@@ -1,0 +1,1995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Widget</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>111</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>QWidget TEST</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>10</y>
+     <width>91</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget_bottombg" native="true">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>370</y>
+     <width>808</width>
+     <height>69</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>808</width>
+     <height>69</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>808</width>
+     <height>69</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+	background-image: url(:/images/dotclick_bottombg.png);
+}
+</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget_direction" native="true">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>10</y>
+     <width>216</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButton_left">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="widget_test_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>690</y>
+     <width>808</width>
+     <height>69</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>808</width>
+     <height>69</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>808</width>
+     <height>69</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+	background-image: url(:/images/dotclick_bottombg.png);
+}
+</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QPushButton" name="pushButton_left_6">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_6">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_6">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_6">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_7">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_7">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_7">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_7">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_8">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_8">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_8">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_8">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_9">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_9">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_9">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_9">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="widget_dirbtn" native="true">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>300</y>
+     <width>828</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item>
+     <widget class="QPushButton" name="pushButton_left_12">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_10">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_10">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_12">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_10">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_13">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_11">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_10">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_11">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_11">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_13">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_11">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_13">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_12">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_12">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_13">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="widget_btn_bg" native="true">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>10</y>
+     <width>216</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <item>
+     <widget class="QPushButton" name="pushButton_left_bg">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_bg">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_bg">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_bg">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButton_merge">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>10</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>merge</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget_dirbtn_first" native="true">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>530</y>
+     <width>828</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <item>
+     <widget class="QPushButton" name="pushButton_left_14">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_14">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_14">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_14">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_15">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_15">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_15">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_15">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_16">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_16">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_16">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_16">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_left_17">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_left.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_left_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_right_17">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_right.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_right_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_down_17">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_down.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_down_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_up_17">
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>46</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/images/dotclick_arrow_up.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/images/dotclick_arrow_up_pressed.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="widget_bottombg_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>450</y>
+     <width>808</width>
+     <height>69</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>808</width>
+     <height>69</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>808</width>
+     <height>69</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+	background-image: url(:/images/dotclick_bottombg.png);
+}
+</string>
+   </property>
+  </widget>
+  <zorder>widget_bottombg</zorder>
+  <zorder>label</zorder>
+  <zorder>widget_direction</zorder>
+  <zorder>widget_test_2</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>widget_dirbtn</zorder>
+  <zorder>widget_btn_bg</zorder>
+  <zorder>pushButton_merge</zorder>
+  <zorder>widget_bottombg_2</zorder>
+  <zorder>widget_dirbtn_first</zorder>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

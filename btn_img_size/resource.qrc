@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pg_btn_grvbev.png</file>
+        <file>pg_btn_grvbev_pressed.png</file>
+        <file>pg_btn_grvflat.png</file>
+        <file>pg_btn_grvflat_pressed.png</file>
+        <file>pg_btn_off.png</file>
+        <file>pg_btn_off_pressed.png</file>
+        <file>pg_btn_flatbev.png</file>
+        <file>pg_btn_flatbev_pressed.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/dotclick_arrow_down.png</file>
+        <file>images/dotclick_arrow_down_pressed.png</file>
+        <file>images/dotclick_arrow_left.png</file>
+        <file>images/dotclick_arrow_left_pressed.png</file>
+        <file>images/dotclick_arrow_right.png</file>
+        <file>images/dotclick_arrow_right_pressed.png</file>
+        <file>images/dotclick_arrow_up.png</file>
+        <file>images/dotclick_arrow_up_pressed.png</file>
+        <file>images/dotclick_bottombg.png</file>
+        <file>images/dotclick_btn_drill.png</file>
+        <file>images/dotclick_btn_drill_pressed.png</file>
+        <file>images/dotclick_btn_mag_round.png</file>
+        <file>images/dotclick_btn_mag_round_pressed.png</file>
+        <file>images/dotclick_btn_mag_square.png</file>
+        <file>images/dotclick_btn_mag_square_pressed.png</file>
+        <file>images/dotclick_btn_size.png</file>
+        <file>images/dotclick_btn_size_pressed.png</file>
+        <file>images/dotclick_calc_box.png</file>
+        <file>images/dotclick_icon_btn_start.png</file>
+        <file>images/dotclick_icon_btn_start_pressed.png</file>
+        <file>images/dotclick_icon_exit.png</file>
+        <file>images/dotclick_icon_primary.png</file>
+        <file>images/dotclick_icon_primary_drill.png</file>
+        <file>images/dotclick_icon_readerlens.png</file>
+        <file>images/dotclick_icon_start.png</file>
+        <file>images/dotclick_icon_sunlens.png</file>
+        <file>images/dotclick_input_box.png</file>
+        <file>images/dotclick_input_box_pressed.png</file>
+        <file>images/dotclick_topbg.png</file>
+    </qresource>
+</RCC>

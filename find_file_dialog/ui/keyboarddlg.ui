@@ -1,0 +1,1623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>KeyboardDlg</class>
+ <widget class="QDialog" name="KeyboardDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>805</width>
+    <height>380</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>805</width>
+    <height>380</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>805</width>
+    <height>380</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Keyboard</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#KeyboardDlg {
+/*	background-color: rgb(237, 237, 237);*/
+
+ 	background-color: rgb(247, 248, 249);
+/*	background-color: rgb(196, 202, 209);*/
+
+}
+
+QPushButton {
+	border: 0px solid rgba(255,255,255,100);
+	border-radius:none;
+	background-color:rgb(255,255,255,100);
+}
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="widget_top" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>70</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">/*
+#widget_top {
+	background-color: rgb(247, 248, 249);
+
+}
+*/</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QWidget" name="widget_input" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>656</width>
+          <height>44</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>656</width>
+          <height>44</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#widget_input {
+	background-image: url(:/global/images/keyboard/input.png);
+	border: none;
+}
+</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+border: none;
+</string>
+           </property>
+           <property name="maxLength">
+            <number>256</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_bottom" native="true">
+     <property name="styleSheet">
+      <string notr="true">/*
+#widget_bottom {
+	background-color: rgb(247, 248, 249);
+
+}
+*/</string>
+     </property>
+     <widget class="QWidget" name="widget_k1" native="true">
+      <property name="geometry">
+       <rect>
+        <x>3</x>
+        <y>9</y>
+        <width>780</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>780</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>780</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pushButton_1">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/1.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/1_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/2.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/2_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/3.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/3_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/4.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/4_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/5.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/5_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_6">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/6.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/6_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_7">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/7.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/7_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_8">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/8.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/8_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_9">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/9.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/9_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_0">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/0.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/0_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_backspace">
+         <property name="minimumSize">
+          <size>
+           <width>126</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>126</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/delete.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/delete_pressed.png);
+}
+</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widget_k2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>3</x>
+        <y>76</y>
+        <width>670</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>670</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>670</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_blank2" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>15</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>15</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_q">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/q.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/q_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_w">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/w.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/w_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_e">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/e.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/e_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_r">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/r.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/r_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_t">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/t.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/t_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_y">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/y.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/y_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_u">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/u.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/u_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_i">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/i.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/i_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_o">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/o.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/o_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_p">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/p.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/p_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widget_k3" native="true">
+      <property name="geometry">
+       <rect>
+        <x>3</x>
+        <y>143</y>
+        <width>630</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>630</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>630</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_blank3" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>32</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_a">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/a.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/a_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_s">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/s.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/s_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_d">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/d.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/d_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_f">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/f.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/f_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_g">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/g.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/g_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_h">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/h.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/h_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_j">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/j.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/j_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_k">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/k.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/k_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_l">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/l.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/l_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widget_k4" native="true">
+      <property name="geometry">
+       <rect>
+        <x>3</x>
+        <y>210</y>
+        <width>780</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>780</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>780</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pushButton_z">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/z.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/z_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_x">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/x.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/x_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_c">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/c.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/c_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_v">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/v.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/v_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_b">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/b.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/b_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_n">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/n.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/n_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_m">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/m.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/m_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_point">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/dot.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/dot_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_underline">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/under.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/under_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_keyLeft">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/keyleft.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/keyleft_pressed.png);
+}
+</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_keyRight">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/keyright.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/keyright_pressed.png);
+}
+</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_reset">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>61</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/reset.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/reset_pressed.png);
+}
+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton_enter">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>141</y>
+        <width>140</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>140</width>
+        <height>61</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>140</width>
+        <height>61</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/enter2.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/enter2_pressed.png);
+}
+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_enter_2">
+      <property name="geometry">
+       <rect>
+        <x>678</x>
+        <y>76</y>
+        <width>102</width>
+        <height>66</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>102</width>
+        <height>66</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>102</width>
+        <height>66</height>
+       </size>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background-image: url(:/global/images/keyboard/enter1.png);
+	border: none;
+}
+QPushButton:pressed {
+	background-image: url(:/global/images/keyboard/enter1_pressed.png);
+}
+</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
