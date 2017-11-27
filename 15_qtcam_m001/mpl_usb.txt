@@ -1,0 +1,48 @@
+mplayer tv://
+MPlayer2 2.0-701-gd4c5b7f-2ubuntu2 (C) 2000-2012 MPlayer Team
+Cannot open file '/home/eschoi/.mplayer/input.conf': No such file or directory
+Failed to open /home/eschoi/.mplayer/input.conf.
+Cannot open file '/etc/mplayer/input.conf': No such file or directory
+Failed to open /etc/mplayer/input.conf.
+
+Playing tv://.
+Detected file format: TV
+Selected driver: v4l2
+ name: Video 4 Linux 2 input
+ author: Martin Olschewski <olschewski@zpr.uni-koeln.de>
+ comment: first try, more to come ;-)
+v4l2: your device driver does not support VIDIOC_G_STD ioctl, VIDIOC_G_PARM was used instead.
+Selected device: USB2.0 PC CAMERA
+ Capabilities:  video capture  streaming
+ supported norms:
+ inputs: 0 = Camera 1;
+ Current input: 0
+ Current format: YUYV
+v4l2: ioctl set format failed: Invalid argument
+v4l2: ioctl set format failed: Invalid argument
+v4l2: ioctl set format failed: Invalid argument
+tv.c: norm_from_string(pal): Bogus norm parameter, setting default.
+v4l2: ioctl enum norm failed: Invalid argument
+Error: Cannot set norm!
+Selected input hasn't got a tuner!
+v4l2: ioctl set mute failed: Invalid argument
+Failed to open VDPAU backend libvdpau_nvidia.so: cannot open shared object file: No such file or directory
+[vdpau] Error when calling vdp_device_create_x11: 1
+[ass] auto-open
+VIDEO:  640x480  30.000 fps    0.0 kbps ( 0.0 kB/s)
+Could not find matching colorspace - retrying with -vf scale...
+Opening video filter: [scale]
+[swscaler @ 0xb5fef988]using unscaled yuyv422 -> yuv420p special converter
+VO: [xv] 640x480 => 640x480 Planar YV12 
+Selected video codec: RAW YUY2 [raw]
+Audio: no sound
+Starting playback...
+V:   0.0  85/ 85 ??% ??% ??,?% 0 0 
+Invalid command for bound key 'MOUSE_BTN0': 'dvdnav mouse'
+V:   0.0 115/115 ??% ??% ??,?% 0 0 
+v4l2: ioctl set mute failed: Invalid argument
+v4l2: 117 frames successfully processed, -503 frames dropped.
+
+Exiting... (Quit)
+eschoi@eschoi:~/Camera/09_qtCam_2640$ 
+

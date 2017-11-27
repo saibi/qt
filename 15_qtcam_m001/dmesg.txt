@@ -1,0 +1,25 @@
+//////////MPlayer//////////////
+[OV7670]ov7670_init
+[OV7670]ov7670_try_fmt_internal
+[OV7670]----------fmt->code = 0x2008
+[OV7670]----------wsize->width = 640,wsize->height = 480
+[OV7670]ov7670_s_fmt
+[OV7670]ov7670_try_fmt_internal
+[OV7670]----------fmt->code = 0x2008
+[OV7670]----------wsize->width = 640,wsize->height = 480
+[OV7670]ov7670_try_fmt_internal
+[OV7670]----------fmt->code = 0x2008
+[OV7670]----------wsize->width = 640,wsize->height = 480
+[OV7670]ov7670_s_fmt
+[OV7670]ov7670_try_fmt_internal
+[OV7670]----------fmt->code = 0x2008
+[OV7670]----------wsize->width = 640,wsize->height = 480
+[OV7670]CSI_SUBDEV_CMD_SET_INFO
+[OV7670]ccm_info.mclk=19bfcc0
+[OV7670]ccm_info.vref=0
+[OV7670]ccm_info.href=1
+[OV7670]ccm_info.clock=1
+[OV7670]ccm_info.iocfg=0
+[OV7670]CSI_SUBDEV_PWR_OFF
+////////////////////////////////////////////////////
+

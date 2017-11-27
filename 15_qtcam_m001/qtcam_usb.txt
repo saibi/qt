@@ -1,0 +1,107 @@
+2640$ sudo ./08_qtCam
+
+(08_qtCam:2689): IBUS-WARNING **: The owner of /home/eschoi/.config/ibus/bus is not root!
+main in a main thread QThread(0x7dee10) 
+run in MyThread MyThread(0x942290) 
+open_device: called!
+init_device: called!
+	driver: uvcvideo
+	card: USB2.0 PC CAMERA 
+	bus_info: usb-sw-ehci-1.1
+	version: 3.4.90
+	capabilities: 0x04000001
+	cropcap.type: 1
+	cropcap.bounds.left: 0
+	cropcap.bounds.top: 0
+	cropcap.bounds.width: 640
+	cropcap.bounds.height: 480
+	cropcap.pixelaspect.numerator: 1
+	cropcap.pixelaspect.denominator: 1
+
+	fmt.fmt.pix.pixelformat: Y,U,Y,V
+
+Init_mmap
+FB Init Start
+FB Init ENd
+	buf.m.offset: 0
+	buf.length: 614400
+buf mmap Check= 0 start=0xb1293000
+buf mmap OK n_Buffer=0
+	buf.m.offset: 614400
+	buf.length: 614400
+buf mmap Check= 1 start=0xb11fd000
+buf mmap OK n_Buffer=1
+	buf.m.offset: 1228800
+	buf.length: 614400
+buf mmap Check= 2 start=0xb1167000
+buf mmap OK n_Buffer=2
+	buf.m.offset: 1843200
+	buf.length: 614400
+buf mmap Check= 3 start=0xb10d1000
+buf mmap OK n_Buffer=3
+start_capturing: called!
+	n_buffers: 4
+
+start_capturing: called!
+	n_buffers: 4
+
+30 88 30 7d 3b 84 39 80 
+ff 85 ff 7d ff 82 ff 7c 
+ff 85 ff 7d ff 81 ff 7d 
+ff 81 ff 7f ff 82 ff 7c 
+ff 82 ff 7c ff 81 ff 7c 
+ff 84 ff 7f ff 82 ff 7a 
+ff 85 ff 7d ff 82 ff 7d 
+ff 80 ff 7f ff 82 ff 7d 
+ff 80 ff 7f ff 81 ff 7d 
+ff 80 ff 7d ff 81 ff 7c 
+ff 84 ff 7c ff 81 ff 7c 
+ff 85 ff 7f ff 82 ff 7c 
+ff 80 ff 7f ff 82 ff 7c 
+ff 87 ff 7d ff 82 ff 7d 
+ff 80 ff 7d ff 82 ff 7c 
+ff 84 ff 7c ff 81 ff 7a 
+ff 85 ff 7f ff 82 ff 7f 
+ff 80 ff 7f ff 84 ff 7d 
+ff 87 ff 7d ff 85 ff 7d 
+ff 85 ff 80 ff 82 ff 7d 
+ff 84 ff 7d ff 80 ff 7c 
+ff 80 ff 7d ff 81 ff 7a 
+ff 80 ff 7f ff 82 ff 7c 
+ff 80 ff 7d ff 84 ff 79 
+ff 85 ff 7f ff 81 ff 7d 
+ff 80 ff 7d ff 84 ff 7d 
+ff 80 ff 7f ff 81 ff 7d 
+ff 80 ff 7f ff 81 ff 7f 
+ff 80 ff 7f ff 81 ff 7d 
+ff 85 ff 7f ff 82 ff 7c 
+ff 84 ff 7d ff 81 ff 7c 
+ff 84 ff 7d ff 81 ff 7c 
+ff 85 ff 7f ff 82 ff 7a 
+ff 85 ff 7d ff 82 ff 7c 
+ff 80 ff 7f ff 82 ff 7d 
+ff 85 ff 80 ff 81 ff 7c 
+ff 85 ff 7f ff 82 ff 7c 
+ff 80 ff 7f ff 84 ff 7d 
+ff 85 ff 7c ff 82 ff 7a 
+ff 82 ff 7f ff 82 ff 7f 
+ff 85 ff 7d ff 81 ff 7c 
+ff 80 ff 7d ff 82 ff 7a 
+ff 80 ff 7f ff 81 ff 7d 
+ff 80 ff 7d ff 84 ff 7a 
+ff 85 ff 7f ff 82 ff 7a 
+ff 85 ff 7f ff 82 ff 7c 
+ff 81 ff 7f ff 81 ff 7c 
+ff 81 ff 7d ff 82 ff 7a 
+ff 87 ff 7d ff 84 ff 7c 
+ff 87 ff 7c ff 84 ff 79 
+ff 85 ff 7a ff 84 ff 79 
+ff 82 ff 7a ff 84 ff 7a 
+ff 87 ff 78 ff 82 ff 75 
+ff 89 ff 79 ff 84 ff 75 
+ff 89 ff 78 ff 85 ff 75 
+ff 88 ff 75 ff 84 ff 75 
+ff 82 ff 78 ff 84 ff 73 
+ff 82 ff 79 ff 84 ff 79 
+ff 80 ff 7d ff 84 ff 75 
+

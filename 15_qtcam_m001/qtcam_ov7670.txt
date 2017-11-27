@@ -1,0 +1,16 @@
+eschoi@eschoi:~/Camera/09_qtCam_2640$ sudo ./08_qtCam
+
+(08_qtCam:2870): IBUS-WARNING **: The owner of /home/eschoi/.config/ibus/bus is not root!
+main in a main thread QThread(0x11e6e10) 
+run in MyThread MyThread(0x134a330) 
+open_device: called!
+init_device: called!
+	driver: sun4i_csi
+	card: sun4i_csi 
+	bus_info: sun4i_csi sun4i_csi.0
+	version: 1.0.0
+	capabilities: 0x05000001
+	fmt.fmt.pix.pixelformat: N,V,2,1
+Init_mmap
+mmap error 22, Invalid argument
+
