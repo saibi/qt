@@ -219,7 +219,7 @@ static void process_image(const void *p, int size,int index_buf)
 {
 	unsigned char *in = (unsigned char *)p;
 
-	fprintf(stderr,"\nIndex=%d | ",index_buf);
+	fprintf(stderr,"\nIndex=%d size %d| ",index_buf, size);
 	fprintf(stderr, "%02x %02x %02x %02x ",in[0],in[1],in[2],in[3]);
 	fprintf(stderr, "%02x %02x %02x %02x ",in[4],in[5],in[6],in[7]);
 }

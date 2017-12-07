@@ -77,18 +77,20 @@ void ImageViewer::keyPressEvent(QKeyEvent *event)
 }
 void ImageViewer::updateGUI(int index)
 {
-	unsigned char *in = (unsigned char *)buffers[index].start;
+#ifndef __arm_A20__
+	Q_UNUSED(index);
+#endif
 
-	//if((index % 2) == 0)
-	{
-		g_led_on();
+	g_led_on();
 
 #ifdef __arm_A20__
-		///NEON NEON NEON NEON NEON NEON FORMAT NV21
-		nv21_to_rgb(pRGBData, in, in + QT_WIDTH * QT_HEIGHT, QT_WIDTH, QT_HEIGHT);
+	unsigned char *in = (unsigned char *)buffers[index].start;
 
-		label->setPixmap(QPixmap::fromImage(QImage((unsigned char *)pRGBData, QT_WIDTH, QT_HEIGHT, QImage::Format_RGB888)));
+	///NEON NEON NEON NEON NEON NEON FORMAT NV21
+	nv21_to_rgb(pRGBData, in, in + QT_WIDTH * QT_HEIGHT, QT_WIDTH, QT_HEIGHT);
+
+	label->setPixmap(QPixmap::fromImage(QImage((unsigned char *)pRGBData, QT_WIDTH, QT_HEIGHT, QImage::Format_RGB888)));
 #endif
-		g_led_off();
-	}
+
+	g_led_off();
 }
