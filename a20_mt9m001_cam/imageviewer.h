@@ -32,6 +32,8 @@ private:
 	unsigned char   *pRGBData;
 
 	MyThread myThread;
+
+	bool m_stopFlag;
 };
 #endif 
 

@@ -7,6 +7,8 @@
 
 ImageViewer::ImageViewer()
 {
+	m_stopFlag = false;
+
 	label = new QLabel(this);
     label->resize(QT_WIDTH,QT_HEIGHT);
     label->setText("No Image  ");
@@ -34,6 +36,7 @@ void ImageViewer::keyPressEvent(QKeyEvent *event)
 	if(event->key() == Qt::Key_Q)
 	{
 		qDebug() << "You Press q key ";
+		m_stopFlag = true;
 		disconnect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
 		myThread.stop();
 		close();
@@ -80,6 +83,9 @@ void ImageViewer::updateGUI(int index)
 #ifndef __arm_A20__
 	Q_UNUSED(index);
 #endif
+
+	if ( m_stopFlag )
+		return;
 
 	g_led_on();
 
