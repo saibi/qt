@@ -9,14 +9,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	m_cwd = "/home/saibi";
+    m_cwd = QDir::current().absolutePath();
+    qDebug("m_cwd [%s]", qPrintable(m_cwd));
 
 	m_dirModel = new QFileSystemModel(this);
 	m_dirModel->setRootPath("/");
 	m_dirModel->setFilter(QDir::AllDirs | QDir::Files | QDir::NoDot);
 	ui->treeView->setModel(m_dirModel);
 	ui->treeView->setRootIndex( m_dirModel->index(m_cwd));
-
+    ui->treeView->setColumnWidth(1, 200);
 }
 
 MainWindow::~MainWindow()
