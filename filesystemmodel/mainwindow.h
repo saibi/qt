@@ -22,6 +22,10 @@ protected:
 private slots:
 	void on_treeView_doubleClicked(const QModelIndex &index);
 
+	void on_pushButton_exit_clicked();
+
+	void on_pushButton_rename_clicked();
+
 private:
 	Ui::MainWindow *ui;
 

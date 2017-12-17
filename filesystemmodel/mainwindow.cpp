@@ -60,3 +60,25 @@ void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 		ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
 	}
 }
+
+void MainWindow::on_pushButton_exit_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	close();
+}
+
+void MainWindow::on_pushButton_rename_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
+
+	qDebug("DBG count = %d", list.size());
+
+
+	for (int i = 0; i < list.size(); ++i)
+	{
+		qDebug("DBG %s", qPrintable(list.at(i).data().toString()));
+	}
+
+}
