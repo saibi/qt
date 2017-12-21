@@ -17,7 +17,8 @@ HEADERS += \
 	imageviewer.h \
 	neon.h \
 	camera.h \
-	led.h
+	led.h \
+    clickablelabel.h
 
 SOURCES += \
 	camera.cpp \
@@ -25,7 +26,8 @@ SOURCES += \
 	imageviewer.cpp \
 	neon.cpp \
 	main.cpp \
-	led.cpp
+	led.cpp \
+    clickablelabel.cpp
 
 FORMS += \
 	imageviewer.ui

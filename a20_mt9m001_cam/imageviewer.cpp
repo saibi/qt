@@ -2,6 +2,7 @@
 #include "ui_imageviewer.h"
 #include "led.h"
 #include "neon.h"
+#include "clickablelabel.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -17,6 +18,7 @@ ImageViewer::ImageViewer(QWidget *parent) :
 	pRGBData = new unsigned char[1280 * 1024 * 3]; // alloc max buffer
 	Q_CHECK_PTR(pRGBData);
 
+	connect(ui->label, SIGNAL(clicked(QPoint)), this, SLOT(slot_clicked(QPoint)));
 	connect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
 	myThread.start();
 
@@ -33,6 +35,75 @@ ImageViewer::~ImageViewer()
 	delete ui;
 }
 
+void ImageViewer::slot_clicked(const QPoint &pos)
+{
+	qDebug("(%d,%d)", pos.x(), pos.y());
+
+	if ( pos.x() > 900 && pos.y() < 50 )
+	{
+		m_stopFlag = true;
+		disconnect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
+		myThread.stop();
+		close();
+		return;
+	}
+
+	if ( pos.y() < 100 )
+	{
+		// up
+		upControl_rowStart();
+	}
+	else if ( pos.y() > 650 )
+	{
+		// down
+		downControl_rowStart();
+	}
+	else
+	{
+		if ( pos.x() > 500 )
+		{
+			if ( pos.x() > 900 )
+			{
+				// right
+				downControl_colStart();
+			}
+			else
+			{
+				// gain
+				if ( pos.y() < 380 )
+				{
+					upControl_gain();
+				}
+				else
+				{
+					downControl_gain();
+				}
+			}
+		}
+		else
+		{
+			if ( pos.x() < 100 )
+			{
+				// left
+				upControl_colStart();
+			}
+			else
+			{
+				// exposure
+				if ( pos.y() < 350 )
+				{
+					upControl_exp();
+				}
+				else
+				{
+					downControl_exp();
+				}
+
+			}
+		}
+	}
+}
+
 void ImageViewer::keyPressEvent(QKeyEvent *event)
 {
 	if(event->key() == Qt::Key_Q)
@@ -42,6 +113,7 @@ void ImageViewer::keyPressEvent(QKeyEvent *event)
 		disconnect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
 		myThread.stop();
 		close();
+		return;
 	}
 	else if(event->key() == Qt::Key_A){
 		qDebug() << "A key => Up Gain";

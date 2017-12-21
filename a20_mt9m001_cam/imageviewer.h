@@ -2,6 +2,8 @@
 #define IMAGEVIEWER_H
 
 #include <QMainWindow>
+#include <QPoint>
+
 #include "camera.h"
 #include "mythread.h"
 
@@ -17,11 +19,14 @@ public:
 	explicit ImageViewer(QWidget *parent = 0);
 	~ImageViewer();
 
-public slots:
-	void updateGUI(int count);
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
+
+protected slots:
+	void updateGUI(int count);
+
+	void slot_clicked(const QPoint & pos);
 
 private:
 	Ui::ImageViewer *ui;
