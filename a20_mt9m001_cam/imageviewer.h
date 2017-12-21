@@ -2,21 +2,23 @@
 #define IMAGEVIEWER_H
 
 #include <QMainWindow>
-#include <QLabel>
-#include <QScrollArea>
-
 #include "camera.h"
 #include "mythread.h"
 
+namespace Ui {
+class ImageViewer;
+}
+
 #define QT_WIDTH    FORCED_WIDTH
 #define QT_HEIGHT   FORCED_HEIGHT
+
 
 class ImageViewer : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	ImageViewer();
+	explicit ImageViewer(QWidget *parent = 0);
 	~ImageViewer();
 
 public slots:
@@ -25,9 +27,9 @@ public slots:
 protected:
 	void keyPressEvent(QKeyEvent *event);
 
+
 private:
-	QLabel *label;
-	QScrollArea *scrollArea;
+	Ui::ImageViewer *ui;
 
 	unsigned char   *pRGBData;
 
@@ -35,6 +37,5 @@ private:
 
 	bool m_stopFlag;
 };
-#endif 
 
-
+#endif // IMAGEVIEWER_H

@@ -1,35 +1,34 @@
 #include "imageviewer.h"
-#include "neon.h"
+#include "ui_imageviewer.h"
 #include "led.h"
+#include "neon.h"
 
 #include <QKeyEvent>
 #include <QDebug>
 
-ImageViewer::ImageViewer()
+ImageViewer::ImageViewer(QWidget *parent) :
+	QMainWindow(parent),
+	ui(new Ui::ImageViewer)
 {
+	ui->setupUi(this);
+
 	m_stopFlag = false;
-
-	label = new QLabel(this);
-    label->resize(QT_WIDTH,QT_HEIGHT);
-    label->setText("No Image  ");
-
-	scrollArea = new QScrollArea(this);
-	scrollArea->setWidget(label);
-
-	setWindowTitle(tr("Qt Cam"));
-	resize(QT_WIDTH + 5, QT_HEIGHT + 5);
-	setCentralWidget(scrollArea);
 
 	pRGBData = new unsigned char[QT_WIDTH * QT_HEIGHT * 3];
 
 	connect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
 	myThread.start();
+
 }
 
 ImageViewer::~ImageViewer()
 {
 	delete [] pRGBData;
+	pRGBData = 0;
+
+	delete ui;
 }
+
 
 void ImageViewer::keyPressEvent(QKeyEvent *event)
 {
@@ -78,13 +77,14 @@ void ImageViewer::keyPressEvent(QKeyEvent *event)
 		qDebug() << event->nativeScanCode();
 	}
 }
+
 void ImageViewer::updateGUI(int index)
 {
 #ifndef __arm_A20__
 	Q_UNUSED(index);
 #endif
 
-	if ( m_stopFlag )
+	if ( m_stopFlag || pRGBData == 0 )
 		return;
 
 	g_led_on();
@@ -95,7 +95,7 @@ void ImageViewer::updateGUI(int index)
 	///NEON NEON NEON NEON NEON NEON FORMAT NV21
 	nv21_to_rgb(pRGBData, in, in + QT_WIDTH * QT_HEIGHT, QT_WIDTH, QT_HEIGHT);
 
-	label->setPixmap(QPixmap::fromImage(QImage((unsigned char *)pRGBData, QT_WIDTH, QT_HEIGHT, QImage::Format_RGB888)));
+	ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char *)pRGBData, QT_WIDTH, QT_HEIGHT, QImage::Format_RGB888)));
 #endif
 
 	g_led_off();

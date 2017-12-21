@@ -19,6 +19,7 @@ extern struct buffer *buffers;
 #define FORCED_FIELD  	V4L2_FIELD_NONE
 #define MAX_CAM_BUFFER	4
 
+// 1280x1024, 960x960, 800x480, 640x480, 480x480
 #define FORCED_WIDTH    640
 #define FORCED_HEIGHT   480
 

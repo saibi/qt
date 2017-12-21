@@ -12,17 +12,21 @@ linux-arm-a20-g++ {
 	QMAKE_CXXFLAGS += -mfpu=neon -ftree-vectorize -flax-vector-conversions
 }
 
-HEADERS += mythread.h \
+HEADERS += \
+	mythread.h \
 	imageviewer.h \
 	neon.h \
 	camera.h \
 	led.h
 
-SOURCES += camera.cpp \
+SOURCES += \
+	camera.cpp \
 	mythread.cpp \
 	imageviewer.cpp \
 	neon.cpp \
 	main.cpp \
 	led.cpp
 
-FORMS +=
+FORMS += \
+	imageviewer.ui
+
