@@ -14,7 +14,8 @@ ImageViewer::ImageViewer(QWidget *parent) :
 
 	m_stopFlag = false;
 
-	pRGBData = new unsigned char[QT_WIDTH * QT_HEIGHT * 3];
+	pRGBData = new unsigned char[1280 * 1024 * 3]; // alloc max buffer
+	Q_CHECK_PTR(pRGBData);
 
 	connect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
 	myThread.start();
@@ -23,12 +24,14 @@ ImageViewer::ImageViewer(QWidget *parent) :
 
 ImageViewer::~ImageViewer()
 {
-	delete [] pRGBData;
-	pRGBData = 0;
+	if ( pRGBData )
+	{
+		delete [] pRGBData;
+		pRGBData = 0;
+	}
 
 	delete ui;
 }
-
 
 void ImageViewer::keyPressEvent(QKeyEvent *event)
 {
@@ -93,9 +96,9 @@ void ImageViewer::updateGUI(int index)
 	unsigned char *in = (unsigned char *)buffers[index].start;
 
 	///NEON NEON NEON NEON NEON NEON FORMAT NV21
-	nv21_to_rgb(pRGBData, in, in + QT_WIDTH * QT_HEIGHT, QT_WIDTH, QT_HEIGHT);
+	nv21_to_rgb(pRGBData, in, in + cam_width * cam_height, cam_width, cam_height);
 
-	ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char *)pRGBData, QT_WIDTH, QT_HEIGHT, QImage::Format_RGB888)));
+	ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char *)pRGBData, cam_width, cam_height, QImage::Format_RGB888)));
 #endif
 
 	g_led_off();

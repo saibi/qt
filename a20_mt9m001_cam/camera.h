@@ -13,6 +13,8 @@ struct buffer {
 };
 
 extern struct buffer *buffers;
+extern int cam_width;
+extern int cam_height;
 
 #define VIDEODEV "/dev/video0"
 #define FORCED_FORMAT 	V4L2_PIX_FMT_GREY

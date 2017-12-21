@@ -9,10 +9,6 @@ namespace Ui {
 class ImageViewer;
 }
 
-#define QT_WIDTH    FORCED_WIDTH
-#define QT_HEIGHT   FORCED_HEIGHT
-
-
 class ImageViewer : public QMainWindow
 {
 	Q_OBJECT
@@ -26,7 +22,6 @@ public slots:
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
-
 
 private:
 	Ui::ImageViewer *ui;

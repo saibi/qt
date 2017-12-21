@@ -30,6 +30,9 @@ static int verbose = 1;
 		if (verbose) fprintf(stderr, fmt, ##arg)
 
 
+int cam_width = FORCED_WIDTH;
+int cam_height = FORCED_HEIGHT;
+
 struct buffer          *buffers;
 static char            *dev_name;
 static enum io_method   cam_io_method = IO_METHOD_MMAP;
@@ -340,7 +343,7 @@ int mainloop(void)
 	else if ( 0 == r )
 	{
 		fprintf(stderr, "select timeout\n");
-		return -1;
+		exit(1);
 	}
 
 	return read_frame();
@@ -660,8 +663,8 @@ void init_device(void)
 	
 	fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	if (force_format) {
-		fmt.fmt.pix.width       = FORCED_WIDTH;
-		fmt.fmt.pix.height      = FORCED_HEIGHT;
+		fmt.fmt.pix.width       = cam_width;
+		fmt.fmt.pix.height      = cam_height;
 		fmt.fmt.pix.pixelformat = FORCED_FORMAT;
 		fmt.fmt.pix.field       = FORCED_FIELD;
 
