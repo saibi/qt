@@ -16,8 +16,15 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
 	void on_treeView_doubleClicked(const QModelIndex &index);
+
+	void on_pushButton_exit_clicked();
+
+	void on_pushButton_rename_clicked();
 
 private:
 	Ui::MainWindow *ui;
