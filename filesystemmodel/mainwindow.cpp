@@ -3,6 +3,7 @@
 
 #include <QFileInfo>
 #include <QSettings>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	m_dirModel = new QFileSystemModel(this);
 	m_dirModel->setRootPath("/");
-	m_dirModel->setFilter(QDir::AllDirs | QDir::Files | QDir::NoDot);
+	m_dirModel->setFilter(QDir::AllDirs | QDir::Files | QDir::AllEntries | QDir::Hidden | QDir::NoDot);
 	ui->treeView->setModel(m_dirModel);
 	ui->treeView->setRootIndex( m_dirModel->index(m_cwd));
     ui->treeView->setColumnWidth(0, col0_width);
@@ -75,10 +76,57 @@ void MainWindow::on_pushButton_rename_clicked()
 
 	qDebug("DBG count = %d", list.size());
 
+	if ( list.size() != 2 )
+	{
+		QMessageBox::information(this, "Error", "Select only 2 files. (video and subtile)", QMessageBox::Ok);
+		return;
+	}
+
+	QString path;
+	QString videoPath;
+	QString subPath;
 
 	for (int i = 0; i < list.size(); ++i)
 	{
-		qDebug("DBG %s", qPrintable(list.at(i).data().toString()));
+		path = list.at(i).data().toString();
+
+		qDebug("DBG %s", qPrintable(path));
+		if ( path.endsWith(".mkv", Qt::CaseInsensitive) ||
+			 path.endsWith(".avi", Qt::CaseInsensitive) ||
+			 path.endsWith(".mp4", Qt::CaseInsensitive) ||
+			 path.endsWith(".mov", Qt::CaseInsensitive) ||
+			 path.endsWith(".wmv", Qt::CaseInsensitive) )
+		{
+			videoPath = path;
+		}
+		else if ( path.endsWith(".smil", Qt::CaseInsensitive) ||
+				  path.endsWith(".smi", Qt::CaseInsensitive) ||
+				  path.endsWith(".srt", Qt::CaseInsensitive) )
+		{
+			subPath = path;
+		}
 	}
 
+	if ( videoPath.isEmpty() || subPath.isEmpty() )
+	{
+		QMessageBox::information(this, "Error", "Select video and subtile.", QMessageBox::Ok);
+		return;
+	}
+
+
+	QString ext;
+	if ( subPath.contains(".srt", Qt::CaseInsensitive ) )
+		ext = ".srt";
+	else
+		ext = ".smi";
+
+	QFileInfo v(videoPath);
+
+	QString newSubPath = v.completeBaseName() + ext;
+
+	qDebug("%s: %s -> %s", qPrintable(m_cwd), qPrintable(subPath), qPrintable(newSubPath));
+
+	QFile::rename( m_cwd + "/" + subPath, m_cwd + "/" + newSubPath);
+
+	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
 }
