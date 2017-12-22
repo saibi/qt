@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    kbdtreeview.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    kbdtreeview.h
 
 FORMS += \
         mainwindow.ui

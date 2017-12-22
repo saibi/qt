@@ -30,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->treeView->setModel(m_dirModel);
 	ui->treeView->setRootIndex( m_dirModel->index(m_cwd));
     ui->treeView->setColumnWidth(0, col0_width);
+
+	connect(ui->treeView, SIGNAL(keyPressed(int)), this, SLOT(slot_keyPressed(int)));
 }
 
 MainWindow::~MainWindow()
@@ -79,11 +81,9 @@ void MainWindow::on_pushButton_exit_clicked()
 
 void MainWindow::on_pushButton_rename_clicked()
 {
-	qDebug("[%s]", Q_FUNC_INFO);
-
 	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
 
-	qDebug("DBG count = %d", list.size());
+	qDebug("[%s] %d items.", Q_FUNC_INFO), list.size();
 
 	if ( list.size() != 2 )
 	{
@@ -151,4 +151,23 @@ void MainWindow::on_pushButton_up_clicked()
 	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
 	ui->treeView->setCurrentIndex(m_dirModel->index(prev_cwd));
 	ui->treeView->scrollTo(m_dirModel->index(prev_cwd));
+}
+
+void MainWindow::slot_keyPressed(int key)
+{
+	if ( key == Qt::Key_Backspace )
+		on_pushButton_up_clicked();
+	else if ( key == Qt::Key_Return || key == Qt::Key_Enter )
+	{
+		QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
+
+		if ( list.size() == 1 )
+		{
+			on_treeView_doubleClicked( list.at(0) );
+		}
+		else if ( list.size() == 2 )
+		{
+			on_pushButton_rename_clicked();
+		}
+	}
 }

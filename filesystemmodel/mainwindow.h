@@ -28,6 +28,8 @@ private slots:
 
 	void on_pushButton_up_clicked();
 
+	void slot_keyPressed(int key);
+
 private:
 	Ui::MainWindow *ui;
 
