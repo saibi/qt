@@ -83,7 +83,7 @@ void MainWindow::on_pushButton_rename_clicked()
 {
 	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
 
-	qDebug("[%s] %d items.", Q_FUNC_INFO), list.size();
+	qDebug("[%s] %d items.", Q_FUNC_INFO, list.size());
 
 	if ( list.size() != 2 )
 	{
