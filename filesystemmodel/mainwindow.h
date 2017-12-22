@@ -26,6 +26,8 @@ private slots:
 
 	void on_pushButton_rename_clicked();
 
+	void on_pushButton_up_clicked();
+
 private:
 	Ui::MainWindow *ui;
 

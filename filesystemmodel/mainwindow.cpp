@@ -4,6 +4,7 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QMessageBox>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -49,16 +50,24 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 {
-	qDebug("[%s] start", Q_FUNC_INFO);
+	qDebug("[%s]", Q_FUNC_INFO);
 
 	QFileInfo f = m_dirModel->fileInfo(index);
 
 	if ( f.isDir() )
 	{
+		QString prev_cwd = m_cwd;
+
 		m_cwd = f.absoluteFilePath();
-		qDebug("[%s] %s", Q_FUNC_INFO, qPrintable(f.absoluteFilePath()));
+		qDebug("[%s] directory [%s] selected", Q_FUNC_INFO, qPrintable(f.absoluteFilePath()));
 
 		ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
+
+		if ( QFileInfo(prev_cwd).dir().absolutePath() == m_cwd )
+		{
+			ui->treeView->setCurrentIndex(m_dirModel->index(prev_cwd));
+			ui->treeView->scrollTo(m_dirModel->index(prev_cwd));
+		}
 	}
 }
 
@@ -129,4 +138,17 @@ void MainWindow::on_pushButton_rename_clicked()
 	QFile::rename( m_cwd + "/" + subPath, m_cwd + "/" + newSubPath);
 
 	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
+}
+
+void MainWindow::on_pushButton_up_clicked()
+{
+	QString prev_cwd = m_cwd;
+
+	QFileInfo f(m_cwd);
+	m_cwd = f.dir().absolutePath();
+	qDebug("[%s] directory [%s] selected", Q_FUNC_INFO, qPrintable(m_cwd));
+
+	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
+	ui->treeView->setCurrentIndex(m_dirModel->index(prev_cwd));
+	ui->treeView->scrollTo(m_dirModel->index(prev_cwd));
 }
