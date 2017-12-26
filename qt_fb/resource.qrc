@@ -2,5 +2,6 @@
     <qresource prefix="/img">
         <file>aoa.jpg</file>
         <file>apink.jpg</file>
+        <file>so.jpg</file>
     </qresource>
 </RCC>

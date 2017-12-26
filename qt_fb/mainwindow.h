@@ -21,11 +21,14 @@ private slots:
 
 	void on_pushButton_exit_clicked();
 
+	void on_pushButton_clear_clicked();
+
 private:
 	Ui::MainWindow *ui;
 
 	QPixmap m_aoa;
 	QPixmap m_apink;
+	QPixmap m_so;
 };
 
 #endif // MAINWINDOW_H
