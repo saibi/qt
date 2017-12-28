@@ -53,7 +53,74 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 {
 	qDebug("[%s]", Q_FUNC_INFO);
+	handle_select(index);
+}
 
+void MainWindow::on_pushButton_exit_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	close();
+}
+
+
+void MainWindow::on_pushButton_rename_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_rename();
+}
+
+void MainWindow::on_pushButton_up_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_up();
+}
+
+void MainWindow::slot_keyPressed(int key)
+{
+	if ( key == Qt::Key_Backspace )
+	{
+		qDebug("[%s] backspace pressed", Q_FUNC_INFO);
+		handle_up();
+	}
+	else if ( key == Qt::Key_Return || key == Qt::Key_Enter )
+	{
+		qDebug("[%s] enter pressed", Q_FUNC_INFO);
+
+		QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
+
+		if ( list.size() == 1 )
+		{			
+			handle_select( list.at(0) );
+		}
+		else if ( list.size() == 2 )
+		{
+			handle_rename();
+		}
+	}
+}
+
+
+void MainWindow::on_actionExit_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	close();
+}
+
+void MainWindow::on_actionUp_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_up();
+}
+
+
+void MainWindow::on_actionRename_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_rename();
+}
+
+void MainWindow::handle_select(const QModelIndex &index)
+{
 	QFileInfo f = m_dirModel->fileInfo(index);
 
 	if ( f.isDir() )
@@ -73,22 +140,29 @@ void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 	}
 }
 
-void MainWindow::on_pushButton_exit_clicked()
+void MainWindow::handle_up()
 {
-	qDebug("[%s]", Q_FUNC_INFO);
-	close();
+	QString prev_cwd = m_cwd;
+
+	QFileInfo f(m_cwd);
+	m_cwd = f.dir().absolutePath();
+	qDebug("[%s] directory [%s] selected", Q_FUNC_INFO, qPrintable(m_cwd));
+
+	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
+	ui->treeView->setCurrentIndex(m_dirModel->index(prev_cwd));
+	ui->treeView->scrollTo(m_dirModel->index(prev_cwd));
 }
 
-void MainWindow::on_pushButton_rename_clicked()
+bool MainWindow::handle_rename()
 {
 	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
 
-	qDebug("[%s] %d items.", Q_FUNC_INFO, list.size());
+	qDebug("[%s] %d items selected.", Q_FUNC_INFO, list.size());
 
 	if ( list.size() != 2 )
 	{
-		QMessageBox::information(this, "Error", "Select only 2 files. (video and subtile)", QMessageBox::Ok);
-		return;
+		QMessageBox::information(this, tr("Error"), tr("Select only 2 files. (video and subtile)"), QMessageBox::Ok);
+		return false;
 	}
 
 	QString path;
@@ -118,8 +192,8 @@ void MainWindow::on_pushButton_rename_clicked()
 
 	if ( videoPath.isEmpty() || subPath.isEmpty() )
 	{
-		QMessageBox::information(this, "Error", "Select video and subtile.", QMessageBox::Ok);
-		return;
+		QMessageBox::information(this, tr("Error"), tr("Select video and subtile."), QMessageBox::Ok);
+		return false;
 	}
 
 
@@ -138,36 +212,6 @@ void MainWindow::on_pushButton_rename_clicked()
 	QFile::rename( m_cwd + "/" + subPath, m_cwd + "/" + newSubPath);
 
 	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
-}
 
-void MainWindow::on_pushButton_up_clicked()
-{
-	QString prev_cwd = m_cwd;
-
-	QFileInfo f(m_cwd);
-	m_cwd = f.dir().absolutePath();
-	qDebug("[%s] directory [%s] selected", Q_FUNC_INFO, qPrintable(m_cwd));
-
-	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
-	ui->treeView->setCurrentIndex(m_dirModel->index(prev_cwd));
-	ui->treeView->scrollTo(m_dirModel->index(prev_cwd));
-}
-
-void MainWindow::slot_keyPressed(int key)
-{
-	if ( key == Qt::Key_Backspace )
-		on_pushButton_up_clicked();
-	else if ( key == Qt::Key_Return || key == Qt::Key_Enter )
-	{
-		QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
-
-		if ( list.size() == 1 )
-		{
-			on_treeView_doubleClicked( list.at(0) );
-		}
-		else if ( list.size() == 2 )
-		{
-			on_pushButton_rename_clicked();
-		}
-	}
+	return true;
 }
