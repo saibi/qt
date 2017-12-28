@@ -22,7 +22,7 @@ protected:
 	void handle_up();
 	bool handle_rename();
 	void handle_select(const QModelIndex &index);
-
+	bool handle_delete();
 
 private slots:
 	void on_treeView_doubleClicked(const QModelIndex &index);
@@ -41,6 +41,8 @@ private slots:
 	void on_actionUp_triggered();
 
 	void on_actionRename_triggered();
+
+	void on_action_Delete_triggered();
 
 private:
 	Ui::MainWindow *ui;

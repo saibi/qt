@@ -119,6 +119,13 @@ void MainWindow::on_actionRename_triggered()
 	handle_rename();
 }
 
+
+void MainWindow::on_action_Delete_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_delete();
+}
+
 void MainWindow::handle_select(const QModelIndex &index)
 {
 	QFileInfo f = m_dirModel->fileInfo(index);
@@ -173,7 +180,6 @@ bool MainWindow::handle_rename()
 	{
 		path = list.at(i).data().toString();
 
-		qDebug("DBG %s", qPrintable(path));
 		if ( path.endsWith(".mkv", Qt::CaseInsensitive) ||
 			 path.endsWith(".avi", Qt::CaseInsensitive) ||
 			 path.endsWith(".mp4", Qt::CaseInsensitive) ||
@@ -212,6 +218,39 @@ bool MainWindow::handle_rename()
 	QFile::rename( m_cwd + "/" + subPath, m_cwd + "/" + newSubPath);
 
 	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
+
+	return true;
+}
+
+bool MainWindow::handle_delete()
+{
+	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
+	QString msg;
+
+	if ( list.size() == 1 )
+	{
+		msg = tr("Do you want to delete %1?").arg(list.at(0).data().toString());
+	}
+	else if ( list.size() > 1 )
+	{
+		msg = tr("Do you want to delete %1 files?").arg(list.size());
+	}
+	else
+		return false;
+
+	int answer = QMessageBox::question(this, tr("Confirm"), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+	if ( QMessageBox::No == answer)
+		return false;
+
+	QString path;
+
+	for (int i = 0; i < list.size(); ++i)
+	{
+		path = list.at(i).data().toString();
+
+		bool ret = QFile::remove(m_cwd + "//" + path);
+		qDebug("Delete %s : %s", qPrintable(path), ret ? "success" : "fail");
+	}
 
 	return true;
 }
