@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QSettings settings("saibi_soft", "subtitle_filename_changer");
 
+	m_cutMode = false;
     m_cwd = settings.value("cwd").toString();
     if (m_cwd.isEmpty() )
         m_cwd = QDir::current().absolutePath();
@@ -63,10 +64,10 @@ void MainWindow::on_pushButton_exit_clicked()
 }
 
 
-void MainWindow::on_pushButton_rename_clicked()
+void MainWindow::on_pushButton_match_clicked()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
-	handle_rename();
+	handle_match();
 }
 
 void MainWindow::on_pushButton_up_clicked()
@@ -94,7 +95,7 @@ void MainWindow::slot_keyPressed(int key)
 		}
 		else if ( list.size() == 2 )
 		{
-			handle_rename();
+			handle_match();
 		}
 	}
 }
@@ -112,18 +113,35 @@ void MainWindow::on_actionUp_triggered()
 	handle_up();
 }
 
-
-void MainWindow::on_actionRename_triggered()
+void MainWindow::on_actionMatch_triggered()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
-	handle_rename();
+	handle_match();
 }
-
 
 void MainWindow::on_action_Delete_triggered()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
 	handle_delete();
+}
+
+
+void MainWindow::on_action_Copy_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_copy(false);
+}
+
+void MainWindow::on_actionCut_X_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_copy(true);
+}
+
+void MainWindow::on_action_Paste_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_paste();
 }
 
 void MainWindow::handle_select(const QModelIndex &index)
@@ -160,7 +178,7 @@ void MainWindow::handle_up()
 	ui->treeView->scrollTo(m_dirModel->index(prev_cwd));
 }
 
-bool MainWindow::handle_rename()
+bool MainWindow::handle_match()
 {
 	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
 
@@ -248,9 +266,88 @@ bool MainWindow::handle_delete()
 	{
 		path = list.at(i).data().toString();
 
-		bool ret = QFile::remove(m_cwd + "//" + path);
+		bool ret = QFile::remove(m_cwd + "/" + path);
 		qDebug("Delete %s : %s", qPrintable(path), ret ? "success" : "fail");
 	}
 
 	return true;
 }
+
+void MainWindow::handle_copy(bool cutMode)
+{
+	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
+
+	m_clipFileList.clear();
+	m_clipDir.clear();
+
+	for (int i = 0 ; i < list.size(); ++i )
+	{
+		QString fileName = list.at(i).data().toString();
+		QFileInfo f(m_cwd + "/" + fileName);
+		if ( f.isFile() )
+		{
+			m_clipFileList.append(fileName);
+			qDebug("[%s] File '%s' added to clipboard.", Q_FUNC_INFO, qPrintable(fileName) );
+		}
+	}
+
+	m_clipDir = m_cwd;
+	m_cutMode = cutMode;
+}
+
+void MainWindow::handle_paste()
+{
+	if ( m_clipFileList.size() == 0 )
+		return;
+
+
+	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
+
+	if ( list.size() > 1)
+	{
+		qDebug("[%s] Select a destination directory only.", Q_FUNC_INFO);
+		return;
+	}
+
+	QString destDir = m_cwd;
+
+	if ( list.size() == 1 )
+	{
+		QFileInfo f(m_cwd + "/" + list.at(0).data().toString());
+
+		if ( f.isDir() )
+		{
+			destDir = f.absoluteFilePath();
+		}
+	}
+
+	if ( m_clipDir == destDir )
+	{
+		qDebug("[%s] Select different destination directory.", Q_FUNC_INFO);
+		return;
+	}
+
+	QMessageBox m(QMessageBox::Information, m_cutMode ? tr("Cut") : tr("Copy"), tr("Please wait..."), QMessageBox::NoButton, 0);
+	m.setStandardButtons(0);
+	m.show();
+	QApplication::processEvents();
+
+	for(int i = 0 ; i < m_clipFileList.size(); ++i )
+	{
+		QString src = m_clipDir + "/" + m_clipFileList.at(i);
+		QString target = destDir + "/" + m_clipFileList.at(i);
+
+		if ( m_cutMode )
+		{
+			if ( QFile::rename(src, target) )
+				qDebug("move : %s -> %s", qPrintable(src), qPrintable(target));
+		}
+		else
+		{
+			if ( QFile::copy(src, target) )
+				qDebug("copy : %s -> %s", qPrintable(src), qPrintable(target));
+		}
+	}
+	m.hide();
+}
+

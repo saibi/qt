@@ -20,16 +20,18 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 	void handle_up();
-	bool handle_rename();
+	bool handle_match();
 	void handle_select(const QModelIndex &index);
 	bool handle_delete();
+	void handle_copy(bool cutMode);
+	void handle_paste();
 
 private slots:
 	void on_treeView_doubleClicked(const QModelIndex &index);
 
 	void on_pushButton_exit_clicked();
 
-	void on_pushButton_rename_clicked();
+	void on_pushButton_match_clicked();
 
 	void on_pushButton_up_clicked();
 
@@ -40,9 +42,17 @@ private slots:
 
 	void on_actionUp_triggered();
 
-	void on_actionRename_triggered();
+	void on_actionMatch_triggered();
 
 	void on_action_Delete_triggered();
+
+	void on_action_Copy_triggered();
+
+	void on_actionCut_X_triggered();
+
+	void on_action_Paste_triggered();
+
+
 
 private:
 	Ui::MainWindow *ui;
@@ -50,6 +60,9 @@ private:
 	QFileSystemModel *m_dirModel;
 
 	QString m_cwd;
+	QList <QString> m_clipFileList;
+	QString m_clipDir;
+	bool m_cutMode;
 };
 
 #endif // MAINWINDOW_H

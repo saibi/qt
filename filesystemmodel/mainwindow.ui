@@ -94,7 +94,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_rename">
+        <widget class="QPushButton" name="pushButton_match">
          <property name="minimumSize">
           <size>
            <width>200</width>
@@ -102,7 +102,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Rename</string>
+          <string>Match</string>
          </property>
         </widget>
        </item>
@@ -143,20 +143,29 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionRename"/>
+    <addaction name="actionMatch"/>
     <addaction name="action_Delete"/>
     <addaction name="actionUp"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionCut_X"/>
+    <addaction name="action_Copy"/>
+    <addaction name="action_Paste"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -167,20 +176,17 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionRename">
+  <action name="actionMatch">
    <property name="text">
-    <string>&amp;Rename</string>
+    <string>&amp;Match</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+R</string>
+    <string>Ctrl+M</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>E&amp;xit</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+X</string>
    </property>
   </action>
   <action name="actionUp">
@@ -197,6 +203,30 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="action_Copy">
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="action_Paste">
+   <property name="text">
+    <string>Paste(&amp;V)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionCut_X">
+   <property name="text">
+    <string>Cut(&amp;X)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
    </property>
   </action>
  </widget>
