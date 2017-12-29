@@ -151,6 +151,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionMatch"/>
+    <addaction name="action_Rename"/>
     <addaction name="action_Delete"/>
     <addaction name="actionUp"/>
     <addaction name="separator"/>
@@ -227,6 +228,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="action_Rename">
+   <property name="text">
+    <string>&amp;Rename</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>

@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QDir>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -142,6 +143,12 @@ void MainWindow::on_action_Paste_triggered()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
 	handle_paste();
+}
+
+void MainWindow::on_action_Rename_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_rename();
 }
 
 void MainWindow::handle_select(const QModelIndex &index)
@@ -351,3 +358,21 @@ void MainWindow::handle_paste()
 	m.hide();
 }
 
+void MainWindow::handle_rename()
+{
+	QModelIndexList list = ui->treeView->selectionModel()->selectedRows(0);
+
+	if ( list.size() != 1)
+		return;
+
+	QString	fileName = list.at(0).data().toString();
+	QString newName = QInputDialog::getText(this, tr("Rename"), tr("Edit filename"), QLineEdit::Normal, fileName);
+
+	if ( fileName != newName )
+	{
+		if ( QFile::rename( m_cwd + "/" + fileName , m_cwd + "/" + newName) )
+		{
+			qDebug("rename : %s -> %s", qPrintable(fileName), qPrintable(newName));
+		}
+	}
+}

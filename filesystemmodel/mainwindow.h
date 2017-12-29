@@ -25,6 +25,7 @@ protected:
 	bool handle_delete();
 	void handle_copy(bool cutMode);
 	void handle_paste();
+	void handle_rename();
 
 private slots:
 	void on_treeView_doubleClicked(const QModelIndex &index);
@@ -53,6 +54,8 @@ private slots:
 	void on_action_Paste_triggered();
 
 
+
+	void on_action_Rename_triggered();
 
 private:
 	Ui::MainWindow *ui;
