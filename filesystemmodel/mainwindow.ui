@@ -153,7 +153,9 @@
     <addaction name="actionMatch"/>
     <addaction name="action_Rename"/>
     <addaction name="action_Delete"/>
+    <addaction name="separator"/>
     <addaction name="actionUp"/>
+    <addaction name="action_New_Directory"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -236,6 +238,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="action_New_Directory">
+   <property name="text">
+    <string>&amp;New Directory</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
  </widget>

@@ -151,6 +151,13 @@ void MainWindow::on_action_Rename_triggered()
 	handle_rename();
 }
 
+
+void MainWindow::on_action_New_Directory_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handle_create();
+}
+
 void MainWindow::handle_select(const QModelIndex &index)
 {
 	QFileInfo f = m_dirModel->fileInfo(index);
@@ -241,8 +248,6 @@ bool MainWindow::handle_match()
 	qDebug("%s: %s -> %s", qPrintable(m_cwd), qPrintable(subPath), qPrintable(newSubPath));
 
 	QFile::rename( m_cwd + "/" + subPath, m_cwd + "/" + newSubPath);
-
-	ui->treeView->setRootIndex(m_dirModel->index(m_cwd) );
 
 	return true;
 }
@@ -373,6 +378,18 @@ void MainWindow::handle_rename()
 		if ( QFile::rename( m_cwd + "/" + fileName , m_cwd + "/" + newName) )
 		{
 			qDebug("rename : %s -> %s", qPrintable(fileName), qPrintable(newName));
+		}
+	}
+}
+
+void MainWindow::handle_create()
+{
+	QString newDir = QInputDialog::getText(this, tr("Create New Directory"), tr("Enter directory name"));
+	if ( !newDir.trimmed().isEmpty() )
+	{
+		if ( QDir().mkpath( m_cwd + "/" + newDir) )
+		{
+			qDebug("mkdir : %s", qPrintable(newDir));
 		}
 	}
 }
