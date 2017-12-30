@@ -292,6 +292,22 @@ void MainWindow::handle_copy(bool cutMode)
 	m_clipFileList.clear();
 	m_clipDir.clear();
 
+	if ( list.size() == 0 )
+	{
+		ui->statusBar->clearMessage();
+		return;
+	}
+
+	QString statMsg;
+
+	statMsg = m_cwd + " : " + list.at(0).data().toString();
+	if ( list.size() > 1 )
+		statMsg += QString(" and %1 files are copied.").arg(list.size()-1);
+	else
+		statMsg += " copied.";
+
+	ui->statusBar->showMessage(statMsg);
+
 	for (int i = 0 ; i < list.size(); ++i )
 	{
 		QString fileName = list.at(i).data().toString();
@@ -300,6 +316,7 @@ void MainWindow::handle_copy(bool cutMode)
 		{
 			m_clipFileList.append(fileName);
 			qDebug("[%s] File '%s' added to clipboard.", Q_FUNC_INFO, qPrintable(fileName) );
+			statMsg += fileName + " ";
 		}
 	}
 
