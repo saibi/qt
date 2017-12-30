@@ -158,6 +158,14 @@ void MainWindow::on_action_New_Directory_triggered()
 	handle_create();
 }
 
+
+void MainWindow::on_action_Version_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	QMessageBox::information(this, tr("Version"), tr("Rename Subtitle") + " V" + QString(VERSION_STR) +"\n\n\n" + "Made by saibi", QMessageBox::Ok);
+}
+
 void MainWindow::handle_select(const QModelIndex &index)
 {
 	QFileInfo f = m_dirModel->fileInfo(index);

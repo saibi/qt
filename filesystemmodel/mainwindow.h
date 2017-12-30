@@ -8,6 +8,9 @@ namespace Ui {
 class MainWindow;
 }
 
+#define VERSION_STR "0.7.0"
+
+
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -59,6 +62,8 @@ private slots:
 	void on_action_Rename_triggered();
 
 	void on_action_New_Directory_triggered();
+
+	void on_action_Version_triggered();
 
 private:
 	Ui::MainWindow *ui;
