@@ -57,3 +57,14 @@ void MainWindow::on_pushButton_clear_clicked()
 {
 	update();
 }
+
+void MainWindow::on_pushButton_buffer_clicked()
+{
+	int idx = FrameBuffer::instance().toggleBuffer();
+	qDebug("[%s] %d", Q_FUNC_INFO, idx);
+}
+
+void MainWindow::on_pushButton_copy_clicked()
+{
+	FrameBuffer::instance().copy(0);
+}

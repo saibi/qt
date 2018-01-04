@@ -27,14 +27,19 @@ public:
 
 	void test(int startx = 100, int starty = 100);
 	void drawImg(int x, int y, const QImage & img);
+	int toggleBuffer();
+	void copy(int idx);
 
 private:
 	int m_fbfd;
 	char * m_fbp;
-	long int m_screensize;
+	int m_screensize;
+	int m_virtualSize;
+	int m_fbDepthBytes;
 
 	struct fb_var_screeninfo m_vinfo;
 	struct fb_fix_screeninfo m_finfo;
+	int m_doubleBufferIdx;
 
 };
 

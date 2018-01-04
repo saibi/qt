@@ -23,6 +23,10 @@ private slots:
 
 	void on_pushButton_clear_clicked();
 
+	void on_pushButton_buffer_clicked();
+
+	void on_pushButton_copy_clicked();
+
 private:
 	Ui::MainWindow *ui;
 

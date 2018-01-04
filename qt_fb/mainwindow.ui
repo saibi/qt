@@ -20,93 +20,155 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
-     <widget class="QWidget" name="widget_img" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout">
+     <widget class="QWidget" name="widget_bg" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QLabel" name="label_1">
-         <property name="text">
-          <string>Image1</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>image2</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="widget" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <widget class="QWidget" name="widget_img" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QPushButton" name="pushButton">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>40</height>
-             </size>
-            </property>
+           <widget class="QLabel" name="label_1">
             <property name="text">
-             <string>FB</string>
+             <string>Image1</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_clear">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>40</height>
-             </size>
-            </property>
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>clear</string>
+             <string>image2</string>
             </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="widget" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Draw</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_buffer">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Buffer</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_copy">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0-&gt;1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_clear">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>clear</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_exit">
+        <widget class="QWidget" name="widget_fb" native="true">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>40</height>
+           <width>400</width>
+           <height>400</height>
           </size>
          </property>
-         <property name="text">
-          <string>Exit</string>
-         </property>
+         <widget class="QLabel" name="label_so">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>340</y>
+            <width>58</width>
+            <height>14</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>universe</string>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="widget_fb" native="true">
+     <widget class="QPushButton" name="pushButton_exit">
       <property name="minimumSize">
        <size>
-        <width>400</width>
-        <height>400</height>
+        <width>0</width>
+        <height>40</height>
        </size>
       </property>
-      <widget class="QLabel" name="label_so">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>340</y>
-         <width>58</width>
-         <height>14</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>universe</string>
-       </property>
-      </widget>
+      <property name="text">
+       <string>Exit</string>
+      </property>
      </widget>
     </item>
    </layout>
