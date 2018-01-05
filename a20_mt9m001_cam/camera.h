@@ -56,6 +56,8 @@ void downControl_rowStart(void);
 void upControl_colStart(void);
 void downControl_colStart(void);
 
+int vid_s_ctrl(int id, int value);
+int vid_q_ctrl(int id, struct v4l2_queryctrl *p);
 
 
 #endif // CAMERA_H

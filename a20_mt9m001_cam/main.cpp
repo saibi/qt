@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 	qDebug("width %d, height %d", cam_width, cam_height);
 
 	ImageViewer imageviewer;
-	imageviewer.showFullScreen();
+	imageviewer.show();
 
 	return a.exec();
 }

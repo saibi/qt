@@ -3,6 +3,7 @@
 #include "led.h"
 #include "neon.h"
 #include "clickablelabel.h"
+#include "keypaddlg.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -12,6 +13,12 @@ ImageViewer::ImageViewer(QWidget *parent) :
 	ui(new Ui::ImageViewer)
 {
 	ui->setupUi(this);
+
+	m_ctrlIdx = 0;
+	m_ids.append(V4L2_CID_AUDIO_TREBLE);
+	m_ids.append(V4L2_CID_AUDIO_BASS);
+	m_ids.append(V4L2_CID_EXPOSURE);
+	m_ids.append(V4L2_CID_GAIN);
 
 	m_stopFlag = false;
 
@@ -35,16 +42,21 @@ ImageViewer::~ImageViewer()
 	delete ui;
 }
 
+void ImageViewer::handleClose()
+{
+	m_stopFlag = true;
+	disconnect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
+	myThread.stop();
+	close();
+}
+
 void ImageViewer::slot_clicked(const QPoint &pos)
 {
 	qDebug("(%d,%d)", pos.x(), pos.y());
 
 	if ( pos.x() > 900 && pos.y() < 50 )
 	{
-		m_stopFlag = true;
-		disconnect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
-		myThread.stop();
-		close();
+		handleClose();
 		return;
 	}
 
@@ -109,10 +121,7 @@ void ImageViewer::keyPressEvent(QKeyEvent *event)
 	if(event->key() == Qt::Key_Q)
 	{
 		qDebug() << "You Press q key ";
-		m_stopFlag = true;
-		disconnect(&myThread, SIGNAL(updateThread(int)), this, SLOT(updateGUI(int)));
-		myThread.stop();
-		close();
+		handleClose();
 		return;
 	}
 	else if(event->key() == Qt::Key_A){
@@ -174,4 +183,48 @@ void ImageViewer::updateGUI(int index)
 #endif
 
 	g_led_off();
+}
+
+void ImageViewer::on_pushButton_exit_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handleClose();
+}
+
+void ImageViewer::handleCtrl(const QString &title, int id, int min, int max)
+{
+	KeypadDlg dlg(this);
+
+	dlg.setKeypadMode(KeypadDlg::KM_INT);
+	dlg.setIntMinMax(min, max);
+	dlg.setIntStep(1);
+	dlg.setIntValue(0);
+
+	dlg.setWindowTitle(title);
+
+	if ( QDialog::Accepted == dlg.exec() )
+	{
+		if ( vid_s_ctrl(id, dlg.getIntValue()) != 0)
+			qDebug("[%s] s_ctrl err - %s 0x%x %d ", Q_FUNC_INFO, qPrintable(title), id, dlg.getIntValue());
+	}
+}
+
+void ImageViewer::on_pushButton_vflip_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handleCtrl("V4L2_CID_VFLIP", V4L2_CID_VFLIP, 0, 1);
+}
+
+
+void ImageViewer::on_pushButton_gain_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handleCtrl("V4L2_CID_GAIN", V4L2_CID_GAIN, 0, 127);
+}
+
+void ImageViewer::on_pushButton_exposure_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	handleCtrl("V4L2_CID_EXPOSURE", V4L2_CID_EXPOSURE, 0, 1023);
+
 }

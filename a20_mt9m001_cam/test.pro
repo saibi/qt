@@ -18,7 +18,10 @@ HEADERS += \
 	neon.h \
 	camera.h \
 	led.h \
-    clickablelabel.h
+    clickablelabel.h \
+    keypaddlg.h \ 
+    hw/beep.h \
+    hw/beepthread.h
 
 SOURCES += \
 	camera.cpp \
@@ -27,8 +30,15 @@ SOURCES += \
 	neon.cpp \
 	main.cpp \
 	led.cpp \
-    clickablelabel.cpp
+    clickablelabel.cpp \
+    keypaddlg.cpp \ 
+    hw/beep.cpp \
+    hw/beepthread.cpp
 
 FORMS += \
-	imageviewer.ui
+	imageviewer.ui \
+    keypaddlg.ui
+
+RESOURCES += \
+    resources.qrc
 
