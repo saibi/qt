@@ -7,6 +7,7 @@
 #include <linux/fb.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
+#include <linux/videodev2.h>
 
 FrameBuffer::FrameBuffer(QObject *parent) : QObject(parent)
 {
@@ -127,6 +128,33 @@ void FrameBuffer::test(int startx, int starty)
 			}
 
 		}
+
+
+
+	struct v4l2_framebuffer p;
+
+	::memset(&p, 0, sizeof(p));
+
+	if ( ::ioctl(m_fbfd, VIDIOC_G_FBUF, &p) )
+	{
+		qDebug("Error - VIDIOC_G_FBUF");
+	}
+	else
+	{
+		qDebug("VIDIOC_G_FBUF");
+		qDebug("  capability 0x%x", p.capability);
+		qDebug("  flags 0x%x", p.flags);
+		qDebug("  base %p", p.base);
+		qDebug("  width %d", p.fmt.width);
+		qDebug("  height %d", p.fmt.height);
+		qDebug("  pixelformat 0x%x", p.fmt.pixelformat);
+		qDebug("  field 0x%x", p.fmt.field);
+		qDebug("  bytesperline %d", p.fmt.bytesperline);
+		qDebug("  sizeimage %d", p.fmt.sizeimage);
+		qDebug("  colorspace 0x%x", p.fmt.colorspace);
+		qDebug("  priv 0x%x", p.fmt.priv);
+
+	}
 }
 
 void FrameBuffer::drawImg(int x, int y, const QImage &img)
@@ -195,6 +223,7 @@ void FrameBuffer::copy(int idx)
 	else
 		::memcpy(m_fbp, m_fbp + m_screensize, m_screensize);
 }
+
 
 #if 0
 

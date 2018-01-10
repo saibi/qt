@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>490</height>
+    <height>520</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,26 +31,76 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="ClickableLabel" name="label">
+     <widget class="QWidget" name="widget_disp" native="true">
       <property name="minimumSize">
        <size>
         <width>640</width>
         <height>480</height>
        </size>
       </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>false</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
+      <widget class="ClickableLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>640</width>
+         <height>480</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>640</width>
+         <height>480</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="DrawWidget" name="widget_draw" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>110</y>
+         <width>640</width>
+         <height>241</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>640</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_topText">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>10</y>
+         <width>261</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>24</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Top Text Area</string>
+       </property>
+      </widget>
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="QWidget" name="widget_btn" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>2</number>
@@ -144,6 +194,12 @@
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DrawWidget</class>
+   <extends>QWidget</extends>
+   <header>drawwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -21,7 +21,8 @@ HEADERS += \
     clickablelabel.h \
     keypaddlg.h \ 
     hw/beep.h \
-    hw/beepthread.h
+    hw/beepthread.h \
+    drawwidget.h
 
 SOURCES += \
 	camera.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     clickablelabel.cpp \
     keypaddlg.cpp \ 
     hw/beep.cpp \
-    hw/beepthread.cpp
+    hw/beepthread.cpp \
+    drawwidget.cpp
 
 FORMS += \
 	imageviewer.ui \
