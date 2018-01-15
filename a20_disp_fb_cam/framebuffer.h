@@ -24,10 +24,12 @@ public:
 
 	bool open();
 	void close();
+	void clear();
 
 	void test(int startx = 100, int starty = 100);
 	void drawImg(int x, int y, const QImage & img);
 	void drawImg(const QPoint & pos, const QImage & img) { drawImg(pos.x(), pos.y(), img); };
+	void drawCam(int x, int y, unsigned char *camData, int width, int height);
 
 	int toggleBuffer();
 	void copy(int idx);

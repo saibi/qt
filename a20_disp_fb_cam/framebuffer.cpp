@@ -92,6 +92,16 @@ void FrameBuffer::close()
 	}
 }
 
+void FrameBuffer::clear()
+{
+	if ( m_fbfd < 0 )
+		return;
+
+	char * framebuffer = m_fbp;
+	int location = (0 + m_vinfo.xoffset) * m_fbDepthBytes + (0 + m_vinfo.yoffset) * m_finfo.line_length;
+	::memset( framebuffer + location, 0, m_screensize );
+}
+
 void FrameBuffer::test(int startx, int starty)
 {
 	if ( m_fbfd < 0 )
@@ -150,6 +160,27 @@ void FrameBuffer::drawImg(int x, int y, const QImage &img)
 		::memcpy( framebuffer + location, tmp.scanLine(idx), img.width() * m_fbDepthBytes );
 	}
 
+}
+
+void FrameBuffer::drawCam(int x, int y, unsigned char *camData, int width, int height)
+{
+	if ( m_fbfd < 0 )
+		return;
+
+	char *fbData = m_fbp + ( x + m_vinfo.xoffset) * m_fbDepthBytes + ( y + m_vinfo.yoffset) * m_finfo.line_length;
+	int copyBytes = width * m_fbDepthBytes;
+
+	for ( int idx = 0 ; idx < height ; ++idx )
+	{
+		if ( (y + idx) >= m_vinfo.yres )
+		{
+			break;
+		}
+
+		memcpy(fbData, camData, copyBytes);
+		fbData += m_vinfo.xres * m_fbDepthBytes;
+		camData += copyBytes;
+	}
 }
 
 int FrameBuffer::toggleBuffer()

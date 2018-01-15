@@ -8,6 +8,12 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+
+UI_DIR = build
+MOC_DIR = build
+OBJECTS_DIR = build
+RCC_DIR = build
+
 TARGET = a20_disp_fb_cam
 TEMPLATE = app
 
@@ -23,17 +29,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
+linux-arm-a20-g++ {
+		QMAKE_CXXFLAGS += -D__arm_A20__
+		QMAKE_CXXFLAGS += -mfpu=neon -ftree-vectorize -flax-vector-conversions
+}
+
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    framebuffer.cpp
+    framebuffer.cpp \
+    camthread.cpp \
+    neon.cpp \
+    hw/beep.cpp \
+    hw/beepthread.cpp \
+    keypaddlg.cpp
 
 HEADERS += \
         mainwindow.h \
-    framebuffer.h
+    framebuffer.h \
+    camthread.h \
+    neon.h \
+    hw/beep.h \
+    hw/beepthread.h \
+    keypaddlg.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    keypaddlg.ui
 
 RESOURCES += \
     resources.qrc
