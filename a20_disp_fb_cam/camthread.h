@@ -48,6 +48,9 @@ public:
 
 	int getCurrentCameraSize();
 
+	bool isRunning();
+
+
 protected:
 	void run();
 
@@ -75,7 +78,7 @@ private:
 	int _camDelay;
 
 signals:
-	void signalCamStream(char * camData);
+	void signalCamStream(char * camData, unsigned int offset);
 
 public slots:
 

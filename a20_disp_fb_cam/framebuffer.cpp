@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
-#include <linux/fb.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <linux/videodev2.h>
@@ -172,7 +171,7 @@ void FrameBuffer::drawCam(int x, int y, unsigned char *camData, int width, int h
 
 	for ( int idx = 0 ; idx < height ; ++idx )
 	{
-		if ( (y + idx) >= m_vinfo.yres )
+		if ( (y + idx) >= int(m_vinfo.yres) )
 		{
 			break;
 		}

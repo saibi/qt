@@ -239,7 +239,7 @@ void CamThread::run()
 }
 
 int CamThread::initCam(int mirrorMode)
-{
+{			
 #ifdef __arm__
 	int camFile = 0;
 
@@ -263,7 +263,7 @@ int CamThread::initCam(int mirrorMode)
 
 	msleep(_camDelay);
 
-#ifdef __arm_V210__
+#ifdef __arm__
 	//-------------------------------------------------------------------------
 	{
 		int input = 0;
@@ -361,26 +361,8 @@ int CamThread::initCam(int mirrorMode)
 				qDebug("[CamThread::initCam] Error - VIDIOC_QBUF, errno - %d", errno);
 			}
 #endif
+			qDebug("m_camData[%d] = %p, m_camDataSize = %d", i, m_camData[i], m_camDataSize);
 		}
-
-#ifdef __arm_V210__
-		for (loop = 0; loop < req.count; loop++)
-		{
-			struct v4l2_buffer buf;
-
-			buf.index = loop;
-			buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-			buf.memory = V4L2_MEMORY_MMAP;
-			buf.length = 0;
-			buf.m.offset = 0;
-
-			if (::ioctl(camFile, VIDIOC_QBUF, &buf) < 0)
-			{
-				qDebug("[CamThread::initCam] Error - VIDIOC_QBUF, errno - %d", errno);
-				goto INIT_CAM_ERROR;
-			}
-		}
-#endif
 	}
 
 	msleep(_camDelay);
@@ -501,8 +483,7 @@ void CamThread::runNormalCamera()
 #endif
 		}
 		camData = m_camData[camBuffer.index];
-
-		emit signalCamStream(camData);
+		emit signalCamStream(camData, camBuffer.m.offset);
 	}
 	qDebug("[CamThread::runNormalCamera] STOPED");
 #endif
@@ -512,4 +493,11 @@ void CamThread::runNormalCamera()
 int CamThread::getCurrentCameraSize()
 {
 	return m_camWidth;
+}
+
+bool CamThread::isRunning()
+{
+	QMutexLocker locker(&_mutex);
+
+	return m_runningFlag;
 }

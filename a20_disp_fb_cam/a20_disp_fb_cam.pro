@@ -42,7 +42,8 @@ SOURCES += \
     neon.cpp \
     hw/beep.cpp \
     hw/beepthread.cpp \
-    keypaddlg.cpp
+    keypaddlg.cpp \
+    disp.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +52,9 @@ HEADERS += \
     neon.h \
     hw/beep.h \
     hw/beepthread.h \
-    keypaddlg.h
+    keypaddlg.h \
+    disp.h \
+    sunxi_disp_ioctl.h
 
 FORMS += \
         mainwindow.ui \

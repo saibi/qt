@@ -21,7 +21,7 @@ private slots:
 	void on_pushButton_img_clicked();
 
 
-	void slotCamStream(char *camData);
+	void slotCamStream(char *camData, unsigned int offset);
 
 	void on_pushButton_camStart_clicked();
 
@@ -34,6 +34,8 @@ private slots:
 	void on_pushButton_qtDraw_clicked();
 
 	void on_pushButton_fbDraw_clicked();
+
+	void on_pushButton_disp_clicked();
 
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
@@ -51,6 +53,7 @@ private:
 
 	bool m_fbStream;
 	bool m_qtStream;
+	bool m_dispStream;
 
 };
 

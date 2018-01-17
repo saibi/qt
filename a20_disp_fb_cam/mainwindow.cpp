@@ -4,6 +4,7 @@
 #include "keypaddlg.h"
 #include "camthread.h"
 #include "neon.h"
+#include "disp.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -19,8 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_camHeight = 0;
 	m_qtStream = false;
 	m_fbStream = false;
+	m_dispStream = false;
 
-	connect(&CamThread::instance(), SIGNAL(signalCamStream(char*)), this, SLOT(slotCamStream(char*)));
+	connect(&CamThread::instance(), SIGNAL(signalCamStream(char*, unsigned int)), this, SLOT(slotCamStream(char*, unsigned int)));
 }
 
 MainWindow::~MainWindow()
@@ -49,7 +51,7 @@ void MainWindow::on_pushButton_img_clicked()
 
 
 
-void MainWindow::slotCamStream(char *camData)
+void MainWindow::slotCamStream(char *camData, unsigned int offset)
 {
 	if ( m_camStartFlag )
 	{
@@ -65,6 +67,13 @@ void MainWindow::slotCamStream(char *camData)
 
 		if ( m_qtStream )
 			ui->label_cam->setPixmap(QPixmap::fromImage(img));
+
+		if ( m_dispStream )
+		{
+			unsigned int addr = offset;
+			Disp::instance().set_addr(m_camWidth, m_camHeight, &addr);
+		}
+
 #endif
 	}
 }
@@ -136,22 +145,51 @@ bool MainWindow::inputIntValue(const QString & title, int min, int max, int &val
 
 void MainWindow::on_pushButton_qtDraw_clicked()
 {
-	qDebug("[%s]", Q_FUNC_INFO);
 
 	if ( ui->pushButton_qtDraw->isChecked() )
 		m_qtStream = true;
 	else
+
 		m_qtStream = false;
+
+	qDebug("[%s] qt stream = %d", Q_FUNC_INFO, m_qtStream);
+
 }
 
 
 void MainWindow::on_pushButton_fbDraw_clicked()
 {
-	qDebug("[%s]", Q_FUNC_INFO);
-
 	if ( ui->pushButton_fbDraw->isChecked() )
 		m_fbStream = true;
 	else
 		m_fbStream = false;
 
+	qDebug("[%s] fb stream = %d", Q_FUNC_INFO, m_fbStream);
+
+}
+
+void MainWindow::on_pushButton_disp_clicked()
+{
+	if ( ui->pushButton_disp->isChecked() )
+	{
+		if ( m_camStartFlag )
+		{
+			Disp::instance().init(m_fbCamPos.x(), m_fbCamPos.y(), m_camWidth, m_camHeight);
+			Disp::instance().set_para(m_camWidth, m_camHeight);
+			Disp::instance().start();
+			m_dispStream = true;
+		}
+		else
+		{
+			qDebug("[%s] start cam first", Q_FUNC_INFO);
+		}
+	}
+	else
+	{
+		m_dispStream = false;
+		Disp::instance().stop();
+		Disp::instance().quit();
+	}
+
+	qDebug("[%s] disp stream = %d", Q_FUNC_INFO, m_dispStream);
 }
