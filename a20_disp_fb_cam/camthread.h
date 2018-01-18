@@ -6,6 +6,7 @@
 #include <QImage>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QPoint>
 
 #define CAM_SIZE_NORMAL     480
 #define CAM_SIZE_BIG        960
@@ -51,12 +52,19 @@ public:
 	bool isRunning();
 
 
+	void adjRow(bool up);
+	void adjCol(bool up);
+	void resetRowCol();
+
 protected:
 	void run();
 
 	int initCam(int mirrorMode = NoMirror);
 
 	void runNormalCamera();
+
+	int s_ctrl(int id, int value);
+	int g_ctrl(int id, int & value);
 
 private:
 	QMutex _mutex;
@@ -76,6 +84,10 @@ private:
 	int m_camHeight;
 
 	int _camDelay;
+
+	int m_rowVal;
+	int m_colVal;
+	QPoint m_startRowCol;
 
 signals:
 	void signalCamStream(char * camData, unsigned int offset);

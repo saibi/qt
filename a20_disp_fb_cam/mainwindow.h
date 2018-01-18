@@ -43,6 +43,16 @@ private slots:
 
 	void on_pushButton_colorkey_clicked();
 
+	void on_pushButton_up_clicked();
+
+	void on_pushButton_down_clicked();
+
+	void on_pushButton_left_clicked();
+
+	void on_pushButton_right_clicked();
+
+	void on_pushButton_center_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 

@@ -119,6 +119,9 @@ CamThread::CamThread(QObject *parent) :
 	m_camHeight = 0;
 
 	_camDelay = 10;
+
+	m_rowVal = 0;
+	m_colVal = 0;
 }
 
 bool CamThread::startCam(int cam_size)
@@ -162,7 +165,12 @@ bool CamThread::startCam(int cam_size)
 
 	qDebug("[CamThread::startCam] OK - initCam");
 
-	qDebug("[CamThread::startCam] OK - moveCam");
+	if ( g_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 && g_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0)
+	{
+		m_startRowCol.setX(m_colVal);
+		m_startRowCol.setY(m_rowVal);
+		qDebug("[CamThread::startCam] OK - row,col");
+	}
 
 	locker.unlock();
 
@@ -500,4 +508,84 @@ bool CamThread::isRunning()
 	QMutexLocker locker(&_mutex);
 
 	return m_runningFlag;
+}
+
+int CamThread::s_ctrl(int id, int value)
+{
+	struct v4l2_control ctl;
+
+	ctl.id = id;
+	ctl.value = value;
+
+	return ::ioctl(m_camFile, VIDIOC_S_CTRL, &ctl);
+}
+
+int CamThread::g_ctrl(int id, int &value)
+{
+	struct v4l2_control ctl;
+
+	ctl.id = id;
+
+	int ret = ::ioctl(m_camFile, VIDIOC_G_CTRL, &ctl);
+	if ( ret == 0 )
+		value = ctl.value;
+
+	return ret;
+}
+
+void CamThread::adjRow(bool up)
+{
+	if ( up )
+	{
+		if ( m_rowVal < 512)
+		{
+			++m_rowVal;
+			if ( s_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 )
+				qDebug("m_rowVal = %d", m_rowVal);
+		}
+	}
+	else
+	{
+		if ( m_rowVal > 0 )
+		{
+			--m_rowVal;
+			if ( s_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 )
+				qDebug("m_rowVal = %d", m_rowVal);
+		}
+	}
+}
+
+void CamThread::adjCol(bool up)
+{
+
+	if ( up )
+	{
+		if ( m_colVal < 639)
+		{
+			++m_colVal;
+			if ( s_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0 )
+				qDebug("m_colVal = %d", m_colVal);
+		}
+	}
+	else
+	{
+		if ( m_colVal > 0 )
+		{
+			--m_colVal;
+			if ( s_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0 )
+				qDebug("m_colVal = %d", m_colVal);
+		}
+	}
+}
+
+void CamThread::resetRowCol()
+{
+	m_rowVal = m_startRowCol.y();
+	m_colVal = m_startRowCol.x();
+
+	if ( s_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 )
+		qDebug("m_rowVal = %d", m_rowVal);
+
+	if ( s_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0 )
+		qDebug("m_colVal = %d", m_colVal);
 }

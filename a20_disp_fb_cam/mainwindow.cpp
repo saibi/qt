@@ -39,9 +39,8 @@ void MainWindow::on_pushButton_fb_clicked()
 
 	FrameBuffer::instance().test(m_fbCamPos.x(), m_fbCamPos.y());
 
+	ui->label_cam->clear();
 	ui->label_cam->setStyleSheet("QLabel { background-color : #00ff00; }");
-
-
 }
 
 void MainWindow::on_pushButton_img_clicked()
@@ -245,4 +244,34 @@ void MainWindow::on_pushButton_colorkey_clicked()
 		bool ret = Disp::instance().disableColorKey();
 		qDebug("[%s] disable colorkey %d", Q_FUNC_INFO, ret);
 	}
+}
+
+void MainWindow::on_pushButton_up_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjRow(true);
+}
+
+void MainWindow::on_pushButton_down_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjRow(false);
+}
+
+void MainWindow::on_pushButton_left_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjCol(true);
+}
+
+void MainWindow::on_pushButton_right_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjCol(false);
+}
+
+void MainWindow::on_pushButton_center_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().resetRowCol();
 }
