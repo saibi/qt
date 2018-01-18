@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_qtStream = false;
 	m_fbStream = false;
 	m_dispStream = false;
+	m_fillSize = 100;
 
 	connect(&CamThread::instance(), SIGNAL(signalCamStream(char*, unsigned int)), this, SLOT(slotCamStream(char*, unsigned int)));
 }
@@ -34,9 +35,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_fb_clicked()
 {
-	qDebug("[%s]", Q_FUNC_INFO);
+	qDebug("[%s] box test", Q_FUNC_INFO);
 
 	FrameBuffer::instance().test(m_fbCamPos.x(), m_fbCamPos.y());
+
+	ui->label_cam->setStyleSheet("QLabel { background-color : #00ff00; }");
+
 
 }
 
@@ -49,13 +53,37 @@ void MainWindow::on_pushButton_img_clicked()
 	FrameBuffer::instance().drawImg( m_fbCamPos.x(), m_fbCamPos.y(), img.toImage() );
 }
 
+void MainWindow::on_pushButton_size_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
 
+	if ( inputIntValue("fill size", 1, 500, m_fillSize) )
+	{
+		ui->pushButton_size->setText(QString("%1").arg(m_fillSize));
+	}
+}
+
+void MainWindow::on_pushButton_fill_clicked()
+{
+	static int idx = 0;
+	unsigned int cTable[] = { 0, 0xffffffff, 0xff, 0xff00, 0xff0000, 0xff000000 };
+
+	FrameBuffer::instance().fillBox(m_fbCamPos.x(), m_fbCamPos.y(), m_fillSize, m_fillSize, cTable[idx] );
+
+	QString msg;
+	msg.sprintf("fill 0x%x", cTable[idx]);
+	ui->statusBar->showMessage(msg);
+
+	qDebug("[%s] %s", Q_FUNC_INFO, qPrintable(msg));
+
+	idx = (idx + 1) % 6;
+}
 
 void MainWindow::slotCamStream(char *camData, unsigned int offset)
 {
+#ifdef __arm_A20__
 	if ( m_camStartFlag )
 	{
-#ifdef __arm_A20__
 		unsigned char *in = (unsigned char *)camData;
 
 		nv21_to_rgb(pRGBData, in, in + m_camWidth * m_camHeight, m_camWidth, m_camHeight);
@@ -73,9 +101,14 @@ void MainWindow::slotCamStream(char *camData, unsigned int offset)
 			unsigned int addr = offset;
 			Disp::instance().set_addr(m_camWidth, m_camHeight, &addr);
 		}
+	}
+#else
+
+	Q_UNUSED(camData);
+	Q_UNUSED(offset);
 
 #endif
-	}
+
 }
 
 void MainWindow::on_pushButton_camStart_clicked()
@@ -88,6 +121,7 @@ void MainWindow::on_pushButton_camStart_clicked()
 	m_camHeight = CamThread::instance().getCamHeight();
 
 	m_camStartFlag = true;
+	ui->statusBar->showMessage("cam start");
 }
 
 void MainWindow::on_pushButton_camStop_clicked()
@@ -95,6 +129,7 @@ void MainWindow::on_pushButton_camStop_clicked()
 	qDebug("[%s]", Q_FUNC_INFO);
 	m_camStartFlag = false;
 	CamThread::instance().stopCam();
+	ui->statusBar->showMessage("cam stop");
 }
 
 void MainWindow::on_pushButton_fbx_clicked()
@@ -152,6 +187,7 @@ void MainWindow::on_pushButton_qtDraw_clicked()
 
 		m_qtStream = false;
 
+	ui->statusBar->showMessage(QString("qt stream %1").arg(m_qtStream));
 	qDebug("[%s] qt stream = %d", Q_FUNC_INFO, m_qtStream);
 
 }
@@ -164,8 +200,8 @@ void MainWindow::on_pushButton_fbDraw_clicked()
 	else
 		m_fbStream = false;
 
+	ui->statusBar->showMessage(QString("fb stream = %1").arg(m_fbStream));
 	qDebug("[%s] fb stream = %d", Q_FUNC_INFO, m_fbStream);
-
 }
 
 void MainWindow::on_pushButton_disp_clicked()
@@ -191,5 +227,22 @@ void MainWindow::on_pushButton_disp_clicked()
 		Disp::instance().quit();
 	}
 
+	ui->statusBar->showMessage(QString("disp stream = %1").arg(m_dispStream));
+
 	qDebug("[%s] disp stream = %d", Q_FUNC_INFO, m_dispStream);
+}
+
+void MainWindow::on_pushButton_colorkey_clicked()
+{
+	if ( ui->pushButton_colorkey->isChecked() )
+	{
+		bool ret = Disp::instance().enableColorKey( FrameBuffer::instance().getLayerId(), 0xff00 );
+
+		qDebug("[%s] enable colorkey %d", Q_FUNC_INFO, ret);
+	}
+	else
+	{
+		bool ret = Disp::instance().disableColorKey();
+		qDebug("[%s] disable colorkey %d", Q_FUNC_INFO, ret);
+	}
 }

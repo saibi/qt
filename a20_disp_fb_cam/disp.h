@@ -34,6 +34,9 @@ public:
 	void stop();
 	int set_addr(int width, int height, unsigned int *addr);
 
+	bool enableColorKey(int screenLayer, unsigned int color);
+	bool disableColorKey();
+
 protected:
 	void clearMemberVars();
 	int wrap_ioctl(int fd, unsigned long req, unsigned int *addr);

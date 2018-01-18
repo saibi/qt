@@ -74,7 +74,7 @@ bool Disp::init(int x, int y, int width, int height)
 	qDebug("m_layer = %d", m_layer);
 
 	m_layerParam.mode            = DISP_LAYER_WORK_MODE_SCALER;
-	m_layerParam.pipe            = 0;
+	m_layerParam.pipe            = 1;
 	m_layerParam.prio            = 0;
 	m_layerParam.alpha_en        = 1;
 	m_layerParam.alpha_val       = 0xff;
@@ -241,4 +241,90 @@ int Disp::set_addr(int width, int height, unsigned int *addr)
 	args[1] = m_layer;
 	args[2] = (__u32)&fb;
 	return wrap_ioctl(m_fdDisp, DISP_CMD_VIDEO_SET_FB, args);
+}
+
+
+bool Disp::enableColorKey(int screenLayer, unsigned int color)
+{
+	if ( m_fdDisp <= 0 )
+	{
+		qDebug("[%s] disp not initialized.", Q_FUNC_INFO);
+		return false;
+	}
+
+	unsigned int args[4];
+
+	__disp_colorkey_t colorkey;
+	__disp_color_t disp_color;
+
+	disp_color.alpha = (color >> 24) & 0xFF;
+	disp_color.red   = (color >> 16) & 0xFF;
+	disp_color.green = (color >> 8)  & 0xFF;
+	disp_color.blue  = (color >> 0)  & 0xFF;
+
+	colorkey.ck_min = disp_color;
+	colorkey.ck_max = disp_color;
+	colorkey.red_match_rule   = 2;
+	colorkey.green_match_rule = 2;
+	colorkey.blue_match_rule  = 2;
+
+	args[0] = 0;
+	args[1] = (unsigned int)&colorkey;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_SET_COLORKEY, args) )
+		return false;
+
+	/* Set the overlay layer below the screen layer */
+	args[0] = 0;
+	args[1] = screenLayer;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_BOTTOM, args) < 0)
+		return false;
+
+	args[0] = 0;
+	args[1] = m_layer;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_BOTTOM, args) < 0)
+		return false;
+
+	/* Enable color key for the overlay layer */
+	args[0] = 0;
+	args[1] = m_layer;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_CK_ON, args) < 0)
+		return false;
+
+	/* Disable color key and enable global alpha for the screen layer */
+	args[0] = 0;
+	args[1] = screenLayer;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_CK_OFF, args) < 0)
+		return false;
+
+	args[0] = 0;
+	args[1] = screenLayer;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_ALPHA_ON, args) < 0)
+		return false;
+
+	return true;
+}
+
+bool Disp::disableColorKey()
+{
+	if ( m_fdDisp <= 0 )
+	{
+		qDebug("[%s] disp not initialized.", Q_FUNC_INFO);
+		return false;
+	}
+
+	unsigned int args[4];
+
+	/* Disable color key for the overlay layer */
+	args[0] = 0;
+	args[1] = m_layer;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_CK_OFF, args) < 0)
+		return false;
+
+	/* Set the overlay layer above the screen layer */
+	args[0] = 0;
+	args[1] = m_layer;
+	if (wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_TOP, args) < 0)
+		return false;
+
+	return true;
 }

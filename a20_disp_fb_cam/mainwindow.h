@@ -37,6 +37,12 @@ private slots:
 
 	void on_pushButton_disp_clicked();
 
+	void on_pushButton_size_clicked();
+
+	void on_pushButton_fill_clicked();
+
+	void on_pushButton_colorkey_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 
@@ -54,6 +60,8 @@ private:
 	bool m_fbStream;
 	bool m_qtStream;
 	bool m_dispStream;
+
+	int m_fillSize;
 
 };
 
