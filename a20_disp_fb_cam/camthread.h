@@ -8,14 +8,6 @@
 #include <QWaitCondition>
 #include <QPoint>
 
-#define CAM_SIZE_NORMAL     480
-#define CAM_SIZE_BIG        960
-
-#define CAM_SIZE_x1_0		480
-#define CAM_SIZE_x2_0		960
-
-#define CAM_STREAM_FRAMES  4 /* Number of streaming buffer */
-
 class CamThread : public QThread
 {
 	Q_OBJECT
@@ -44,10 +36,8 @@ public:
 		return cam_thread;
 	}
 
-	bool startCam(int cam_size = CAM_SIZE_x1_0);
+	bool startCam(int cam_size = CAM_SIZE_480);
 	void stopCam();
-
-	int getCurrentCameraSize();
 
 	bool isRunning();
 
@@ -55,6 +45,14 @@ public:
 	void adjRow(bool up);
 	void adjCol(bool up);
 	void resetRowCol();
+
+	enum CameraSizeIndex
+	{
+		CAM_SIZE_480 =	480,	// 480 * 480
+		CAM_SIZE_640 = 640,	// 640 * 480
+		CAM_SIZE_960 = 960,	// 960 * 960
+		CAM_SIZE_1280 =	1280, // 1280 * 1024
+	};
 
 protected:
 	void run();
@@ -67,6 +65,13 @@ protected:
 	int g_ctrl(int id, int & value);
 
 private:
+
+	enum InternalConstants
+	{
+		CAM_STREAM_FRAMES = 4, /* Number of streaming buffer */
+	};
+
+
 	QMutex _mutex;
 
 	bool m_runningFlag;
@@ -88,17 +93,12 @@ private:
 	int m_rowVal;
 	int m_colVal;
 	QPoint m_startRowCol;
-
 signals:
 	void signalCamStream(char * camData, unsigned int offset);
 
 public slots:
 
 public:
-	inline int getCurrentCamera()
-	{
-		return m_camIndex;
-	}
 
 	inline int getCamWidth() { return m_camWidth; }
 	inline int getCamHeight() { return m_camHeight; }

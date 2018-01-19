@@ -129,22 +129,37 @@ bool CamThread::startCam(int cam_size)
 #ifdef __arm__
 	QMutexLocker locker(&_mutex);
 
-	if(cam_size != CAM_SIZE_x1_0 && cam_size != CAM_SIZE_x2_0 )
-	{
-		qDebug("[CamThread::startCam] Error - invalid camear size: %d", cam_size);
-		qDebug("[CamThread::startCam] Using default camera size - 480x480.");
-		cam_size = CAM_SIZE_x1_0;
-	}
-
 	if (m_runningFlag)
 		stopCam();
+
+	switch (cam_size )
+	{
+
+	case CAM_SIZE_640:
+		m_camWidth = 640;
+		m_camHeight = 480;
+		break;
+
+	case CAM_SIZE_960:
+		m_camWidth = 960;
+		m_camHeight = 960;
+		break;
+
+	case CAM_SIZE_1280:
+		m_camWidth = 1280;
+		m_camHeight = 1024;
+		break;
+
+	case CAM_SIZE_480:
+	default:
+		m_camWidth = 480;
+		m_camHeight = 480;
+		break;
+	}
 
 	int mirrorMode = NoMirror;
 
 	m_camIndex = ImageCamera;
-
-	m_camWidth = cam_size;
-	m_camHeight = cam_size;
 
 	//
 	for (int i = 0; i < CAM_STREAM_FRAMES; i++)
@@ -495,12 +510,6 @@ void CamThread::runNormalCamera()
 	}
 	qDebug("[CamThread::runNormalCamera] STOPED");
 #endif
-}
-
-
-int CamThread::getCurrentCameraSize()
-{
-	return m_camWidth;
 }
 
 bool CamThread::isRunning()

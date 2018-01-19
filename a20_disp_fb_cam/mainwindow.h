@@ -57,6 +57,8 @@ private slots:
 
 	void on_pushButton_moveDisp_clicked();
 
+	void on_pushButton_camSize_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 
@@ -78,6 +80,8 @@ private:
 	int m_fillSize;
 
 	QPoint m_dispPos;
+
+	int m_camSize;
 };
 
 #endif // MAINWINDOW_H

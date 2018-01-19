@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_fbStream = false;
 	m_dispStream = false;
 	m_fillSize = 100;
-
+	m_camSize = CamThread::CAM_SIZE_480;
 	connect(&CamThread::instance(), SIGNAL(signalCamStream(char*, unsigned int)), this, SLOT(slotCamStream(char*, unsigned int)));
 }
 
@@ -116,7 +116,7 @@ void MainWindow::on_pushButton_camStart_clicked()
 
 	if ( ui->pushButton_camStart->isChecked() )
 	{
-		CamThread::instance().startCam();
+		CamThread::instance().startCam(m_camSize);
 
 		m_camWidth = CamThread::instance().getCamWidth();
 		m_camHeight = CamThread::instance().getCamHeight();
@@ -309,7 +309,6 @@ void MainWindow::on_pushButton_dispY_clicked()
 
 void MainWindow::on_pushButton_moveDisp_clicked()
 {
-
 	qDebug("[%s]", Q_FUNC_INFO);
 
 	Disp::instance().move(m_dispPos.x(), m_dispPos.y());
@@ -318,4 +317,21 @@ void MainWindow::on_pushButton_moveDisp_clicked()
 		Disp::instance().disableColorKey();
 		Disp::instance().enableColorKey( FrameBuffer::instance().getLayerId(), 0xff00 );
 	}
+}
+
+void MainWindow::on_pushButton_camSize_clicked()
+{
+
+	if ( m_camSize == CamThread::CAM_SIZE_480 )
+	{
+		m_camSize = CamThread::CAM_SIZE_640;
+		ui->pushButton_camSize->setText("640");
+	}
+	else
+	{
+		m_camSize = CamThread::CAM_SIZE_480;
+		ui->pushButton_camSize->setText("480");
+	}
+
+	qDebug("[%s] m_camSize = %d", Q_FUNC_INFO, m_camSize);
 }
