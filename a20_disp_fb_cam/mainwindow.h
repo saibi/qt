@@ -59,6 +59,10 @@ private slots:
 
 	void on_pushButton_camSize_clicked();
 
+	void on_pushButton_dispWidth_clicked();
+
+	void on_pushButton_dispHeight_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 
@@ -80,6 +84,7 @@ private:
 	int m_fillSize;
 
 	QPoint m_dispPos;
+	QPoint m_dispSize;
 
 	int m_camSize;
 };

@@ -120,10 +120,15 @@ void MainWindow::on_pushButton_camStart_clicked()
 
 		m_camWidth = CamThread::instance().getCamWidth();
 		m_camHeight = CamThread::instance().getCamHeight();
+		m_dispSize.setX(m_camWidth);
+		m_dispSize.setY(m_camHeight);
 
 		m_camStartFlag = true;
 		ui->statusBar->showMessage("cam start");
 		ui->pushButton_camStart->setText("Started");
+
+		ui->pushButton_dispWidth->setText(QString::number(m_camWidth));
+		ui->pushButton_dispHeight->setText(QString::number(m_camHeight));
 	}
 	else
 	{
@@ -212,7 +217,7 @@ void MainWindow::on_pushButton_disp_clicked()
 	{
 		if ( m_camStartFlag )
 		{
-			Disp::instance().init(m_dispPos.x(), m_dispPos.y(), m_camWidth, m_camHeight);
+			Disp::instance().init(m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
 			Disp::instance().set_para(m_camWidth, m_camHeight);
 			Disp::instance().start();
 			m_dispStream = true;
@@ -311,7 +316,7 @@ void MainWindow::on_pushButton_moveDisp_clicked()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
 
-	Disp::instance().move(m_dispPos.x(), m_dispPos.y());
+	Disp::instance().move(m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
 	if ( ui->pushButton_colorkey->isChecked() )
 	{
 		Disp::instance().disableColorKey();
@@ -344,4 +349,30 @@ void MainWindow::on_pushButton_camSize_clicked()
 	}
 
 	qDebug("[%s] m_camSize = %d", Q_FUNC_INFO, m_camSize);
+}
+
+void MainWindow::on_pushButton_dispWidth_clicked()
+{
+	int val = m_dispSize.x();
+
+	if ( inputIntValue("disp width", 1, 1024, val) )
+	{
+		m_dispSize.setX(val);
+		ui->pushButton_dispWidth->setText(QString::number(val));
+		ui->statusBar->showMessage(QString("disp width = %1").arg(val));
+	}
+	qDebug("[%s] disp width = %d", Q_FUNC_INFO, val);
+}
+
+void MainWindow::on_pushButton_dispHeight_clicked()
+{
+	int val = m_dispSize.y();
+
+	if ( inputIntValue("disp height", 1, 768, val) )
+	{
+		m_dispSize.setY(val);
+		ui->pushButton_dispHeight->setText(QString::number(val));
+		ui->statusBar->showMessage(QString("disp height = %1").arg(val));
+	}
+	qDebug("[%s] disp height = %d", Q_FUNC_INFO, val);
 }

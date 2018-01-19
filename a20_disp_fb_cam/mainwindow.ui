@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>697</width>
-    <height>540</height>
+    <width>777</width>
+    <height>586</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,8 +38,8 @@
      <rect>
       <x>480</x>
       <y>0</y>
-      <width>201</width>
-      <height>421</height>
+      <width>151</width>
+      <height>495</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -322,10 +322,7 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <property name="spacing">
-            <number>1</number>
-           </property>
+          <layout class="QGridLayout" name="gridLayout_2">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -338,7 +335,10 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <item row="0" column="0">
             <widget class="QPushButton" name="pushButton_dispX">
              <property name="minimumSize">
               <size>
@@ -351,7 +351,7 @@
              </property>
             </widget>
            </item>
-           <item>
+           <item row="0" column="1">
             <widget class="QPushButton" name="pushButton_dispY">
              <property name="minimumSize">
               <size>
@@ -361,6 +361,32 @@
              </property>
              <property name="text">
               <string>y</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_dispWidth">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>w</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_dispHeight">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>h</string>
              </property>
             </widget>
            </item>
@@ -628,7 +654,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>697</width>
+     <width>777</width>
      <height>19</height>
     </rect>
    </property>
