@@ -25,8 +25,6 @@ private slots:
 
 	void on_pushButton_camStart_clicked();
 
-	void on_pushButton_camStop_clicked();
-
 	void on_pushButton_fbx_clicked();
 
 	void on_pushButton_fby_clicked();
@@ -53,6 +51,12 @@ private slots:
 
 	void on_pushButton_center_clicked();
 
+	void on_pushButton_dispX_clicked();
+
+	void on_pushButton_dispY_clicked();
+
+	void on_pushButton_moveDisp_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 
@@ -73,6 +77,7 @@ private:
 
 	int m_fillSize;
 
+	QPoint m_dispPos;
 };
 
 #endif // MAINWINDOW_H

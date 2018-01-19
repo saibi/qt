@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
-    <height>560</height>
+    <width>697</width>
+    <height>540</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,12 @@
       <height>480</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>480</width>
+      <height>480</height>
+     </size>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -30,10 +36,10 @@
    <widget class="QWidget" name="widget_btn" native="true">
     <property name="geometry">
      <rect>
-      <x>483</x>
+      <x>480</x>
       <y>0</y>
-      <width>131</width>
-      <height>501</height>
+      <width>201</width>
+      <height>421</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -53,10 +59,13 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QWidget" name="widget_fbDraw" native="true">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <widget class="QGroupBox" name="groupBox_fb">
+       <property name="title">
+        <string>FrameBuffer</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
          <number>0</number>
@@ -71,130 +80,138 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QPushButton" name="pushButton_fb">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>fb</string>
-          </property>
+         <widget class="QWidget" name="widget_fbPos" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton_fbx">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>fbx</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_fby">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>fby</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_size">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>size</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_img">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>img</string>
-          </property>
+         <widget class="QWidget" name="widget_fbTest" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton_fb">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>test</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_img">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>img</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_fill">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>fill</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QWidget" name="widget" native="true">
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <property name="spacing">
-         <number>2</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QPushButton" name="pushButton_fill">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>fill</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_size">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>size</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>5</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_camStart">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>start</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_camStop">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>stop</string>
-       </property>
       </widget>
      </item>
      <item>
@@ -211,125 +228,170 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_fbx">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
+      <widget class="QGroupBox" name="groupBox_disp">
+       <property name="title">
+        <string>Disp</string>
        </property>
-       <property name="text">
-        <string>fbx</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_fby">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>fby</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFrame" name="frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="topMargin">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="rightMargin">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="bottomMargin">
-         <number>2</number>
+         <number>0</number>
         </property>
         <item>
-         <widget class="QPushButton" name="pushButton_qtDraw">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>qt</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
+         <widget class="QWidget" name="widget_disp" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton_disp">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Disp</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_colorkey">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>colorkey</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_moveDisp">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>move</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_fbDraw">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
+         <widget class="QFrame" name="frame_dispMove">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="text">
-           <string>fb</string>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton_dispX">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>x</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_dispY">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>y</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_disp">
-       <property name="minimumSize">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
         <size>
-         <width>0</width>
+         <width>20</width>
          <height>40</height>
         </size>
        </property>
-       <property name="text">
-        <string>Disp</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
+      </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_colorkey">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
+      <widget class="QGroupBox" name="groupBox_cam">
+       <property name="title">
+        <string>Camera</string>
        </property>
-       <property name="text">
-        <string>colorkey</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QWidget" name="widget_move" native="true">
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>1</number>
+        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -342,84 +404,177 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <property name="spacing">
-         <number>2</number>
-        </property>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="pushButton_right">
+        <item>
+         <widget class="QPushButton" name="pushButton_camStart">
           <property name="minimumSize">
            <size>
-            <width>40</width>
+            <width>0</width>
             <height>40</height>
            </size>
           </property>
           <property name="text">
-           <string>right</string>
+           <string>Stopped</string>
           </property>
-          <property name="autoRepeat">
+          <property name="checkable">
            <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_up">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
+        <item>
+         <widget class="QFrame" name="frame">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="text">
-           <string>up</string>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
-          <property name="autoRepeat">
-           <bool>true</bool>
-          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton_qtDraw">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>qt</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_fbDraw">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>fb</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_down">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>down</string>
-          </property>
-          <property name="autoRepeat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_left">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>left</string>
-          </property>
-          <property name="autoRepeat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_center">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>c</string>
-          </property>
+        <item>
+         <widget class="QWidget" name="widget_move" native="true">
+          <layout class="QGridLayout" name="gridLayout">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="pushButton_right">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>right</string>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_up">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>up</string>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton_down">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>down</string>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_left">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>left</string>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_center">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>c</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -433,7 +588,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>620</width>
+     <width>697</width>
      <height>19</height>
     </rect>
    </property>

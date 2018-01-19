@@ -37,6 +37,9 @@ public:
 	bool enableColorKey(int screenLayer, unsigned int color);
 	bool disableColorKey();
 
+	void move(int x = 0, int y = 0, int width = 480, int height = 480);
+
+
 protected:
 	void clearMemberVars();
 	int wrap_ioctl(int fd, unsigned long req, unsigned int *addr);

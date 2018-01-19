@@ -56,6 +56,16 @@ bool Disp::init(int x, int y, int width, int height)
 	qDebug("[%s] %s open ok", Q_FUNC_INFO, DISP_DEVICE);
 
 
+	/* version check */
+	unsigned int tmp = SUNXI_DISP_VERSION;
+	int version = wrap_ioctl(m_fdDisp, DISP_CMD_VERSION, &tmp);
+	if (version < 0)
+	{
+		close(m_fdDisp);
+		qDebug("[%s] version error", Q_FUNC_INFO);
+		return false;
+	}
+
 	unsigned int args[4];
 
 	args[0] = 0;
@@ -127,6 +137,28 @@ void Disp::set_para(int width, int height)
 	args[2] = (__u32)&m_layerParam;
 	wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_SET_PARA, args);
 }
+
+void Disp::move(int x, int y, int width, int height)
+{
+	if ( m_fdDisp <= 0 )
+	{
+		qDebug("[%s] disp not initialized.", Q_FUNC_INFO);
+		return;
+	}
+
+	unsigned int args[4];
+
+	m_layerParam.scn_win.x       = x;
+	m_layerParam.scn_win.y       = y;
+	m_layerParam.scn_win.width   = width;
+	m_layerParam.scn_win.height  = height;
+
+	args[0] = 0;
+	args[1] = m_layer;
+	args[2] = (__u32)&m_layerParam;
+	wrap_ioctl(m_fdDisp, DISP_CMD_LAYER_SET_PARA, args);
+}
+
 
 void Disp::start()
 {

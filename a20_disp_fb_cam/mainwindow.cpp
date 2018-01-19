@@ -114,21 +114,24 @@ void MainWindow::on_pushButton_camStart_clicked()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
 
-	CamThread::instance().startCam();
+	if ( ui->pushButton_camStart->isChecked() )
+	{
+		CamThread::instance().startCam();
 
-	m_camWidth = CamThread::instance().getCamWidth();
-	m_camHeight = CamThread::instance().getCamHeight();
+		m_camWidth = CamThread::instance().getCamWidth();
+		m_camHeight = CamThread::instance().getCamHeight();
 
-	m_camStartFlag = true;
-	ui->statusBar->showMessage("cam start");
-}
-
-void MainWindow::on_pushButton_camStop_clicked()
-{
-	qDebug("[%s]", Q_FUNC_INFO);
-	m_camStartFlag = false;
-	CamThread::instance().stopCam();
-	ui->statusBar->showMessage("cam stop");
+		m_camStartFlag = true;
+		ui->statusBar->showMessage("cam start");
+		ui->pushButton_camStart->setText("Started");
+	}
+	else
+	{
+		m_camStartFlag = false;
+		CamThread::instance().stopCam();
+		ui->statusBar->showMessage("cam stop");
+		ui->pushButton_camStart->setText("Stopped");
+	}
 }
 
 void MainWindow::on_pushButton_fbx_clicked()
@@ -137,7 +140,7 @@ void MainWindow::on_pushButton_fbx_clicked()
 
 	int val = m_fbCamPos.x();
 
-	if ( inputIntValue("framebuffer cam x pos", 0, 1024 - 1, val) )
+	if ( inputIntValue("framebuffer x pos", 0, 1024 - 1, val) )
 	{
 		m_fbCamPos.setX(val);
 
@@ -151,7 +154,7 @@ void MainWindow::on_pushButton_fby_clicked()
 
 	int val = m_fbCamPos.y();
 
-	if ( inputIntValue("framebuffer cam y pos", 0, 768 - 1, val) )
+	if ( inputIntValue("framebuffer y pos", 0, 768 - 1, val) )
 	{
 		m_fbCamPos.setY(val);
 
@@ -209,7 +212,7 @@ void MainWindow::on_pushButton_disp_clicked()
 	{
 		if ( m_camStartFlag )
 		{
-			Disp::instance().init(m_fbCamPos.x(), m_fbCamPos.y(), m_camWidth, m_camHeight);
+			Disp::instance().init(m_dispPos.x(), m_dispPos.y(), m_camWidth, m_camHeight);
 			Disp::instance().set_para(m_camWidth, m_camHeight);
 			Disp::instance().start();
 			m_dispStream = true;
@@ -274,4 +277,45 @@ void MainWindow::on_pushButton_center_clicked()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
 	CamThread::instance().resetRowCol();
+}
+
+void MainWindow::on_pushButton_dispX_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	int val = m_dispPos.x();
+
+	if ( inputIntValue("disp x pos", 0, 1024 - 1, val) )
+	{
+		m_dispPos.setX(val);
+
+		ui->pushButton_dispX->setText(QString("x %1").arg(val));
+	}
+}
+
+void MainWindow::on_pushButton_dispY_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	int val = m_dispPos.y();
+
+	if ( inputIntValue("disp y pos", 0, 768 - 1, val) )
+	{
+		m_dispPos.setY(val);
+
+		ui->pushButton_dispY->setText(QString("y %1").arg(val));
+	}
+}
+
+void MainWindow::on_pushButton_moveDisp_clicked()
+{
+
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	Disp::instance().move(m_dispPos.x(), m_dispPos.y());
+	if ( ui->pushButton_colorkey->isChecked() )
+	{
+		Disp::instance().disableColorKey();
+		Disp::instance().enableColorKey( FrameBuffer::instance().getLayerId(), 0xff00 );
+	}
 }
