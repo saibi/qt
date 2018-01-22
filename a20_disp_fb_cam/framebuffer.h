@@ -29,7 +29,7 @@ public:
 	void test(int startx = 100, int starty = 100);
 	void drawImg(int x, int y, const QImage & img);
 	void drawImg(const QPoint & pos, const QImage & img) { drawImg(pos.x(), pos.y(), img); };
-	void drawCam(int x, int y, unsigned char *camData, int width, int height);
+	void drawCam(int x, int y, unsigned char *camData, int width, int height, int fbIdx = -1);
 	void fillBox(int x = 0, int y = 0, int w = 100, int h = 100, unsigned int c = 0);
 
 	int toggleBuffer();

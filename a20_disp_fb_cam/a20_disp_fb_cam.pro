@@ -43,7 +43,8 @@ SOURCES += \
     hw/beep.cpp \
     hw/beepthread.cpp \
     keypaddlg.cpp \
-    disp.cpp
+    disp.cpp \
+    sunxidisp.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -54,7 +55,8 @@ HEADERS += \
     hw/beepthread.h \
     keypaddlg.h \
     disp.h \
-    sunxi_disp_ioctl.h
+    sunxi_disp_ioctl.h \
+    sunxidisp.h
 
 FORMS += \
         mainwindow.ui \

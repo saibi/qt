@@ -63,6 +63,18 @@ private slots:
 
 	void on_pushButton_dispHeight_clicked();
 
+	void on_pushButton_toggle_clicked();
+
+	void on_pushButton_copy01_clicked();
+
+	void on_pushButton_copy10_clicked();
+
+	void on_pushButton_sunxi_clicked();
+
+	void on_pushButton_fb1Draw_clicked();
+
+	void on_pushButton_sunxiCk_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 
@@ -80,6 +92,7 @@ private:
 	bool m_fbStream;
 	bool m_qtStream;
 	bool m_dispStream;
+	bool m_fb1Stream;
 
 	int m_fillSize;
 

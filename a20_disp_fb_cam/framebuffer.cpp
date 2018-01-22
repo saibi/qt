@@ -195,12 +195,18 @@ void FrameBuffer::drawImg(int x, int y, const QImage &img)
 
 }
 
-void FrameBuffer::drawCam(int x, int y, unsigned char *camData, int width, int height)
+void FrameBuffer::drawCam(int x, int y, unsigned char *camData, int width, int height, int fbIdx)
 {
 	if ( m_fdFb <= 0 )
 		return;
 
-	char *fbData = m_fbp + ( x + m_vinfo.xoffset) * m_fbDepthBytes + ( y + m_vinfo.yoffset) * m_finfo.line_length;
+	char *fbData;
+
+	if ( fbIdx < 0 )
+		fbData = m_fbp + ( x + m_vinfo.xoffset) * m_fbDepthBytes + ( y + m_vinfo.yoffset) * m_finfo.line_length;
+	else
+		fbData = m_fbp + ( x + m_vinfo.xoffset) * m_fbDepthBytes + ( y + m_vinfo.yres * fbIdx) * m_finfo.line_length;
+
 	int copyBytes = width * m_fbDepthBytes;
 
 	for ( int idx = 0 ; idx < height ; ++idx )

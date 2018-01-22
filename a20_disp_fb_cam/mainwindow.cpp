@@ -6,6 +6,8 @@
 #include "neon.h"
 #include "disp.h"
 
+#include "sunxidisp.h"
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
@@ -23,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_dispStream = false;
 	m_fillSize = 100;
 	m_camSize = CamThread::CAM_SIZE_480;
+	m_fb1Stream = false;
 	connect(&CamThread::instance(), SIGNAL(signalCamStream(char*, unsigned int)), this, SLOT(slotCamStream(char*, unsigned int)));
 }
 
@@ -91,6 +94,9 @@ void MainWindow::slotCamStream(char *camData, unsigned int offset)
 
 		if ( m_fbStream )
 			FrameBuffer::instance().drawCam(m_fbCamPos.x(), m_fbCamPos.y(), img.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight);
+
+		if ( m_fb1Stream )
+			FrameBuffer::instance().drawCam(0, 0, img.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight, 1);
 
 		if ( m_qtStream )
 			ui->label_cam->setPixmap(QPixmap::fromImage(img));
@@ -375,4 +381,66 @@ void MainWindow::on_pushButton_dispHeight_clicked()
 		ui->statusBar->showMessage(QString("disp height = %1").arg(val));
 	}
 	qDebug("[%s] disp height = %d", Q_FUNC_INFO, val);
+}
+
+void MainWindow::on_pushButton_toggle_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	FrameBuffer::instance().toggleBuffer();
+}
+
+void MainWindow::on_pushButton_copy01_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	FrameBuffer::instance().copy(0);
+
+}
+
+void MainWindow::on_pushButton_copy10_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	FrameBuffer::instance().copy(1);
+}
+
+void MainWindow::on_pushButton_sunxi_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	if (ui->pushButton_sunxi->isChecked() )
+	{
+		SunxiDisp::instance().init();
+		SunxiDisp::instance().set_rgb_input_buffer(1024*4*768, m_camWidth, m_camHeight, 1024);
+		SunxiDisp::instance().set_output_window(m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
+		SunxiDisp::instance().layer_show();
+	}
+	else
+	{
+		SunxiDisp::instance().layer_hide();
+		SunxiDisp::instance().end();
+	}
+}
+
+void MainWindow::on_pushButton_fb1Draw_clicked()
+{
+	if ( ui->pushButton_fb1Draw->isChecked() )
+		m_fb1Stream = true;
+	else
+		m_fb1Stream = false;
+
+	ui->statusBar->showMessage(QString("fb1 stream = %1").arg(m_fb1Stream));
+	qDebug("[%s] fb1 stream = %d", Q_FUNC_INFO, m_fb1Stream);
+}
+
+void MainWindow::on_pushButton_sunxiCk_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	if ( ui->pushButton_sunxi->isChecked() )
+	{
+		if ( ui->pushButton_sunxiCk->isChecked() )
+			SunxiDisp::instance().set_colorkey(0xff00);
+		else
+			SunxiDisp::instance().disable_colorkey();
+	}
 }
