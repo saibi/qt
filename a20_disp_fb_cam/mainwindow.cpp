@@ -410,7 +410,8 @@ void MainWindow::on_pushButton_sunxi_clicked()
 	if (ui->pushButton_sunxi->isChecked() )
 	{
 		SunxiDisp::instance().init();
-		SunxiDisp::instance().set_rgb_input_buffer(1024*4*768, m_camWidth, m_camHeight, 1024);
+		SunxiDisp::instance().hide_hw_cursor();
+		SunxiDisp::instance().set_rgb_input_buffer(1024*4*768, 1024, 768, 1024);
 		SunxiDisp::instance().set_output_window(m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
 		SunxiDisp::instance().layer_show();
 	}

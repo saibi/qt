@@ -58,6 +58,7 @@ public:
 	bool layer_hide();
 	bool set_colorkey(unsigned int color);
 	bool disable_colorkey();
+	bool hide_hw_cursor();
 
 protected:
 	bool layer_reserve();

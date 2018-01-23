@@ -580,3 +580,15 @@ bool SunxiDisp::disable_colorkey()
 
 	return true;
 }
+
+
+bool SunxiDisp::hide_hw_cursor()
+{
+	unsigned int tmp[4];
+
+	tmp[0] = m_ctx->fb_id;
+	if ( ::ioctl(m_ctx->fd_disp, DISP_CMD_HWC_CLOSE, &tmp) >= 0 )
+		return true;
+	else
+		return false;
+}
