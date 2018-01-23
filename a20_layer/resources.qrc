@@ -1,0 +1,41 @@
+<RCC>
+    <qresource prefix="/global">
+        <file>images/run.jpg</file>
+
+        <file>images/keypad/0.png</file>
+        <file>images/keypad/0_pressed.png</file>
+        <file>images/keypad/1.png</file>
+        <file>images/keypad/1_pressed.png</file>
+        <file>images/keypad/2.png</file>
+        <file>images/keypad/2_pressed.png</file>
+        <file>images/keypad/3.png</file>
+        <file>images/keypad/3_pressed.png</file>
+        <file>images/keypad/4.png</file>
+        <file>images/keypad/4_pressed.png</file>
+        <file>images/keypad/5.png</file>
+        <file>images/keypad/5_pressed.png</file>
+        <file>images/keypad/6.png</file>
+        <file>images/keypad/6_pressed.png</file>
+        <file>images/keypad/7.png</file>
+        <file>images/keypad/7_pressed.png</file>
+        <file>images/keypad/8.png</file>
+        <file>images/keypad/8_pressed.png</file>
+        <file>images/keypad/9.png</file>
+        <file>images/keypad/9_pressed.png</file>
+        <file>images/keypad/delete.png</file>
+        <file>images/keypad/delete_pressed.png</file>
+        <file>images/keypad/dot.png</file>
+        <file>images/keypad/dot_pressed.png</file>
+        <file>images/keypad/enter.png</file>
+        <file>images/keypad/enter_pressed.png</file>
+        <file>images/keypad/input.png</file>
+        <file>images/keypad/plusminus.png</file>
+        <file>images/keypad/plusminus_pressed.png</file>
+        <file>images/keypad/reset.png</file>
+        <file>images/keypad/reset_pressed.png</file>
+        <file>images/keypad/valuedown.png</file>
+        <file>images/keypad/valuedown_pressed.png</file>
+        <file>images/keypad/valueup.png</file>
+        <file>images/keypad/valueup_pressed.png</file>
+    </qresource>
+</RCC>
