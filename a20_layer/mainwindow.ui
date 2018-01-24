@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>777</width>
+    <width>721</width>
     <height>586</height>
    </rect>
   </property>
@@ -19,14 +19,14 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>480</width>
-      <height>480</height>
+      <width>500</width>
+      <height>500</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>480</width>
-      <height>480</height>
+      <width>500</width>
+      <height>500</height>
      </size>
     </property>
     <property name="text">
@@ -36,9 +36,9 @@
    <widget class="QWidget" name="widget_btn" native="true">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>510</x>
       <y>0</y>
-      <width>151</width>
+      <width>211</width>
       <height>495</height>
      </rect>
     </property>
@@ -586,7 +586,7 @@
             <widget class="QPushButton" name="pushButton_camSize">
              <property name="minimumSize">
               <size>
-               <width>0</width>
+               <width>70</width>
                <height>40</height>
               </size>
              </property>
@@ -713,54 +713,6 @@
            <property name="spacing">
             <number>2</number>
            </property>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButton_right">
-             <property name="minimumSize">
-              <size>
-               <width>40</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>right</string>
-             </property>
-             <property name="autoRepeat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="pushButton_up">
-             <property name="minimumSize">
-              <size>
-               <width>40</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>up</string>
-             </property>
-             <property name="autoRepeat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_down">
-             <property name="minimumSize">
-              <size>
-               <width>40</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>down</string>
-             </property>
-             <property name="autoRepeat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0">
             <widget class="QPushButton" name="pushButton_left">
              <property name="minimumSize">
@@ -778,6 +730,89 @@
             </widget>
            </item>
            <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_right">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>right</string>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QPushButton" name="pushButton_neon">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>neon</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QPushButton" name="pushButton_green">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>green</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="pushButton_down">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>down</string>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton_up">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>up</string>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
             <widget class="QPushButton" name="pushButton_center">
              <property name="minimumSize">
               <size>
@@ -786,7 +821,20 @@
               </size>
              </property>
              <property name="text">
-              <string>c</string>
+              <string>center</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="pushButton_skip">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>skip 0</string>
              </property>
             </widget>
            </item>
@@ -798,38 +846,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton_green">
-    <property name="geometry">
-     <rect>
-      <x>640</x>
-      <y>10</y>
-      <width>47</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>0</width>
-      <height>40</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>16777215</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>green</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>777</width>
+     <width>721</width>
      <height>19</height>
     </rect>
    </property>

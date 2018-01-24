@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_fillSize = 100;
 	m_camSize = CamThread::CAM_SIZE_480;
 	m_fb1Stream = false;
+	m_neon = true;
+	m_skip = 0;
 	connect(&CamThread::instance(), SIGNAL(signalCamStream(char*, unsigned int)), this, SLOT(slotCamStream(char*, unsigned int)));
 
 
@@ -95,40 +97,61 @@ void MainWindow::on_pushButton_fill_clicked()
 void MainWindow::slotCamStream(char *camData, unsigned int offset)
 {
 #ifdef __arm_A20__
+	static int count = 0;
+
 	if ( m_camStartFlag )
 	{
+		if ( count < m_skip )
+		{
+			++count;
+			return;
+		}
+		else
+			count = 0;
+
 		if ( m_dispStream )
 			A20Disp::instance().setCamScalerAddr(offset);
 
 
-		// Use QImage Indexed8
-		::memcpy(m_image_indexed8.bits(), camData, m_image_indexed8.byteCount());
+		if ( m_neon )
+		{
+			// use neon
+			unsigned char *in = (unsigned char *)camData;
 
-		if ( m_fbStream )
-			A20Disp::instance().drawCam(m_fbCamPos.x(), m_fbCamPos.y(), m_image_indexed8.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight, A20Disp::FB_MAIN);
-		if ( m_fb1Stream )
-			A20Disp::instance().drawCam(0, 0, m_image_indexed8.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight, A20Disp::FB_BACK);
-		if ( m_qtStream )
-			ui->label_cam->setPixmap(QPixmap::fromImage(m_image_indexed8));
+			nv21_to_rgb(pRGBData, in, in + m_camWidth * m_camHeight, m_camWidth, m_camHeight);
 
+			QImage img((unsigned char *)pRGBData, m_camWidth, m_camHeight, QImage::Format_RGB888);
 
-#ifdef USE_NEON
-		unsigned char *in = (unsigned char *)camData;
+			if ( m_fbStream || m_fb1Stream )
+			{
+				const QImage &img32 = img.convertToFormat(QImage::Format_RGB32);
+				if ( m_fbStream )
+					A20Disp::instance().drawCam(m_fbCamPos.x(), m_fbCamPos.y(), (unsigned char *)img32.bits(), m_camWidth, m_camHeight, A20Disp::FB_MAIN);
+				else
+					A20Disp::instance().drawCam(0, 0, (unsigned char *)img32.bits(), m_camWidth, m_camHeight, A20Disp::FB_BACK);
+			}
 
-		nv21_to_rgb(pRGBData, in, in + m_camWidth * m_camHeight, m_camWidth, m_camHeight);
+			if ( m_qtStream )
+				ui->label_cam->setPixmap(QPixmap::fromImage(img));
+		}
+		else
+		{
+			// Use QImage Indexed8
+			::memcpy(m_image_indexed8.bits(), camData, m_image_indexed8.byteCount());
 
-		QImage img((unsigned char *)pRGBData, m_camWidth, m_camHeight, QImage::Format_RGB888);
+			if ( m_fbStream || m_fb1Stream )
+			{
+				const QImage & img32 = m_image_indexed8.convertToFormat(QImage::Format_RGB32);
 
-		if ( m_fbStream )
-			A20Disp::instance().drawCam(m_fbCamPos.x(), m_fbCamPos.y(), img.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight, A20Disp::FB_MAIN);
+				if ( m_fbStream )
+					A20Disp::instance().drawCam(m_fbCamPos.x(), m_fbCamPos.y(), (unsigned char *)img32.bits(), m_camWidth, m_camHeight, A20Disp::FB_MAIN);
+				else
+					A20Disp::instance().drawCam(0, 0, (unsigned char *)img32.bits(), m_camWidth, m_camHeight, A20Disp::FB_BACK);
+			}
 
-		if ( m_fb1Stream )
-			A20Disp::instance().drawCam(0, 0, img.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight, A20Disp::FB_BACK);
-
-		if ( m_qtStream )
-			ui->label_cam->setPixmap(QPixmap::fromImage(img));
-#endif
-
+			if ( m_qtStream )
+				ui->label_cam->setPixmap(QPixmap::fromImage(m_image_indexed8));
+		}
 	}
 #else
 
@@ -480,4 +503,30 @@ void MainWindow::on_pushButton_fbLayerMv_clicked()
 		A20Disp::instance().disableColorKey(A20Disp::LAYER_CAM_FB);
 		A20Disp::instance().enableColorKey(A20Disp::LAYER_CAM_FB, 0xff00);
 	}
+}
+
+void MainWindow::on_pushButton_neon_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	if ( ui->pushButton_neon->isChecked() )
+	{
+		m_neon = false;
+		ui->pushButton_neon->setText("indexed8");
+	}
+	else
+	{
+		m_neon = true;
+		ui->pushButton_neon->setText("neon");
+	}
+}
+
+void MainWindow::on_pushButton_skip_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	m_skip = (m_skip + 1) % 4;
+	ui->pushButton_skip->setText(QString("skip %1").arg(m_skip));
+
+	ui->statusBar->showMessage(QString("skip %1").arg(m_skip));
 }

@@ -78,6 +78,10 @@ private slots:
 
 	void on_pushButton_fbLayerMv_clicked();
 
+	void on_pushButton_neon_clicked();
+
+	void on_pushButton_skip_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 
@@ -110,6 +114,8 @@ private:
 
 	QImage m_image_indexed8;
 
+	bool m_neon;
+	int m_skip;
 };
 
 #endif // MAINWINDOW_H
