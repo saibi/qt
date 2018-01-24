@@ -46,6 +46,10 @@ public:
 	void adjCol(bool up);
 	void resetRowCol();
 
+	void adjGain(bool up);
+	void adjExp(bool up);
+
+
 	enum CameraSizeIndex
 	{
 		CAM_SIZE_480 =	480,	// 480 * 480
@@ -63,6 +67,8 @@ protected:
 
 	int s_ctrl(int id, int value);
 	int g_ctrl(int id, int & value);
+
+	void adj_v4l2_cid(int v4l2_id, int & var, bool up, int min, int max, const char *pr_name);
 
 private:
 
@@ -93,6 +99,10 @@ private:
 	int m_rowVal;
 	int m_colVal;
 	QPoint m_startRowCol;
+
+	int m_gainVal;
+	int m_expVal;
+
 signals:
 	void signalCamStream(char * camData, unsigned int offset);
 
@@ -102,6 +112,11 @@ public:
 
 	inline int getCamWidth() { return m_camWidth; }
 	inline int getCamHeight() { return m_camHeight; }
+
+	inline int getGain() { return m_gainVal; }
+	inline int getExp() { return m_expVal; }
+	inline int getRow() { return m_rowVal; }
+	inline int getCol() { return m_colVal; }
 
 };
 

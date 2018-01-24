@@ -82,6 +82,14 @@ private slots:
 
 	void on_pushButton_skip_clicked();
 
+	void on_pushButton_gainUp_clicked();
+
+	void on_pushButton_gainDn_clicked();
+
+	void on_pushButton_expUp_clicked();
+
+	void on_pushButton_expDn_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 

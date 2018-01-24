@@ -308,36 +308,6 @@ void MainWindow::on_pushButton_colorkey_clicked()
 	}
 }
 
-void MainWindow::on_pushButton_up_clicked()
-{
-	qDebug("[%s]", Q_FUNC_INFO);
-	CamThread::instance().adjRow(true);
-}
-
-void MainWindow::on_pushButton_down_clicked()
-{
-	qDebug("[%s]", Q_FUNC_INFO);
-	CamThread::instance().adjRow(false);
-}
-
-void MainWindow::on_pushButton_left_clicked()
-{
-	qDebug("[%s]", Q_FUNC_INFO);
-	CamThread::instance().adjCol(true);
-}
-
-void MainWindow::on_pushButton_right_clicked()
-{
-	qDebug("[%s]", Q_FUNC_INFO);
-	CamThread::instance().adjCol(false);
-}
-
-void MainWindow::on_pushButton_center_clicked()
-{
-	qDebug("[%s]", Q_FUNC_INFO);
-	CamThread::instance().resetRowCol();
-}
-
 void MainWindow::on_pushButton_dispX_clicked()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
@@ -530,3 +500,80 @@ void MainWindow::on_pushButton_skip_clicked()
 
 	ui->statusBar->showMessage(QString("skip %1").arg(m_skip));
 }
+
+void MainWindow::on_pushButton_up_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjRow(true);
+
+	ui->statusBar->showMessage(QString("row %1").arg(CamThread::instance().getRow()));
+}
+
+void MainWindow::on_pushButton_down_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjRow(false);
+
+	ui->statusBar->showMessage(QString("row %1").arg(CamThread::instance().getRow()));
+}
+
+void MainWindow::on_pushButton_left_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjCol(true);
+
+	ui->statusBar->showMessage(QString("col %1").arg(CamThread::instance().getCol()));
+}
+
+void MainWindow::on_pushButton_right_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().adjCol(false);
+
+	ui->statusBar->showMessage(QString("col %1").arg(CamThread::instance().getCol()));
+}
+
+void MainWindow::on_pushButton_center_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	CamThread::instance().resetRowCol();
+
+	ui->statusBar->showMessage(QString("row %1 col %2").arg(CamThread::instance().getRow()).arg(CamThread::instance().getCol()));
+}
+
+void MainWindow::on_pushButton_gainUp_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	CamThread::instance().adjGain(true);
+
+	ui->statusBar->showMessage(QString("gain %1").arg(CamThread::instance().getGain()));
+}
+
+void MainWindow::on_pushButton_gainDn_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	CamThread::instance().adjGain(false);
+
+	ui->statusBar->showMessage(QString("gain %1").arg(CamThread::instance().getGain()));
+}
+
+void MainWindow::on_pushButton_expUp_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	CamThread::instance().adjExp(true);
+
+	ui->statusBar->showMessage(QString("exposure %1").arg(CamThread::instance().getExp()));
+}
+
+void MainWindow::on_pushButton_expDn_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	CamThread::instance().adjExp(false);
+
+	ui->statusBar->showMessage(QString("exposure %1").arg(CamThread::instance().getExp()));
+}
+

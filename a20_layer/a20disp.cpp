@@ -219,7 +219,6 @@ bool A20Disp::addCamFbLayer(int x, int y, int w, int h, int idx)
 	}
 	qDebug("[%s] #%d id = %d", Q_FUNC_INFO, idx, m_layer[idx].id);
 
-#if 0
 	args[0] = SCREEN_0;
 	args[1] = m_layer[idx].id;
 	args[2] = (unsigned int)&(m_layer[idx].param);
@@ -229,7 +228,6 @@ bool A20Disp::addCamFbLayer(int x, int y, int w, int h, int idx)
 		m_layer[idx].id = 0;
 		return false;
 	}
-#endif
 
 	m_layer[idx].param.mode            = DISP_LAYER_WORK_MODE_NORMAL;
 	m_layer[idx].param.pipe            = 1;

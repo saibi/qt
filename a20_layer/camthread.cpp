@@ -122,6 +122,8 @@ CamThread::CamThread(QObject *parent) :
 
 	m_rowVal = 0;
 	m_colVal = 0;
+	m_gainVal = 0;
+	m_expVal = 0;
 }
 
 bool CamThread::startCam(int cam_size)
@@ -185,6 +187,11 @@ bool CamThread::startCam(int cam_size)
 		m_startRowCol.setX(m_colVal);
 		m_startRowCol.setY(m_rowVal);
 		qDebug("[CamThread::startCam] OK - row,col");
+	}
+
+	if ( g_ctrl(V4L2_CID_GAIN, m_gainVal) == 0 && g_ctrl(V4L2_CID_EXPOSURE, m_expVal) == 0 )
+	{
+		qDebug("[CamThread::startCam] gain = %d, exp = %d", m_gainVal, m_expVal);
 	}
 
 	locker.unlock();
@@ -544,47 +551,12 @@ int CamThread::g_ctrl(int id, int &value)
 
 void CamThread::adjRow(bool up)
 {
-	if ( up )
-	{
-		if ( m_rowVal < 512)
-		{
-			++m_rowVal;
-			if ( s_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 )
-				qDebug("m_rowVal = %d", m_rowVal);
-		}
-	}
-	else
-	{
-		if ( m_rowVal > 0 )
-		{
-			--m_rowVal;
-			if ( s_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 )
-				qDebug("m_rowVal = %d", m_rowVal);
-		}
-	}
+	adj_v4l2_cid(V4L2_CID_AUDIO_BASS, m_rowVal, up, 0, 511, "m_gainVal");
 }
 
 void CamThread::adjCol(bool up)
 {
-
-	if ( up )
-	{
-		if ( m_colVal < 639)
-		{
-			++m_colVal;
-			if ( s_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0 )
-				qDebug("m_colVal = %d", m_colVal);
-		}
-	}
-	else
-	{
-		if ( m_colVal > 0 )
-		{
-			--m_colVal;
-			if ( s_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0 )
-				qDebug("m_colVal = %d", m_colVal);
-		}
-	}
+	adj_v4l2_cid(V4L2_CID_AUDIO_TREBLE, m_colVal, up, 0, 639, "m_gainVal");
 }
 
 void CamThread::resetRowCol()
@@ -597,4 +569,36 @@ void CamThread::resetRowCol()
 
 	if ( s_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0 )
 		qDebug("m_colVal = %d", m_colVal);
+}
+
+void CamThread::adjGain(bool up)
+{
+	adj_v4l2_cid(V4L2_CID_GAIN, m_gainVal, up, 0, 127, "m_gainVal");
+}
+
+void CamThread::adjExp(bool up)
+{
+	adj_v4l2_cid(V4L2_CID_EXPOSURE, m_expVal, up, 0, 127, "m_expVal");
+}
+
+void CamThread::adj_v4l2_cid(int v4l2_id, int &var, bool up, int min, int max, const char *pr_name)
+{
+	if ( up )
+	{
+		if ( var < max)
+		{
+			++var;
+			if ( s_ctrl(v4l2_id, var) == 0 )
+				qDebug("%s = %d", pr_name, var);
+		}
+	}
+	else
+	{
+		if ( var > min )
+		{
+			--var;
+			if ( s_ctrl(v4l2_id, var) == 0 )
+				qDebug("%s = %d", pr_name, var);
+		}
+	}
 }
