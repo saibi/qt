@@ -25,6 +25,18 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_fb1Stream = false;
 	connect(&CamThread::instance(), SIGNAL(signalCamStream(char*, unsigned int)), this, SLOT(slotCamStream(char*, unsigned int)));
 
+
+	int i, hue, saturation;
+	for(i = 0 ; i < 256 ; i++)
+	{
+		m_yuv_rgb_conv_color_tab.append(qRgb(i,i,i));
+
+		hue = 255 - i;
+		saturation = 255;
+		m_gray_colorize_color_tab.append(QColor::fromHsv(hue, saturation, 255).rgb());
+	}
+
+
 	A20Disp::instance().init();
 }
 
@@ -85,6 +97,22 @@ void MainWindow::slotCamStream(char *camData, unsigned int offset)
 #ifdef __arm_A20__
 	if ( m_camStartFlag )
 	{
+		if ( m_dispStream )
+			A20Disp::instance().setCamScalerAddr(offset);
+
+
+		// Use QImage Indexed8
+		::memcpy(m_image_indexed8.bits(), camData, m_image_indexed8.byteCount());
+
+		if ( m_fbStream )
+			A20Disp::instance().drawCam(m_fbCamPos.x(), m_fbCamPos.y(), m_image_indexed8.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight, A20Disp::FB_MAIN);
+		if ( m_fb1Stream )
+			A20Disp::instance().drawCam(0, 0, m_image_indexed8.convertToFormat(QImage::Format_RGB32).bits(), m_camWidth, m_camHeight, A20Disp::FB_BACK);
+		if ( m_qtStream )
+			ui->label_cam->setPixmap(QPixmap::fromImage(m_image_indexed8));
+
+
+#ifdef USE_NEON
 		unsigned char *in = (unsigned char *)camData;
 
 		nv21_to_rgb(pRGBData, in, in + m_camWidth * m_camHeight, m_camWidth, m_camHeight);
@@ -99,9 +127,8 @@ void MainWindow::slotCamStream(char *camData, unsigned int offset)
 
 		if ( m_qtStream )
 			ui->label_cam->setPixmap(QPixmap::fromImage(img));
+#endif
 
-		if ( m_dispStream )
-			A20Disp::instance().setCamScalerAddr(offset);
 	}
 #else
 
@@ -124,6 +151,9 @@ void MainWindow::on_pushButton_camStart_clicked()
 		m_camHeight = CamThread::instance().getCamHeight();
 		m_dispSize.setX(m_camWidth);
 		m_dispSize.setY(m_camHeight);
+
+		m_image_indexed8 = QImage(m_camWidth, m_camHeight, QImage::Format_Indexed8);
+		m_image_indexed8.setColorTable(m_yuv_rgb_conv_color_tab);
 
 		m_camStartFlag = true;
 		ui->statusBar->showMessage("cam start");

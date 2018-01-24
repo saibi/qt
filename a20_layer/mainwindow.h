@@ -103,6 +103,13 @@ private:
 	QPoint m_dispSize;
 
 	int m_camSize;
+
+
+	QVector<QRgb> m_yuv_rgb_conv_color_tab;
+	QVector<QRgb> m_gray_colorize_color_tab;
+
+	QImage m_image_indexed8;
+
 };
 
 #endif // MAINWINDOW_H
