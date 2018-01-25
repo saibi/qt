@@ -26,30 +26,29 @@ public:
 	}
 
 
+	// Layer
 	bool init();
 	void quit();
 
-	bool addCamScalerLayer(int camWidth = 480, int camHeight = 480, int x = 0, int y = 0, int w = 480, int h = 480, int idx = LAYER_CAM_SCALER);
-	bool addCamFbLayer(int camWidth = 480, int camHeight = 480, int x = 0, int y = 0, int w = 480, int h = 480, int idx = LAYER_CAM_FB );
-
-	bool showLayer(int idx);
-	bool hideLayer(int idx);
-
-	bool removeLayer(int idx);
-
-	void setCamScalerAddr(unsigned int addr, int idx = LAYER_CAM_SCALER);
-	bool moveLayer(int idx, int x, int y, int width, int height);
-
-	bool enableColorKey(int idx, unsigned int color);
-	bool disableColorKey(int idx);
-
 	enum LayerIndex
 	{
-		LAYER_CAM_SCALER = 0,
-		LAYER_CAM_FB,
+		LAYER_CAM_BUF = 0,
+		LAYER_FB_BACK_BUF,
 
 		MAX_LAYER_IDX,
 	};
+
+	bool addCamBufLayer(int camWidth = 480, int camHeight = 480, int x = 0, int y = 0, int w = 480, int h = 480, int idx = LAYER_CAM_BUF);
+	bool addFbBackBufLayer(int camWidth = 480, int camHeight = 480, int x = 0, int y = 0, int w = 480, int h = 480, bool useScaler = false, int idx = LAYER_FB_BACK_BUF );
+
+	bool showLayer(int idx);
+	bool hideLayer(int idx);
+	bool removeLayer(int idx);
+	void setCamBufAddr(unsigned int addr, int idx = LAYER_CAM_BUF);
+	bool moveLayer(int idx, int x, int y, int width, int height);
+	bool enableColorKey(int idx, unsigned int color);
+	bool disableColorKey(int idx);
+
 
 
 	// frame buffer
@@ -97,14 +96,11 @@ private:
 		__disp_layer_info_t param;
 	} m_layer[MAX_LAYER_IDX];
 
+	bool m_scalerUsed;
+
 protected:
 	void clearVars();
 	bool checkDispVer();
-
-
-	//bool addWorkLayer(int idx);
-
-
 };
 
 #endif // A20DISP_H

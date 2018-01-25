@@ -29,6 +29,8 @@ void A20Disp::clearVars()
 
 	::memset(&m_screen, 0, sizeof(m_screen));
 	::memset(m_layer, 0, sizeof(m_layer));
+
+	m_scalerUsed = false;
 }
 
 bool A20Disp::checkDispVer()
@@ -123,10 +125,10 @@ void A20Disp::quit()
 	if ( m_fd.fb < 0 || m_fd.disp < 0 )
 		return;
 
-	if ( m_layer[LAYER_CAM_FB].id !=0 )
-		removeLayer(LAYER_CAM_FB);
-	if ( m_layer[LAYER_CAM_SCALER].id != 0 )
-		removeLayer(LAYER_CAM_SCALER);
+	if ( m_layer[LAYER_FB_BACK_BUF].id !=0 )
+		removeLayer(LAYER_FB_BACK_BUF);
+	if ( m_layer[LAYER_CAM_BUF].id != 0 )
+		removeLayer(LAYER_CAM_BUF);
 
 	::munmap(m_screen.fb_addr, m_screen.fb_fix.smem_len);
 
@@ -140,11 +142,17 @@ void A20Disp::quit()
 }
 
 
-bool A20Disp::addCamScalerLayer(int camWidth, int camHeight, int x, int y, int w, int h, int idx)
+bool A20Disp::addCamBufLayer(int camWidth, int camHeight, int x, int y, int w, int h, int idx)
 {
 	if ( m_fd.disp < 0 )
 	{
 		qDebug("[%s] init disp first", Q_FUNC_INFO);
+		return false;
+	}
+
+	if ( m_scalerUsed )
+	{
+		qDebug("[%s] remove scaler layer first", Q_FUNC_INFO);
 		return false;
 	}
 
@@ -194,10 +202,12 @@ bool A20Disp::addCamScalerLayer(int camWidth, int camHeight, int x, int y, int w
 		m_layer[idx].id = 0;
 		return false;
 	}
+
+	m_scalerUsed = true;
 	return true;
 }
 
-bool A20Disp::addCamFbLayer(int camWidth, int camHeight, int x, int y, int w, int h, int idx)
+bool A20Disp::addFbBackBufLayer(int camWidth, int camHeight, int x, int y, int w, int h, bool useScaler, int idx)
 {
 	if ( m_fd.disp < 0 )
 	{
@@ -205,11 +215,23 @@ bool A20Disp::addCamFbLayer(int camWidth, int camHeight, int x, int y, int w, in
 		return false;
 	}
 
+	int reqMode = DISP_LAYER_WORK_MODE_NORMAL;
+
+	if ( useScaler )
+	{
+		if ( m_scalerUsed )
+		{
+			qDebug("[%s] remove scaler layer first", Q_FUNC_INFO);
+			return false;
+		}
+
+		reqMode = DISP_LAYER_WORK_MODE_SCALER;
+	}
 
 	unsigned int args[4];
 
 	args[0] = SCREEN_0;
-	args[1] = DISP_LAYER_WORK_MODE_SCALER; //DISP_LAYER_WORK_MODE_NORMAL;
+	args[1] = reqMode;
 
 	m_layer[idx].id = ::ioctl(m_fd.disp, DISP_CMD_LAYER_REQUEST, args);
 	if ( m_layer[idx].id <= 0 )
@@ -229,7 +251,7 @@ bool A20Disp::addCamFbLayer(int camWidth, int camHeight, int x, int y, int w, in
 		return false;
 	}
 
-	m_layer[idx].param.mode            = DISP_LAYER_WORK_MODE_SCALER; //DISP_LAYER_WORK_MODE_NORMAL;
+	m_layer[idx].param.mode            =  (__disp_layer_work_mode_t)reqMode;
 	m_layer[idx].param.pipe            = 1;
 	m_layer[idx].param.prio            = 0;
 	m_layer[idx].param.alpha_en        = 1;
@@ -260,6 +282,10 @@ bool A20Disp::addCamFbLayer(int camWidth, int camHeight, int x, int y, int w, in
 		m_layer[idx].id = 0;
 		return false;
 	}
+
+	if ( useScaler )
+		m_scalerUsed = true;
+
 	return true;
 }
 
@@ -283,7 +309,7 @@ bool A20Disp::showLayer(int idx)
 	args[1] = m_layer[idx].id;
 	::ioctl(m_fd.disp, DISP_CMD_LAYER_TOP, args);
 
-	if ( idx == LAYER_CAM_SCALER )
+	if ( idx == LAYER_CAM_BUF )
 	{
 		args[0] = SCREEN_0;
 		args[1] = m_layer[idx].id;
@@ -327,7 +353,7 @@ bool A20Disp::hideLayer(int idx)
 		return false;
 	}
 
-	if ( idx == LAYER_CAM_SCALER )
+	if ( idx == LAYER_CAM_BUF )
 		::ioctl(m_fd.disp, DISP_CMD_VIDEO_STOP, args);
 
 	return true;
@@ -358,11 +384,15 @@ bool A20Disp::removeLayer(int idx)
 		return false;
 	}
 	m_layer[idx].id = 0;
+
+	if ( m_layer[idx].param.mode == DISP_LAYER_WORK_MODE_SCALER )
+		m_scalerUsed = false;
+
 	return true;
 }
 
 
-void A20Disp::setCamScalerAddr(unsigned int addr, int idx)
+void A20Disp::setCamBufAddr(unsigned int addr, int idx)
 {
 	// assert : fd & layer set properly
 	__disp_video_fb_t fb;

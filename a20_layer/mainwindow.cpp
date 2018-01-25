@@ -110,7 +110,7 @@ void MainWindow::slotCamStream(char *camData, unsigned int offset)
 			count = 0;
 
 		if ( m_dispStream )
-			A20Disp::instance().setCamScalerAddr(offset);
+			A20Disp::instance().setCamBufAddr(offset);
 
 
 		if ( m_neon )
@@ -272,8 +272,8 @@ void MainWindow::on_pushButton_disp_clicked()
 	{
 		if ( m_camStartFlag )
 		{
-			A20Disp::instance().addCamScalerLayer(m_camWidth, m_camHeight, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
-			A20Disp::instance().showLayer(A20Disp::LAYER_CAM_SCALER);
+			A20Disp::instance().addCamBufLayer(m_camWidth, m_camHeight, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
+			A20Disp::instance().showLayer(A20Disp::LAYER_CAM_BUF);
 			m_dispStream = true;
 		}
 		else
@@ -285,8 +285,8 @@ void MainWindow::on_pushButton_disp_clicked()
 	{
 		m_dispStream = false;
 
-		A20Disp::instance().hideLayer(A20Disp::LAYER_CAM_SCALER);
-		A20Disp::instance().removeLayer(A20Disp::LAYER_CAM_SCALER);
+		A20Disp::instance().hideLayer(A20Disp::LAYER_CAM_BUF);
+		A20Disp::instance().removeLayer(A20Disp::LAYER_CAM_BUF);
 	}
 
 	ui->statusBar->showMessage(QString("disp stream = %1").arg(m_dispStream));
@@ -298,12 +298,12 @@ void MainWindow::on_pushButton_colorkey_clicked()
 {
 	if ( ui->pushButton_colorkey->isChecked() )
 	{
-		bool ret = A20Disp::instance().enableColorKey(A20Disp::LAYER_CAM_SCALER, 0xff00 );
+		bool ret = A20Disp::instance().enableColorKey(A20Disp::LAYER_CAM_BUF, 0xff00 );
 		qDebug("[%s] enable colorkey %d", Q_FUNC_INFO, ret);
 	}
 	else
 	{
-		bool ret = A20Disp::instance().disableColorKey(A20Disp::LAYER_CAM_SCALER);
+		bool ret = A20Disp::instance().disableColorKey(A20Disp::LAYER_CAM_BUF);
 		qDebug("[%s] disable colorkey %d", Q_FUNC_INFO, ret);
 	}
 }
@@ -340,11 +340,11 @@ void MainWindow::on_pushButton_moveDisp_clicked()
 {
 	qDebug("[%s]", Q_FUNC_INFO);
 
-	A20Disp::instance().moveLayer(A20Disp::LAYER_CAM_SCALER, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
+	A20Disp::instance().moveLayer(A20Disp::LAYER_CAM_BUF, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
 	if ( ui->pushButton_colorkey->isChecked() )
 	{
-		A20Disp::instance().disableColorKey(A20Disp::LAYER_CAM_SCALER);
-		A20Disp::instance().enableColorKey(A20Disp::LAYER_CAM_SCALER, 0xff00);
+		A20Disp::instance().disableColorKey(A20Disp::LAYER_CAM_BUF);
+		A20Disp::instance().enableColorKey(A20Disp::LAYER_CAM_BUF, 0xff00);
 	}
 }
 
@@ -440,12 +440,12 @@ void MainWindow::on_pushButton_fbLayer_clicked()
 
 	if (ui->pushButton_fbLayer->isChecked() )
 	{
-		A20Disp::instance().addCamFbLayer(m_camWidth, m_camHeight, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
-		A20Disp::instance().showLayer(A20Disp::LAYER_CAM_FB);
+		A20Disp::instance().addFbBackBufLayer(m_camWidth, m_camHeight, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
+		A20Disp::instance().showLayer(A20Disp::LAYER_FB_BACK_BUF);
 	}
 	else
 	{
-		A20Disp::instance().removeLayer(A20Disp::LAYER_CAM_FB);
+		A20Disp::instance().removeLayer(A20Disp::LAYER_FB_BACK_BUF);
 	}
 }
 
@@ -456,9 +456,9 @@ void MainWindow::on_pushButton_fbLayerCk_clicked()
 	if ( ui->pushButton_fbLayer->isChecked() )
 	{
 		if ( ui->pushButton_fbLayerCk->isChecked() )
-			A20Disp::instance().enableColorKey(A20Disp::LAYER_CAM_FB, 0xff00);
+			A20Disp::instance().enableColorKey(A20Disp::LAYER_FB_BACK_BUF, 0xff00);
 		else
-			A20Disp::instance().disableColorKey(A20Disp::LAYER_CAM_FB);
+			A20Disp::instance().disableColorKey(A20Disp::LAYER_FB_BACK_BUF);
 	}
 }
 
@@ -467,11 +467,11 @@ void MainWindow::on_pushButton_fbLayerMv_clicked()
 	qDebug("[%s]", Q_FUNC_INFO);
 
 
-	A20Disp::instance().moveLayer(A20Disp::LAYER_CAM_FB, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
+	A20Disp::instance().moveLayer(A20Disp::LAYER_FB_BACK_BUF, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
 	if ( ui->pushButton_fbLayerCk->isChecked() )
 	{
-		A20Disp::instance().disableColorKey(A20Disp::LAYER_CAM_FB);
-		A20Disp::instance().enableColorKey(A20Disp::LAYER_CAM_FB, 0xff00);
+		A20Disp::instance().disableColorKey(A20Disp::LAYER_FB_BACK_BUF);
+		A20Disp::instance().enableColorKey(A20Disp::LAYER_FB_BACK_BUF, 0xff00);
 	}
 }
 
