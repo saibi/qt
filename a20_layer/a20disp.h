@@ -30,7 +30,7 @@ public:
 	void quit();
 
 	bool addCamScalerLayer(int camWidth = 480, int camHeight = 480, int x = 0, int y = 0, int w = 480, int h = 480, int idx = LAYER_CAM_SCALER);
-	bool addCamFbLayer(int x = 0, int y = 0, int w = 480, int h = 480, int idx = LAYER_CAM_FB );
+	bool addCamFbLayer(int camWidth = 480, int camHeight = 480, int x = 0, int y = 0, int w = 480, int h = 480, int idx = LAYER_CAM_FB );
 
 	bool showLayer(int idx);
 	bool hideLayer(int idx);

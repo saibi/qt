@@ -440,7 +440,7 @@ void MainWindow::on_pushButton_fbLayer_clicked()
 
 	if (ui->pushButton_fbLayer->isChecked() )
 	{
-		A20Disp::instance().addCamFbLayer(m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
+		A20Disp::instance().addCamFbLayer(m_camWidth, m_camHeight, m_dispPos.x(), m_dispPos.y(), m_dispSize.x(), m_dispSize.y());
 		A20Disp::instance().showLayer(A20Disp::LAYER_CAM_FB);
 	}
 	else

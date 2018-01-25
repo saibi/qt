@@ -197,7 +197,7 @@ bool A20Disp::addCamScalerLayer(int camWidth, int camHeight, int x, int y, int w
 	return true;
 }
 
-bool A20Disp::addCamFbLayer(int x, int y, int w, int h, int idx)
+bool A20Disp::addCamFbLayer(int camWidth, int camHeight, int x, int y, int w, int h, int idx)
 {
 	if ( m_fd.disp < 0 )
 	{
@@ -209,7 +209,7 @@ bool A20Disp::addCamFbLayer(int x, int y, int w, int h, int idx)
 	unsigned int args[4];
 
 	args[0] = SCREEN_0;
-	args[1] = DISP_LAYER_WORK_MODE_NORMAL;
+	args[1] = DISP_LAYER_WORK_MODE_SCALER; //DISP_LAYER_WORK_MODE_NORMAL;
 
 	m_layer[idx].id = ::ioctl(m_fd.disp, DISP_CMD_LAYER_REQUEST, args);
 	if ( m_layer[idx].id <= 0 )
@@ -229,7 +229,7 @@ bool A20Disp::addCamFbLayer(int x, int y, int w, int h, int idx)
 		return false;
 	}
 
-	m_layer[idx].param.mode            = DISP_LAYER_WORK_MODE_NORMAL;
+	m_layer[idx].param.mode            = DISP_LAYER_WORK_MODE_SCALER; //DISP_LAYER_WORK_MODE_NORMAL;
 	m_layer[idx].param.pipe            = 1;
 	m_layer[idx].param.prio            = 0;
 	m_layer[idx].param.alpha_en        = 1;
@@ -237,8 +237,8 @@ bool A20Disp::addCamFbLayer(int x, int y, int w, int h, int idx)
 	m_layer[idx].param.ck_enable       = 0;
 	m_layer[idx].param.src_win.x       = 0;
 	m_layer[idx].param.src_win.y       = 0;
-	m_layer[idx].param.src_win.width   = m_screen.fb_var.xres;
-	m_layer[idx].param.src_win.height  = m_screen.fb_var.yres;
+	m_layer[idx].param.src_win.width   = camWidth; //m_screen.fb_var.xres;
+	m_layer[idx].param.src_win.height  = camHeight; //m_screen.fb_var.yres;
 	m_layer[idx].param.scn_win.x       = x;
 	m_layer[idx].param.scn_win.y       = y;
 	m_layer[idx].param.scn_win.width   = w;
