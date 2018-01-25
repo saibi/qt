@@ -90,6 +90,8 @@ private slots:
 
 	void on_pushButton_expDn_clicked();
 
+	void on_pushButton_mod_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 
@@ -124,6 +126,10 @@ private:
 
 	bool m_neon;
 	int m_skip;
+
+	QImage m_image_cam, m_image_cam_gray;
+
+	bool m_modifyCamBuf;
 };
 
 #endif // MAINWINDOW_H

@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
 		m_gray_colorize_color_tab.append(QColor::fromHsv(hue, saturation, 255).rgb());
 	}
 
+	m_image_cam = QImage(":/global/images/run_bw.jpg");
+	m_image_cam_gray = m_image_cam.convertToFormat(QImage::Format_Indexed8, m_yuv_rgb_conv_color_tab);
 
 	A20Disp::instance().init();
 }
@@ -61,11 +63,14 @@ void MainWindow::on_pushButton_green_clicked()
 
 void MainWindow::on_pushButton_img_clicked()
 {
+	static int idx = 0;
+
 	qDebug("[%s]", Q_FUNC_INFO);
 
 	QImage img(":/global/images/run.jpg");
 
-	A20Disp::instance().drawImg(m_fbCamPos.x(), m_fbCamPos.y(), img);
+	A20Disp::instance().drawImg(m_fbCamPos.x(), m_fbCamPos.y(), (idx == 0) ? img : (idx == 1) ? m_image_cam : m_image_cam_gray);
+	idx = (idx + 1 ) % 3;
 }
 
 void MainWindow::on_pushButton_size_clicked()
@@ -108,6 +113,11 @@ void MainWindow::slotCamStream(char *camData, unsigned int offset)
 		}
 		else
 			count = 0;
+
+
+		if ( m_modifyCamBuf )
+			::memcpy(camData, m_image_cam_gray.bits(), m_image_cam_gray.byteCount());
+
 
 		if ( m_dispStream )
 			A20Disp::instance().setCamBufAddr(offset);
@@ -577,3 +587,13 @@ void MainWindow::on_pushButton_expDn_clicked()
 	ui->statusBar->showMessage(QString("exposure %1").arg(CamThread::instance().getExp()));
 }
 
+
+void MainWindow::on_pushButton_mod_clicked()
+{
+	if ( ui->pushButton_mod->isChecked() )
+		m_modifyCamBuf = true;
+	else
+		m_modifyCamBuf = false;
+
+	qDebug("[%s] modify cam buf %d", Q_FUNC_INFO, m_modifyCamBuf);
+}
