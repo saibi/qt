@@ -16,38 +16,13 @@ private:
 	explicit CamThread(QObject *parent = 0);
 
 	Q_DISABLE_COPY(CamThread)
+
 public:
-	enum CameraIndex
-	{
-		ImageCamera = 0,
-		NoSelectedCamera = 5,
-	};
-
-	enum MirrorMode
-	{
-		NoMirror = 0,
-		RowMirror = 1,
-		ColumnMirror = 2
-	};
-
 	static CamThread& instance()
 	{
 		static CamThread cam_thread;
 		return cam_thread;
 	}
-
-	bool startCam(int cam_size = CAM_SIZE_480);
-	void stopCam();
-
-	bool isRunning();
-
-
-	void adjRow(bool up);
-	void adjCol(bool up);
-	void resetRowCol();
-
-	void adjGain(bool up);
-	void adjExp(bool up);
 
 
 	enum CameraSizeIndex
@@ -58,17 +33,28 @@ public:
 		CAM_SIZE_1280 =	1280, // 1280 * 1024
 	};
 
+	bool startCam(int cam_size = CAM_SIZE_480);
+	void stopCam();
+
+	bool isRunning();
+
+	bool adjRow(bool up, int step = 1);
+	bool adjCol(bool up, int step = 1);
+	bool resetRowCol();
+	bool adjGain(bool up, int step = 1);
+	bool adjExp(bool up, int step = 1);
+
+	void closeCam();
+
 protected:
 	void run();
 
-	int initCam(int mirrorMode = NoMirror);
+	int initCam();
+	void runCamera();
 
-	void runNormalCamera();
-
-	int s_ctrl(int id, int value);
-	int g_ctrl(int id, int & value);
-
-	void adj_v4l2_cid(int v4l2_id, int & var, bool up, int min, int max, const char *pr_name);
+	bool s_ctrl(int id, int value);
+	bool g_ctrl(int id, int & value);
+	bool adj_v4l2_cid(int v4l2_id, int & var, bool up, int min, int max, const char *pr_name, int step = 1);
 
 private:
 
@@ -77,31 +63,29 @@ private:
 		CAM_STREAM_FRAMES = 4, /* Number of streaming buffer */
 	};
 
-
 	QMutex _mutex;
 
 	bool m_runningFlag;
 	bool _stopFlag;
 
 	//
-	int m_camFile;
+	int m_fdCam;
 
 	char* m_camData[CAM_STREAM_FRAMES];
 	int m_camDataSize;
-
-	int m_camIndex;
-
 	int m_camWidth;
 	int m_camHeight;
-
 	int _camDelay;
 
-	int m_rowVal;
-	int m_colVal;
-	QPoint m_startRowCol;
-
-	int m_gainVal;
-	int m_expVal;
+	struct CamCtrlValues
+	{
+		int sRow;
+		int sCol;
+		int row;
+		int col;
+		int gain;
+		int exp;
+	} m_ctrl;
 
 signals:
 	void signalCamStream(char * camData, unsigned int offset);
@@ -113,10 +97,10 @@ public:
 	inline int getCamWidth() { return m_camWidth; }
 	inline int getCamHeight() { return m_camHeight; }
 
-	inline int getGain() { return m_gainVal; }
-	inline int getExp() { return m_expVal; }
-	inline int getRow() { return m_rowVal; }
-	inline int getCol() { return m_colVal; }
+	inline int getGain() { return m_ctrl.gain; }
+	inline int getExp() { return m_ctrl.exp; }
+	inline int getRow() { return m_ctrl.row; }
+	inline int getCol() { return m_ctrl.col; }
 
 };
 

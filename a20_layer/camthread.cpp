@@ -22,81 +22,10 @@
 
 #include <linux/fs.h>
 #include <linux/kernel.h>
-#if defined(__arm__) && defined(__arm_V210__)
-#include <linux/videodev.h>
-#else
 #include <linux/videodev2.h>
 #endif
-#endif
-
-#define FB_DEVICE 	"/dev/fb0" /* Device Name */
 
 #define CAM_DEVICE 	"/dev/video0" /* Device Name */
-
-#define CAM_TYPE_IMAGE      0
-#define CAM_TYPE_LENSMETER  1
-
-#if defined( __arm_V210__)
-#define OUTPUT_PIXELFORMAT	V4L2_PIX_FMT_YUV420
-#elif defined( __arm_A20__)
-#define OUTPUT_PIXELFORMAT	V4L2_PIX_FMT_GREY
-#endif
-
-#ifdef __linux__
-/* CID extensions */
-#define V4L2_CID_ACTIVE_CAMERA		(V4L2_CID_PRIVATE_BASE + 0)
-#define V4L2_CID_NR_FRAMES			(V4L2_CID_PRIVATE_BASE + 1)
-#define V4L2_CID_RESET				(V4L2_CID_PRIVATE_BASE + 2)
-#undef V4L2_CID_TEST_PATTERN
-#define V4L2_CID_TEST_PATTERN		(V4L2_CID_PRIVATE_BASE + 3)
-#define V4L2_CID_SCALER_BYPASS		(V4L2_CID_PRIVATE_BASE + 4)
-#define V4L2_CID_JPEG_INPUT			(V4L2_CID_PRIVATE_BASE + 5)
-#define V4L2_CID_OUTPUT_ADDR		(V4L2_CID_PRIVATE_BASE + 10)
-#define V4L2_CID_INPUT_ADDR			(V4L2_CID_PRIVATE_BASE + 20)
-#define V4L2_CID_INPUT_ADDR_RGB		(V4L2_CID_PRIVATE_BASE + 21)
-#define V4L2_CID_INPUT_ADDR_Y		(V4L2_CID_PRIVATE_BASE + 22)
-#define V4L2_CID_INPUT_ADDR_CB		(V4L2_CID_PRIVATE_BASE + 23)
-#define V4L2_CID_INPUT_ADDR_CBCR	(V4L2_CID_PRIVATE_BASE + 24)
-#define V4L2_CID_INPUT_ADDR_CR		(V4L2_CID_PRIVATE_BASE + 25)
-#define V4L2_CID_EFFECT_ORIGINAL	(V4L2_CID_PRIVATE_BASE + 30)
-#define V4L2_CID_EFFECT_ARBITRARY	(V4L2_CID_PRIVATE_BASE + 31)
-#define V4L2_CID_EFFECT_NEGATIVE 	(V4L2_CID_PRIVATE_BASE + 33)
-#define V4L2_CID_EFFECT_ARTFREEZE	(V4L2_CID_PRIVATE_BASE + 34)
-#define V4L2_CID_EFFECT_EMBOSSING	(V4L2_CID_PRIVATE_BASE + 35)
-#define V4L2_CID_EFFECT_SILHOUETTE	(V4L2_CID_PRIVATE_BASE + 36)
-#define V4L2_CID_ROTATE_ORIGINAL	(V4L2_CID_PRIVATE_BASE + 40)
-#define V4L2_CID_ROTATE_90			(V4L2_CID_PRIVATE_BASE + 41)
-#define V4L2_CID_ROTATE_180			(V4L2_CID_PRIVATE_BASE + 42)
-#define V4L2_CID_ROTATE_270			(V4L2_CID_PRIVATE_BASE + 43)
-#define V4L2_CID_ROTATE_90_HFLIP	(V4L2_CID_PRIVATE_BASE + 44)
-#define V4L2_CID_ROTATE_90_VFLIP	(V4L2_CID_PRIVATE_BASE + 45)
-#define	V4L2_CID_ZOOM_IN			(V4L2_CID_PRIVATE_BASE + 51)
-#define V4L2_CID_ZOOM_OUT			(V4L2_CID_PRIVATE_BASE + 52)
-
-// by zwolf
-#define V4L2_CID_CAM_SELECT		V4L2_CID_PRIVATE_BASE+60
-#define V4L2_CID_DIRECT_WRITE	V4L2_CID_PRIVATE_BASE+61
-#define V4L2_CID_DIRECT_READ	V4L2_CID_PRIVATE_BASE+62
-
-#ifndef LOWORD
-#define LOWORD(l) ((quint16)(quint32)(l))
-#endif
-#ifndef HIWORD
-#define HIWORD(l) ((quint16)((((quint32)(l)) >> 16) & 0xFFFF))
-#endif
-#ifndef MAKELONG
-#define MAKELONG(low, high) ((quint32)(((quint16)(low)) | (((quint32)((quint16)(high))) << 16)))
-#endif
-
-#endif
-
-#ifndef MAKELONG
-#define MAKELONG(low, high) ((quint32)(((quint16)(low) | (((quint32)((quint16)(high))) << 16))))
-#endif
-
-#ifdef __arm__
-struct fb_var_screeninfo g_fbVar;
-#endif
 
 
 CamThread::CamThread(QObject *parent) :
@@ -105,7 +34,7 @@ CamThread::CamThread(QObject *parent) :
 {
 	m_runningFlag = false;
 
-	m_camFile = 0;
+	m_fdCam = 0;
 
 	for (int i = 0; i < CAM_STREAM_FRAMES; i++)
 	{
@@ -113,22 +42,17 @@ CamThread::CamThread(QObject *parent) :
 	}
 	m_camDataSize = 0;
 
-	m_camIndex = NoSelectedCamera;
-
 	m_camWidth = 0;
 	m_camHeight = 0;
 
 	_camDelay = 10;
 
-	m_rowVal = 0;
-	m_colVal = 0;
-	m_gainVal = 0;
-	m_expVal = 0;
+	::memset(&m_ctrl, 0, sizeof(m_ctrl));
 }
 
 bool CamThread::startCam(int cam_size)
 {
-#ifdef __arm__
+#ifdef __arm_A20__
 	QMutexLocker locker(&_mutex);
 
 	if (m_runningFlag)
@@ -159,10 +83,6 @@ bool CamThread::startCam(int cam_size)
 		break;
 	}
 
-	int mirrorMode = NoMirror;
-
-	m_camIndex = ImageCamera;
-
 	//
 	for (int i = 0; i < CAM_STREAM_FRAMES; i++)
 	{
@@ -172,26 +92,20 @@ bool CamThread::startCam(int cam_size)
 
 	//-------------------------------------------------------------------------
 	// camera
-	m_camFile = initCam(mirrorMode);
-
-	if (m_camFile <= 0)
+	m_fdCam = initCam();
+	if (m_fdCam <= 0)
 	{
-		m_camIndex = NoSelectedCamera;
 		return false;
 	}
 
 	qDebug("[CamThread::startCam] OK - initCam");
 
-	if ( g_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 && g_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0)
+	if ( g_ctrl(V4L2_CID_AUDIO_BASS, m_ctrl.row) && g_ctrl(V4L2_CID_AUDIO_TREBLE, m_ctrl.col) && g_ctrl(V4L2_CID_GAIN, m_ctrl.gain) && g_ctrl(V4L2_CID_EXPOSURE, m_ctrl.exp) )
 	{
-		m_startRowCol.setX(m_colVal);
-		m_startRowCol.setY(m_rowVal);
-		qDebug("[CamThread::startCam] OK - row,col");
-	}
+		m_ctrl.sRow = m_ctrl.row;
+		m_ctrl.sCol = m_ctrl.col;
 
-	if ( g_ctrl(V4L2_CID_GAIN, m_gainVal) == 0 && g_ctrl(V4L2_CID_EXPOSURE, m_expVal) == 0 )
-	{
-		qDebug("[CamThread::startCam] gain = %d, exp = %d", m_gainVal, m_expVal);
+		qDebug("[%s] row = %d, col = %d, gain = %d, exp = %d", Q_FUNC_INFO, m_ctrl.row, m_ctrl.col, m_ctrl.gain, m_ctrl.exp);
 	}
 
 	locker.unlock();
@@ -208,7 +122,7 @@ bool CamThread::startCam(int cam_size)
 
 void CamThread::stopCam()
 {
-#ifdef __arm__
+#ifdef __arm_A20__
 	QMutexLocker locker(&_mutex);
 
 	if (m_runningFlag == false)
@@ -218,11 +132,10 @@ void CamThread::stopCam()
 
 	wait();
 
-	//-------------------------------------------------------------------------
 	{
 		int type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-		if (::ioctl(m_camFile, VIDIOC_STREAMOFF, &type) == -1)
+		if (::ioctl(m_fdCam, VIDIOC_STREAMOFF, &type) == -1)
 		{
 			qDebug("[CamThread::stopCam] Error - ioctl(camFile, VIDIOC_STREAMOFF, &type)");
 		}
@@ -238,15 +151,13 @@ void CamThread::stopCam()
 		m_camData[i] = 0;
 	}
 	m_camDataSize = 0;
-
-	m_camIndex = NoSelectedCamera;
 #endif
 }
 
 
 void CamThread::run()
 {
-#ifdef __arm__
+#ifdef __arm_A20__
 	if (m_runningFlag)
 		return;
 
@@ -254,36 +165,24 @@ void CamThread::run()
 
 	_stopFlag = false;
 
-	switch (m_camIndex)
-	{
-	case ImageCamera:
-		runNormalCamera();
-		break;
-
-	default:
-		qDebug("[CamThread::run] Error - wrong camera index: %d", m_camIndex);
-	}
+	runCamera();
 
 	m_runningFlag = false;
 #endif
 }
 
-int CamThread::initCam(int mirrorMode)
+int CamThread::initCam()
 {			
-#ifdef __arm__
+#ifdef __arm_A20__
 	int camFile = 0;
 
-	if (m_camFile)
+	if (m_fdCam)
 	{
-		camFile = m_camFile;
+		camFile = m_fdCam;
 	}
 	else
 	{
-#ifdef __arm_A20__
 		camFile = ::open(CAM_DEVICE, O_RDWR | O_NONBLOCK, 0);
-#else
-		camFile = ::open(CAM_DEVICE, O_RDONLY);
-#endif
 		if (camFile <= 0)
 		{
 			qDebug("[CamThread::initCam] Error - open(CAM_DEVICE, O_RDONLY)");
@@ -293,7 +192,6 @@ int CamThread::initCam(int mirrorMode)
 
 	msleep(_camDelay);
 
-#ifdef __arm__
 	//-------------------------------------------------------------------------
 	{
 		int input = 0;
@@ -306,7 +204,6 @@ int CamThread::initCam(int mirrorMode)
 	}
 
 	msleep(_camDelay);
-#endif
 
 	//-------------------------------------------------------------------------
 	{
@@ -317,14 +214,12 @@ int CamThread::initCam(int mirrorMode)
 		vfmt.fmt.pix.width = m_camWidth;
 		vfmt.fmt.pix.height = m_camHeight;
 
-		vfmt.fmt.pix.pixelformat = OUTPUT_PIXELFORMAT;
+		vfmt.fmt.pix.pixelformat = V4L2_PIX_FMT_GREY;
 
 		vfmt.fmt.pix.priv = 0;
-#ifdef __arm_A20__
 		vfmt.fmt.pix.field = V4L2_FIELD_NONE;
 
 		qDebug("DBG pix.width = %d, pix.height = %d", m_camWidth, m_camHeight);
-#endif
 		if (::ioctl(camFile, VIDIOC_S_FMT, &vfmt) < 0)
 		{
 			qDebug("[CamThread::initCam] Error - VIDIOC_S_FMT, errno - %d", errno);
@@ -338,12 +233,8 @@ int CamThread::initCam(int mirrorMode)
 	//-------------------------------------------------------------------------
 	{
 		struct v4l2_requestbuffers req;
-		unsigned int loop;
-		int qcnt;
 
-		qcnt = 4;
-
-		req.count = qcnt;
+		req.count = CAM_STREAM_FRAMES;
 		req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 		req.memory = V4L2_MEMORY_MMAP;
 
@@ -353,10 +244,9 @@ int CamThread::initCam(int mirrorMode)
 			goto INIT_CAM_ERROR;
 		}
 
-		for (loop = 0; loop < req.count; loop++)
+		for (unsigned int loop = 0; loop < req.count; ++loop)
 		{
 			struct v4l2_buffer buf;
-			int i = loop;
 
 			buf.index = loop;
 			buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
@@ -373,60 +263,22 @@ int CamThread::initCam(int mirrorMode)
 
 			qDebug("[CamThread::initCam] VIDIOC_QUERYBUF - index: %d, length: %d, offset: %d", buf.index, buf.length, buf.m.offset);
 
-			int prot = PROT_READ;
-#ifdef __arm_A20__
-			prot |= PROT_WRITE;
-#endif
-			m_camData[i] = (char *)mmap(0, buf.length, prot, MAP_SHARED, camFile, buf.m.offset);
+			m_camData[loop] = (char *)mmap(0, buf.length, PROT_READ | PROT_WRITE, MAP_SHARED, camFile, buf.m.offset);
 			m_camDataSize = buf.length;
 
-			if (m_camData[i] == MAP_FAILED)
+			if (m_camData[loop] == MAP_FAILED)
 			{
 				qDebug("[CamThread::initCam] Error - mmap (%d)", errno);
 				goto INIT_CAM_ERROR;
 			}
-#ifdef __arm_A20__
+
 			if ( -1 == ::ioctl(camFile, VIDIOC_QBUF, &buf))
 			{
 				qDebug("[CamThread::initCam] Error - VIDIOC_QBUF, errno - %d", errno);
 			}
-#endif
-			qDebug("m_camData[%d] = %p, m_camDataSize = %d", i, m_camData[i], m_camDataSize);
+			qDebug("m_camData[%d] = %p, m_camDataSize = %d", loop, m_camData[loop], m_camDataSize);
 		}
 	}
-
-	msleep(_camDelay);
-
-#ifdef __arm_V210__
-	//-------------------------------------------------------------------------
-	{
-		struct v4l2_control ctrl;
-
-		ctrl.id = V4L2_CID_VFLIP;
-		ctrl.value = (mirrorMode == ColumnMirror) ? 1 : 0;
-
-		qDebug("[CamThread::initCam] V4L2_CID_VFLIP (%d)", ctrl.value);
-
-		if (::ioctl(camFile, VIDIOC_S_CTRL, &ctrl) == -1)
-		{
-			qDebug("[CamThread::initCam] Error - ioctl(camFile, VIDIOC_S_CTRL, V4L2_CID_VFLIP), errno - %d", errno);
-			goto INIT_CAM_ERROR;
-		}
-
-		msleep(_camDelay);
-
-		ctrl.id = V4L2_CID_HFLIP;
-		ctrl.value = (mirrorMode == RowMirror) ? 1 : 0;
-
-		qDebug("[CamThread::initCam] V4L2_CID_HFLIP (%d)", ctrl.value);
-
-		if (::ioctl(camFile, VIDIOC_S_CTRL, &ctrl) == -1)
-		{
-			qDebug("[CamThread::initCam] Error - ioctl(camFile, VIDIOC_S_CTRL, V4L2_CID_HFLIP), errno - %d", errno);
-			goto INIT_CAM_ERROR;
-		}
-	}
-#endif
 
 	msleep(_camDelay);
 
@@ -441,24 +293,19 @@ int CamThread::initCam(int mirrorMode)
 		}
 	}
 
-//	msleep(_camDelay);
-
-	//std::cout << "[CamThread::initCam] Step - " << 13 << std::endl << std::flush;
-
 	return camFile;
 
 INIT_CAM_ERROR:
 	if(camFile != 0) ::close(camFile);
 	return 0;
 #else
-	Q_UNUSED(mirrorMode);
-	return false;
+	return 0;
 #endif
 }
 
-void CamThread::runNormalCamera()
+void CamThread::runCamera()
 {
-#ifdef __arm__
+#ifdef __arm_A20__
 	struct v4l2_buffer camBuffer;
 
 	char* camData;
@@ -470,7 +317,7 @@ void CamThread::runNormalCamera()
 	timeout.tv_sec = 1;
 	timeout.tv_usec = 0;
 
-	qDebug("[CamThread::runNormalCamera] STARTED");
+	qDebug("[%s] start", Q_FUNC_INFO);
 
 	while (!_stopFlag)
 	{
@@ -480,42 +327,41 @@ void CamThread::runNormalCamera()
 		camBuffer.memory = V4L2_MEMORY_MMAP;
 
 		FD_ZERO(&rdSet);
-		FD_SET(m_camFile, &rdSet);
+		FD_SET(m_fdCam, &rdSet);
 
 		timeout.tv_sec = 1;
 		timeout.tv_usec = 0;
 
-		ret = select(m_camFile + 1, &rdSet, NULL, NULL, &timeout);
+		ret = select(m_fdCam + 1, &rdSet, NULL, NULL, &timeout);
 
 		if (ret == -1)
 		{
-			qDebug("[CamThread::runNormalCamera] Error - select");
+			qDebug("[%s] select error %d", Q_FUNC_INFO, errno);
 			continue;
 		}
 		else if (ret == 0)
 		{
-			qDebug("[CamThread::runNormalCamera] Error - timeout");
+			qDebug("[%s] select timeout", Q_FUNC_INFO);
 			continue;
 		}
-		else if (FD_ISSET(m_camFile, &rdSet))
+		else if (FD_ISSET(m_fdCam, &rdSet))
 		{	
-			if ( -1 == ::ioctl(m_camFile, VIDIOC_DQBUF, &camBuffer) )
+			if ( -1 == ::ioctl(m_fdCam, VIDIOC_DQBUF, &camBuffer) )
 			{
-				qDebug("[CamThread::runNormalCamera] Error - VIDIOC_DQBUF (%d)", errno);
+				qDebug("[%s] VIDIOC_DQBUF error %d", Q_FUNC_INFO, errno);
 				continue;
 			}
 
-#ifdef __arm_A20__
-			if ( -1 == ::ioctl(m_camFile, VIDIOC_QBUF, &camBuffer))
+			if ( -1 == ::ioctl(m_fdCam, VIDIOC_QBUF, &camBuffer))
 			{
-				qDebug("[CamThread::runNormalCamera] Error - VIDIOC_QBUF, errno - %d", errno);
+				qDebug("[%s] VIDIOC_QBUF error %d", Q_FUNC_INFO, errno);
+				continue;
 			}
-#endif
 		}
 		camData = m_camData[camBuffer.index];
 		emit signalCamStream(camData, camBuffer.m.offset);
 	}
-	qDebug("[CamThread::runNormalCamera] STOPED");
+	qDebug("[%s] end", Q_FUNC_INFO);
 #endif
 }
 
@@ -526,79 +372,114 @@ bool CamThread::isRunning()
 	return m_runningFlag;
 }
 
-int CamThread::s_ctrl(int id, int value)
+bool CamThread::s_ctrl(int id, int value)
 {
+#ifdef __arm_A20__
 	struct v4l2_control ctl;
 
 	ctl.id = id;
 	ctl.value = value;
 
-	return ::ioctl(m_camFile, VIDIOC_S_CTRL, &ctl);
+	if ( ::ioctl(m_fdCam, VIDIOC_S_CTRL, &ctl) == 0 )
+		return true;
+	else
+		return false;
+#else
+	Q_UNUSED(id);
+	Q_UNUSED(value);
+	return false;
+#endif
 }
 
-int CamThread::g_ctrl(int id, int &value)
+bool CamThread::g_ctrl(int id, int &value)
 {
+#ifdef __arm_A20__
 	struct v4l2_control ctl;
 
 	ctl.id = id;
 
-	int ret = ::ioctl(m_camFile, VIDIOC_G_CTRL, &ctl);
-	if ( ret == 0 )
+	if ( ::ioctl(m_fdCam, VIDIOC_G_CTRL, &ctl) == 0 )
+	{
 		value = ctl.value;
+		return true;
+	}
+	else
+		return false;
+#else
+	Q_UNUSED(id);
+	Q_UNUSED(value);
 
-	return ret;
+	return false;
+#endif
 }
 
-void CamThread::adjRow(bool up)
+bool CamThread::adjRow(bool up, int step)
 {
-	adj_v4l2_cid(V4L2_CID_AUDIO_BASS, m_rowVal, up, 0, 511, "m_gainVal");
+	return adj_v4l2_cid(V4L2_CID_AUDIO_BASS, m_ctrl.row, up, 0, 511, "row", step);
 }
 
-void CamThread::adjCol(bool up)
+bool CamThread::adjCol(bool up, int step)
 {
-	adj_v4l2_cid(V4L2_CID_AUDIO_TREBLE, m_colVal, up, 0, 639, "m_gainVal");
+	return adj_v4l2_cid(V4L2_CID_AUDIO_TREBLE, m_ctrl.col, up, 0, 639, "col", step);
 }
 
-void CamThread::resetRowCol()
+bool CamThread::resetRowCol()
 {
-	m_rowVal = m_startRowCol.y();
-	m_colVal = m_startRowCol.x();
-
-	if ( s_ctrl(V4L2_CID_AUDIO_BASS, m_rowVal) == 0 )
-		qDebug("m_rowVal = %d", m_rowVal);
-
-	if ( s_ctrl(V4L2_CID_AUDIO_TREBLE, m_colVal) == 0 )
-		qDebug("m_colVal = %d", m_colVal);
+	if ( s_ctrl(V4L2_CID_AUDIO_BASS, m_ctrl.sRow) && s_ctrl(V4L2_CID_AUDIO_TREBLE, m_ctrl.sCol) )
+	{
+		m_ctrl.row = m_ctrl.sRow;
+		m_ctrl.col = m_ctrl.sCol;
+		qDebug("row = %d, col = %d", m_ctrl.row, m_ctrl.col);
+		return true;
+	}
+	return false;
 }
 
-void CamThread::adjGain(bool up)
+bool CamThread::adjGain(bool up, int step)
 {
-	adj_v4l2_cid(V4L2_CID_GAIN, m_gainVal, up, 0, 127, "m_gainVal");
+	return adj_v4l2_cid(V4L2_CID_GAIN, m_ctrl.gain, up, 0, 127, "gain", step);
 }
 
-void CamThread::adjExp(bool up)
+bool CamThread::adjExp(bool up, int step)
 {
-	adj_v4l2_cid(V4L2_CID_EXPOSURE, m_expVal, up, 0, 127, "m_expVal");
+	return adj_v4l2_cid(V4L2_CID_EXPOSURE, m_ctrl.exp, up, 0, 127, "exp", step);
 }
 
-void CamThread::adj_v4l2_cid(int v4l2_id, int &var, bool up, int min, int max, const char *pr_name)
+bool CamThread::adj_v4l2_cid(int v4l2_id, int &var, bool up, int min, int max, const char *pr_name, int step)
 {
 	if ( up )
 	{
 		if ( var < max)
 		{
-			++var;
-			if ( s_ctrl(v4l2_id, var) == 0 )
+			var += step;
+			if ( s_ctrl(v4l2_id, var) )
+			{
 				qDebug("%s = %d", pr_name, var);
+				return true;
+			}
 		}
 	}
 	else
 	{
 		if ( var > min )
 		{
-			--var;
-			if ( s_ctrl(v4l2_id, var) == 0 )
+			var -= step;
+			if ( s_ctrl(v4l2_id, var) )
+			{
 				qDebug("%s = %d", pr_name, var);
+				return true;
+			}
 		}
 	}
+	return false;
+}
+
+void CamThread::closeCam()
+{
+	stopCam();
+
+	if ( m_fdCam > 0 )
+		::close(m_fdCam);
+
+	m_fdCam = 0;
 }
