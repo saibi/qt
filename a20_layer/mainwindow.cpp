@@ -368,6 +368,11 @@ void MainWindow::on_pushButton_camSize_clicked()
 	}
 	else if ( m_camSize == CamThread::CAM_SIZE_640)
 	{
+		m_camSize = CamThread::CAM_SIZE_800;
+		ui->pushButton_camSize->setText("800");
+	}
+	else if ( m_camSize == CamThread::CAM_SIZE_800)
+	{
 		m_camSize = CamThread::CAM_SIZE_960;
 		ui->pushButton_camSize->setText("960");
 	}

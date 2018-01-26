@@ -66,6 +66,11 @@ bool CamThread::startCam(int cam_size)
 		m_camHeight = 480;
 		break;
 
+	case CAM_SIZE_800:
+		m_camWidth = 800;
+		m_camHeight = 480;
+		break;
+
 	case CAM_SIZE_960:
 		m_camWidth = 960;
 		m_camHeight = 960;
