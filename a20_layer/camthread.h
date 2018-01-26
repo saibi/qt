@@ -43,6 +43,7 @@ public:
 	bool resetRowCol();
 	bool adjGain(bool up, int step = 1);
 	bool adjExp(bool up, int step = 1);
+	bool vflip(bool on);
 
 	void closeCam();
 

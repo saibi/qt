@@ -604,7 +604,7 @@
             <widget class="QPushButton" name="pushButton_camSize">
              <property name="minimumSize">
               <size>
-               <width>70</width>
+               <width>60</width>
                <height>40</height>
               </size>
              </property>
@@ -616,6 +616,28 @@
              </property>
              <property name="text">
               <string>480</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_vflip">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>40</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>vflip</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

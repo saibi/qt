@@ -483,3 +483,17 @@ void CamThread::closeCam()
 
 	m_fdCam = 0;
 }
+
+bool CamThread::vflip(bool on)
+{
+	if ( s_ctrl(V4L2_CID_VFLIP, on ? 1 : 0) )
+	{
+		qDebug("[%s] s_ctrl vflip %d ok", Q_FUNC_INFO, on);
+		return true;
+	}
+	else
+	{
+		qDebug("[%s] s_ctrl vflip %d err", Q_FUNC_INFO, on);
+		return false;
+	}
+}

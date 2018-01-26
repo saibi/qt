@@ -92,6 +92,8 @@ private slots:
 
 	void on_pushButton_mod_clicked();
 
+	void on_pushButton_vflip_clicked();
+
 protected:
 	bool inputIntValue(const QString & title, int min, int max, int & value);
 

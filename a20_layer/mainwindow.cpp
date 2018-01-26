@@ -597,3 +597,13 @@ void MainWindow::on_pushButton_mod_clicked()
 
 	qDebug("[%s] modify cam buf %d", Q_FUNC_INFO, m_modifyCamBuf);
 }
+
+void MainWindow::on_pushButton_vflip_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	if ( ui->pushButton_vflip->isChecked() )
+		CamThread::instance().vflip(true);
+	else
+		CamThread::instance().vflip(false);
+}
