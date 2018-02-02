@@ -612,3 +612,10 @@ void MainWindow::on_pushButton_vflip_clicked()
 	else
 		CamThread::instance().vflip(false);
 }
+
+void MainWindow::on_pushButton_test1_clicked()
+{
+	qDebug("[%s] call camStart", Q_FUNC_INFO);
+
+	CamThread::instance().startCam(m_camSize);
+}

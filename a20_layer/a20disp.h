@@ -46,7 +46,7 @@ public:
 	bool removeLayer(int idx);
 	void setCamBufAddr(unsigned int addr, int idx = LAYER_CAM_BUF);
 	bool moveLayer(int idx, int x, int y, int width, int height);
-	bool enableColorKey(int idx, unsigned int color);
+	bool enableColorKey(int idx, unsigned int color = 0xff00);
 	bool disableColorKey(int idx);
 
 
