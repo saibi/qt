@@ -252,8 +252,17 @@ void MainWindow::on_actionOpen_triggered()
 
 			::memcpy(img.bits(), bin.constData(), bin.size());
 
-			ui->label->setPixmap(QPixmap::fromImage(img.mirrored(true, true)));
+			QImage sc = img.mirrored(true, true);
+			ui->label->setPixmap(QPixmap::fromImage(sc));
+
+			QString imgPath;
+			imgPath.sprintf("%s_%04d.png", qPrintable(filePath), i);
+			sc.save( imgPath);
+
 		}
 	}
+
+
+	qDebug("[%s] finished.\n", Q_FUNC_INFO);
 }
 
