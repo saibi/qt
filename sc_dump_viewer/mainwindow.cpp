@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QFileDialog>
+#include <QUrl>
 
 unsigned char cep4_palette_raw_data[] =
 {
@@ -100,6 +101,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	setAcceptDrops(true);
+
 	for ( int i = 0 ; i < 256; ++i)
 	{
 		m_colorTable.append(qRgb( cep4_palette_raw_data[i*4 +2], cep4_palette_raw_data[i*4 +1], cep4_palette_raw_data[i*4 + 0]));
@@ -109,6 +112,24 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *e)
+{
+	if ( e->mimeData()->hasUrls() )
+	{
+		e->acceptProposedAction();
+	}
+}
+
+void MainWindow::dropEvent(QDropEvent *e)
+{
+	foreach ( const QUrl &url, e->mimeData()->urls())
+	{
+		QString fileName = url.toLocalFile();
+		qDebug("[%s] drop %s", Q_FUNC_INFO, qPrintable(fileName));
+		convertScreenShot(fileName);
+	}
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -150,29 +171,15 @@ static unsigned short ccit_crc(unsigned start_crc, unsigned char *p, int len)
 		return (crc.w);
 }
 
-
-void MainWindow::on_actionOpen_triggered()
+int MainWindow::readDumpTextFile(const QString &filePath, QList<QByteArray> & dumpList)
 {
-	qDebug("[%s]", Q_FUNC_INFO);
-
-	// select file
-	QString filePath = QFileDialog::getOpenFileName(this, "Open Dump File", m_prevFile, "Dump files (*.txt);;All files (*.*)");
-
-	if ( filePath.isEmpty() )
-	{
-			qDebug("[%s] no file selected. canceled.", Q_FUNC_INFO);
-			return;
-	}
-	qDebug("[%s] open %s.", Q_FUNC_INFO, qPrintable(filePath));
-
-
 
 	// read file contents
 	QFile file(filePath);
 	if ( ! file.open(QFile::ReadOnly) )
 	{
 		qDebug("[%s] open error [%s].", Q_FUNC_INFO, qPrintable(filePath));
-		return;
+		return 0;
 
 	}
 	QByteArray data = file.readAll();
@@ -181,8 +188,7 @@ void MainWindow::on_actionOpen_triggered()
 
 
 
-	// search hex dump
-	QList <QByteArray> hexList;
+	dumpList.clear();
 
 	int nextIdx = 0;
 	while ( 1 )
@@ -193,7 +199,7 @@ void MainWindow::on_actionOpen_triggered()
 			int endIdx = data.indexOf("CPE-4000 screen hex end", startIdx);
 			if ( endIdx > startIdx )
 			{
-				hexList.append(data.mid(startIdx, endIdx - startIdx));
+				dumpList.append(data.mid(startIdx, endIdx - startIdx));
 				nextIdx = endIdx + 25;
 			}
 			else
@@ -202,50 +208,58 @@ void MainWindow::on_actionOpen_triggered()
 		else
 			break;
 	}
+
+	return dumpList.size();
+}
+
+QByteArray MainWindow::textDumpToBin(const QByteArray &src)
+{
+	QByteArray tmp = src;
+
+	int crcIdx = src.lastIndexOf("CRC ");
+	QString crcStr = src.mid( crcIdx ).trimmed();
+	crcStr.remove("CRC");
+	int crcVal = crcStr.trimmed().toInt();
+
+	tmp.remove(crcIdx, 100);
+
+	qDebug("[%s] CRC = %d", Q_FUNC_INFO, crcVal);
+
+
+	int startIdx = tmp.indexOf("HEX");
+	tmp.remove(0, startIdx + 3);
+	tmp.replace(" ", "");
+	tmp.replace("\r", "");
+	tmp.replace("\n", "");
+
+	QByteArray bin = QByteArray::fromHex(tmp);
+
+	int calcVal = ccit_crc(0, (unsigned char *)bin.constData(), bin.size());
+	if ( crcVal == calcVal )
+		return bin;
+
+	return QByteArray();
+}
+
+void MainWindow::convertScreenShot(const QString & filePath)
+{
+	QList <QByteArray> hexList;
+	readDumpTextFile(filePath, hexList);
+
 	if ( hexList.size()  == 0 )
 	{
-		qDebug("[%s] not found", Q_FUNC_INFO);
+		qDebug("[%s] hex dump not found", Q_FUNC_INFO);
 		return;
 	}
 
 	qDebug("[%s] %d hex dumps found", Q_FUNC_INFO, hexList.size());
 
 
-	// convert hex to bin
-	QList <QByteArray> binList;
-
 	for (int i = 0 ; i < hexList.size(); ++i )
 	{
-		int crcIdx = hexList[i].lastIndexOf("CRC ");
-		QString crcStr = hexList[i].mid( crcIdx ).trimmed();
+		QByteArray bin = textDumpToBin(hexList[i]);
 
-		hexList[i].remove(crcIdx, 100);
-
-		qDebug("[%s] CRC [%s]", Q_FUNC_INFO, qPrintable(crcStr));
-
-		crcStr.remove("CRC");
-		int crcVal = crcStr.trimmed().toInt();
-
-		qDebug("[%s] #%d CRC = %d", Q_FUNC_INFO, i ,crcVal);
-
-
-		int startIdx = hexList[i].indexOf("HEX");
-		hexList[i].remove(0, startIdx + 3);
-		hexList[i].replace(" ", "");
-		hexList[i].replace("\r", "");
-		hexList[i].replace("\n", "");
-
-		//qDebug("######\n%s\n\n", hexList[i].constData());
-
-
-		QByteArray bin = QByteArray::fromHex(hexList[i]);
-
-
-		int calcVal = ccit_crc(0, (unsigned char *)bin.constData(), bin.size());
-
-		qDebug("[%s] bin size %d, calc crc = %d", Q_FUNC_INFO, bin.size(), calcVal);
-
-		if ( crcVal == calcVal )
+		if ( !bin.isEmpty())
 		{
 			QImage img(800, 600, QImage::Format_Indexed8);
 			img.setColorTable(m_colorTable);
@@ -258,11 +272,26 @@ void MainWindow::on_actionOpen_triggered()
 			QString imgPath;
 			imgPath.sprintf("%s_%04d.png", qPrintable(filePath), i);
 			sc.save( imgPath);
-
 		}
 	}
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
 
 
-	qDebug("[%s] finished.\n", Q_FUNC_INFO);
+	// select file
+	QString filePath = QFileDialog::getOpenFileName(this, "Open Dump File", m_prevFile, "Dump files (*.txt);;All files (*.*)");
+
+	if ( filePath.isEmpty() )
+	{
+			qDebug("[%s] no file selected. canceled.", Q_FUNC_INFO);
+			return;
+	}
+	qDebug("[%s] open %s.", Q_FUNC_INFO, qPrintable(filePath));
+
+	convertScreenShot(filePath);
+
 }
 

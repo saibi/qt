@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDropEvent>
 
 namespace Ui {
 class MainWindow;
@@ -15,6 +16,15 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+protected:
+	void dragEnterEvent(QDragEnterEvent *e);
+	void dropEvent(QDropEvent *e);
+
+	int readDumpTextFile(const QString & file, QList <QByteArray> & dumpList);
+
+	QByteArray textDumpToBin(const QByteArray & src);
+
+	void convertScreenShot(const QString & filePath);
 
 private slots:
 	void on_actionExit_triggered();
