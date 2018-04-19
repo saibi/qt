@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adj_rules>
+
+	<rule id="1">
+		<name>size</name>
+		<desc>size adjustment</desc>
+		<job test="sd">abc</job>
+	</rule>
+	<rule id="2">
+		<name>margin</name>
+		<desc>margin adjustment</desc>
+		<job type="internal">square</job>
+	</rule>
+</adj_rules>
+
