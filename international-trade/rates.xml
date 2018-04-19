@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rates>
+	<rate>
+		<from>AUD</from>
+		<to>CAD</to>
+		<conversion>1.0079</conversion>
+	</rate>
+	<rate>
+		<from>USD</from>
+		<to>KOR</to>
+		<conversion>1059.460</conversion>
+	</rate>
+</rates>
+
