@@ -4,39 +4,61 @@
 #include <QDebug>
 
 XmlAdj::XmlAdj(const QString & filename) :
-    _filename(filename)
+	m_fileName(filename)
 {}
 
-void XmlAdj::read() {
-    QFile xmlFile(_filename);
-    xmlFile.open(QIODevice::ReadOnly);
-    xml.setDevice(&xmlFile);
+void XmlAdj::read()
+{
+	if ( m_fileName.isEmpty() )
+	{
+		qDebug("[%s] empty filename", Q_FUNC_INFO);
+		return;
+	}
 
-	if (xml.readNextStartElement() && xml.name() == "adj_rules")
-	   processAdjRules();
+	QFile xmlFile(m_fileName);
+    xmlFile.open(QIODevice::ReadOnly);
+	m_xml.setDevice(&xmlFile);
+
+	if (m_xml.readNextStartElement() && m_xml.name() == "adj_rules")
+	   parseAdjRules();
 
     // readNextStartElement() leaves the stream in
     // an invalid state at the end. A single readNext()
     // will advance us to EndDocument.
-    if (xml.tokenType() == QXmlStreamReader::Invalid)
-        xml.readNext();
+	if (m_xml.tokenType() == QXmlStreamReader::Invalid)
+		m_xml.readNext();
 
-	if (xml.hasError())
+	if (m_xml.hasError())
 	{
-        xml.raiseError();
+		m_xml.raiseError();
         qDebug() << errorString();
     }
+
+	if ( m_adjRules.size() > 0 )
+	{
+		for (int i = 0; i < m_adjRules.size(); ++i )
+		{
+			dumpRule(m_adjRules.at(i));
+		}
+	}
 }
 
-void XmlAdj::processAdjRules() {
-	if (!xml.isStartElement() || xml.name() != "adj_rules")
+void XmlAdj::dumpRule(const RuleElements &rule)
+{
+	qDebug("#%s [%s] %s\nJOB (%d) : %s", qPrintable(rule.id), qPrintable(rule.name), qPrintable(rule.desc), rule.jobType, qPrintable(rule.job));
+}
+
+void XmlAdj::parseAdjRules()
+{
+	if (!m_xml.isStartElement() || m_xml.name() != "adj_rules")
         return;
-	while (xml.readNextStartElement())
+
+	while (m_xml.readNextStartElement())
 	{
-		if (xml.name() == "rule")
-			processRule();
+		if (m_xml.name() == "rule")
+			parseRule();
         else
-            xml.skipCurrentElement();
+			m_xml.skipCurrentElement();
 	}
 }
 
@@ -45,43 +67,48 @@ void XmlAdj::processAdjRules() {
 // from all child elements.
 //#define USE_READ_ELEMENT_TEXT 1
 
-void XmlAdj::processRule()
+void XmlAdj::parseRule()
 {
-	if (!xml.isStartElement() || xml.name() != "rule")
+	if (!m_xml.isStartElement() || m_xml.name() != "rule")
         return;
 
-	if ( xml.attributes().hasAttribute("id") )
-		qDebug("id = %s", qPrintable(xml.attributes().value("id").toString()));
+	struct RuleElements rule;
 
-	while (xml.readNextStartElement())
+	if ( m_xml.attributes().hasAttribute("id") )
 	{
+		rule.id = m_xml.attributes().value("id").toString();
+	}
 
-		if ( xml.name() == "job" && xml.isStartElement() )
+	while (m_xml.readNextStartElement())
+	{
+		if ( m_xml.name() == "name" )
 		{
-
-			qDebug("#%d", xml.attributes().size());
-
-			QString n;
-			if ( xml.attributes().hasAttribute("type") )
-				n = xml.attributes().value("type").toString();
-
-			qDebug("[%s %s] = %s", qPrintable(xml.name().toString()), qPrintable(n), qPrintable(xml.readElementText()));
-
-			//qDebug("%s = %s", qPrintable(xml.name().toString()), qPrintable(xml.attributes().value("type").toString()), qPrintable(xml.readElementText()));
-			//if ( xml.attributes().hasAttribute("test") )
-			//	qDebug("type attr");
+			rule.name = m_xml.readElementText();
 		}
-		else
-			qDebug("[%s] = %s", qPrintable(xml.name().toString()), qPrintable(xml.readElementText()));
+		else if ( m_xml.name() == "desc" )
+		{
+			rule.desc = m_xml.readElementText();
+		}
+		else if ( m_xml.name() == "job" )
+		{
+			QString typeStr = m_xml.attributes().value("type").toString();
+			if ( typeStr == "adj" )
+				rule.jobType = JOB_TYPE_ADJ;
+			else if (typeStr == "sd" )
+				rule.jobType = JOB_TYPE_SD;
+			else
+				rule.jobType = JOB_TYPE_INTERNAL_DATA;
 
-
-    }
+			rule.job = m_xml.readElementText();
+		}
+	}
+	m_adjRules.append(rule);
 }
 
 QString XmlAdj::errorString()
 {
     return QObject::tr("%1\nLine %2, column %3")
-            .arg(xml.errorString())
-            .arg(xml.lineNumber())
-            .arg(xml.columnNumber());
+			.arg(m_xml.errorString())
+			.arg(m_xml.lineNumber())
+			.arg(m_xml.columnNumber());
 }
