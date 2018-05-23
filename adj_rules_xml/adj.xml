@@ -10,5 +10,15 @@
 		<desc>margin adjustment</desc>
 		<job type="internal">square</job>
 	</rule>
+	<rule id="3">
+		<name>axis</name>
+		<desc>axis adjustment</desc>
+		<job type="internal">square</job>
+	</rule>
+	<rule id="4">
+		<name>sb</name>
+		<desc>safety beveling adjustment</desc>
+		<job type="internal">circle</job>
+	</rule>
 </adj_rules>
 
