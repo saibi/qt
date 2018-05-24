@@ -444,6 +444,9 @@ void CamThread::camLoop()
 
 	m_currentCamStreamBuffer = 0;
 
+#ifdef PUFF_DQ_TEST
+	qDebug("DBG DQBUF, QBUF test ");
+#endif
 	while (!_stopFlag)
 	{
 		memset(&camBuffer, 0, sizeof(camBuffer));
@@ -471,12 +474,39 @@ void CamThread::camLoop()
 		}
 		else if (FD_ISSET(m_fdCam, &rdSet))
 		{
+#ifdef PUFF_DQ_TEST
+			++loopCount;
+
+			int dqcount = 0;
+			while (1)
+			{
+				++dqcount;
+				qDebug("DBG #%d, ioctl try #%d", loopCount, dqcount);
+				if ( -1 == ::ioctl(m_fdCam, VIDIOC_DQBUF, &camBuffer) )
+				{
+					qDebug("[%s] VIDIOC_DQBUF error %d", Q_FUNC_INFO, errno);
+					break;
+				}
+				A20Disp::instance().setCamBufAddr( camBuffer.m.offset );
+
+				if ( -1 == ::ioctl(m_fdCam, VIDIOC_QBUF, &camBuffer))
+				{
+					qDebug("[%s] VIDIOC_QBUF error %d", Q_FUNC_INFO, errno);
+					break;
+				}
+			}
+			continue;
+#endif
+
 			if ( -1 == ::ioctl(m_fdCam, VIDIOC_DQBUF, &camBuffer) )
 			{
 				qDebug("[%s] VIDIOC_DQBUF error %d", Q_FUNC_INFO, errno);
 				continue;
 			}
+
 			++loopCount;
+
+
 
 
 #ifdef PUFF_CAM_THREAD_CALIB
