@@ -230,6 +230,21 @@ void MainWindow::on_pushButton_camSize_clicked()
 {
 	if ( m_camSize == CamThread::SIZE_480s )
 	{
+		m_camSize = CamThread::SIZE_624;
+		ui->pushButton_camSize->setText("624");
+	}
+	else if ( m_camSize == CamThread::SIZE_624)
+	{
+		m_camSize = CamThread::SIZE_720;
+		ui->pushButton_camSize->setText("720");
+	}
+	else if ( m_camSize == CamThread::SIZE_720)
+	{
+		m_camSize = CamThread::SIZE_816;
+		ui->pushButton_camSize->setText("816");
+	}
+	else if ( m_camSize == CamThread::SIZE_816)
+	{
 		m_camSize = CamThread::SIZE_960;
 		ui->pushButton_camSize->setText("960");
 	}
@@ -375,4 +390,36 @@ void MainWindow::on_pushButton_exit_clicked()
 
 	CamThread::instance().closeCameraDevice();
 	close();
+}
+
+void MainWindow::on_pushButton_streamOn_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	if ( CamThread::instance().test_stream(true) )
+		ui->statusBar->showMessage("stream on");
+}
+
+void MainWindow::on_pushButton_streamOff_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+	if ( CamThread::instance().test_stream(false) )
+		ui->statusBar->showMessage("stream off");
+}
+
+void MainWindow::on_pushButton_960scale_clicked()
+{
+	qDebug("[%s]", Q_FUNC_INFO);
+
+	if ( ui->pushButton_960scale->isChecked() )
+	{
+		ui->pushButton_960scale->setText("960 scale");
+		ui->statusBar->showMessage("960 scale");
+		CamThread::instance().test_960scaling(true);
+	}
+	else
+	{
+		ui->pushButton_960scale->setText("960 1");
+		ui->statusBar->showMessage("960 1");
+		CamThread::instance().test_960scaling(false);
+	}
 }

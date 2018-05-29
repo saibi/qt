@@ -74,6 +74,7 @@ public:
 		SIZE_720 = 720, // 720 x 720
 		SIZE_768 = 768, // 768 x 768
 		SIZE_800 = 800, // 800 x 800
+		SIZE_816 = 816, // 816 x 816
 		SIZE_960 = 960,	// 960 x 960
 		SIZE_1024 = 1024, // 1024 x 1024
 		SIZE_1280 =	1280, // 1280 x 1024
@@ -135,6 +136,10 @@ public:
 	static QString screenShotDir;
 	static bool screenShotDateTime;
 
+
+	bool test_stream(bool flag);
+	void test_960scaling(bool flag) { m_960scaling = flag; };
+
 protected:
 	void run();
 
@@ -159,7 +164,7 @@ private:
 
 	enum InternalConstants
 	{
-		CAM_STREAM_BUFFERS = 5, /* Number of streaming buffer */
+		CAM_STREAM_BUFFERS = 8, /* Number of streaming buffer */
 	};
 
 	QMutex _mutex;
@@ -211,6 +216,7 @@ private:
 	bool m_showCamHideFB;
 	bool m_dispScaling;
 	int m_scalingSrcSize;
+	bool m_960scaling;
 
 	QMutex _compensationMutex;
 	bool m_bCompensation;

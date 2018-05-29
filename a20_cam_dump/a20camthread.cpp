@@ -78,6 +78,8 @@ CamThread::CamThread(QObject *parent) :
 	m_screenShotType = SC_NONE;
 	m_startCamSize = 0;
 
+	m_960scaling = false;
+
 	connect(this, SIGNAL(signalCaptureComplete(QImage*)), this, SLOT(slotCaptureComplete(QImage*)));
 }
 
@@ -107,6 +109,7 @@ bool CamThread::size2wh(int camSize, int *w, int *h)
 	case SIZE_720:
 	case SIZE_768:
 	case SIZE_800:
+	case SIZE_816:
 	case SIZE_960:
 	case SIZE_1024:
 		if ( w )
@@ -474,30 +477,6 @@ void CamThread::camLoop()
 		}
 		else if (FD_ISSET(m_fdCam, &rdSet))
 		{
-#ifdef PUFF_DQ_TEST
-			++loopCount;
-
-			int dqcount = 0;
-			while (1)
-			{
-				++dqcount;
-				qDebug("DBG #%d, ioctl try #%d", loopCount, dqcount);
-				if ( -1 == ::ioctl(m_fdCam, VIDIOC_DQBUF, &camBuffer) )
-				{
-					qDebug("[%s] VIDIOC_DQBUF error %d", Q_FUNC_INFO, errno);
-					break;
-				}
-				A20Disp::instance().setCamBufAddr( camBuffer.m.offset );
-
-				if ( -1 == ::ioctl(m_fdCam, VIDIOC_QBUF, &camBuffer))
-				{
-					qDebug("[%s] VIDIOC_QBUF error %d", Q_FUNC_INFO, errno);
-					break;
-				}
-			}
-			continue;
-#endif
-
 			if ( -1 == ::ioctl(m_fdCam, VIDIOC_DQBUF, &camBuffer) )
 			{
 				qDebug("[%s] VIDIOC_DQBUF error %d", Q_FUNC_INFO, errno);
@@ -506,12 +485,11 @@ void CamThread::camLoop()
 
 			++loopCount;
 
-
-
+			//qDebug("DBG #%d, idx %d", loopCount, camBuffer.index);
 
 #ifdef PUFF_CAM_THREAD_CALIB
 			// calib & disp 1/2
-			if ( processFrame || m_camSize != SIZE_480s )
+			//if ( processFrame || m_camSize != SIZE_480s )
 #endif
 			{
 #ifdef A20_CAM_THREAD_USE_DISP
@@ -531,7 +509,7 @@ void CamThread::camLoop()
 					}
 
 #ifdef PUFF_CAM_THREAD_CALIB
-					calibrateImage(m_camData[camBuffer.index], img);
+					//calibrateImage(m_camData[camBuffer.index], img);
 					A20Disp::instance().setCamBufAddr( camBuffer.m.offset );
 					m_currentCamStreamBuffer = m_camData[camBuffer.index];
 					++dispCount;
@@ -941,6 +919,20 @@ bool CamThread::startCam(int cam_idx, const QPoint &centerDiff, int cam_size, bo
 		m_dispScaling = true;
 		m_scalingSrcSize = m_startCamSize / 2;
 		qDebug("[%s] cam size %d, apply disp scaling.", Q_FUNC_INFO, m_startCamSize);
+	}
+	else if ( m_startCamSize == CAM_SIZE_x2_0 )
+	{
+		if ( m_960scaling )
+		{
+			m_dispScaling = true;
+			m_scalingSrcSize = m_startCamSize;
+			qDebug("[%s] cam size %d, apply disp scaling.", Q_FUNC_INFO, m_startCamSize);
+		}
+		else
+		{
+			m_dispScaling = false;
+			m_scalingSrcSize = 0;
+		}
 	}
 
 	if ( m_dispCam == false )
@@ -1495,4 +1487,22 @@ void CamThread::setStreamOn(bool flag)
 		setDispStreamOn(flag);
 
 	m_streamOn = flag;
+}
+
+bool CamThread::test_stream(bool flag)
+{
+	if (m_fdCam <= 0)
+	{
+		return false;
+	}
+
+	int type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+
+	if (::ioctl(m_fdCam, flag ? VIDIOC_STREAMON : VIDIOC_STREAMOFF, &type) == -1)
+	{
+		qDebug("[%s] Error - ioctl(camFile, %s, &type), errno - %d", Q_FUNC_INFO, flag ? "VIDIOC_STREAMON" : "VIDIOC_STREAMOFF", errno);
+		return false;
+	}
+
+	return true;
 }
