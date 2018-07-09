@@ -1,17 +1,4 @@
-import QtQuick 2.9
-import QtQuick.Window 2.2
-
-import "js/logic.js" as Logic
-import "js/style.js" as Style
-
-Window {
-    visible: true
-    width: 400
-    height: 120
-    title: qsTr("Window")
-
-
-    // example code : start
+import QtQuick 2.0
 
     Rectangle {
         id: root
@@ -23,16 +10,26 @@ Window {
         property bool showSeconds: true
         property string currentTime
         property string currentDate
-        property string textColor: "green"
+        property real borderProportion: 0.1
+        property real timeTextProportion: 0.5
+        property real dateTextProportion: 0.2
+        property string textColor: "red"
+        property string timeFormat: "hh :mm"
+        property string dateFormat: "yy/MM/dd"
 
         color: "transparent"
 
+        function getFormattedDateTime(format) {
+            var date = new Date
+            return Qt.formatDateTime(date, format)
+        }
+
         function updateTime() {
             root.currentTime = "<big>" +
-                    Logic.getFormattedDateTime(Style.timeFormat) +
+                    getFormattedDateTime(timeFormat) +
                     "</big>" +
-                    (root.showSeconds ? " <sup><small>" + Logic.getFormattedDateTime("ss") + "</small></sup>" : "");
-            root.currentDate = Logic.getFormattedDateTime(Style.dateFormat);
+                    (root.showSeconds ? " <sup><small>" + getFormattedDateTime("ss") + "</small></sup>" : "");
+            root.currentDate = getFormattedDateTime(dateFormat);
         }
 
         Image {
@@ -70,13 +67,12 @@ Window {
         Column {
             id: clockText
             anchors.centerIn: parent
-            spacing: root.height * Style.borderProportion
+            spacing: root.height * root.borderProportion
 
             Text {
                 id: timeText
-                textFormat: Text.RichText
                 text: root.currentTime
-                font.pixelSize: root.height * Style.timeTextProportion
+                font.pixelSize: root.height * root.timeTextProportion
                 font.family: ledFont.name
                 font.bold: true
                 color: root.textColor
@@ -90,7 +86,7 @@ Window {
                 color: root.textColor
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: ledFont.name
-                font.pixelSize : root.height * Style.dateTextProportion
+                font.pixelSize : root.height * root.dateTextProportion
                 visible: root.showDate
                 style: Text.Raised
                 styleColor: "black"
@@ -98,21 +94,3 @@ Window {
         }
     }
 
-    // example code : end
-}
-
-
-
-
-
-
-// default code
-//import QtQuick 2.9
-//import QtQuick.Window 2.2
-
-//Window {
-//    visible: true
-//    width: 640
-//    height: 480
-//    title: qsTr("Hello World")
-//}
