@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>js/logic.js</file>
-        <file>js/style.js</file>
     </qresource>
 </RCC>

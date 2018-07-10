@@ -1,10 +1,9 @@
 import QtQuick 2.0
 //import QtQuick.Window 2.2
-import "js/style.js" as Style
+import "../js/style.js" as Style
 
 //Window {
 //    visible: true
-//}
     Rectangle {
 
         id: root
@@ -54,3 +53,4 @@ import "js/style.js" as Style
             }
         }
     }
+//}
