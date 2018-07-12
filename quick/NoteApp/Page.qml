@@ -1,10 +1,11 @@
 import QtQuick 2.0
 
-Rectangle {
+Item {
     id: root
     width: 600
     height: 400
-    color: "#222525"
+//    color: "#222525"
+    opacity: 0.0
 
     Note {
         id:note1

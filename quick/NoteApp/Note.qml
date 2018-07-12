@@ -1,10 +1,10 @@
 import QtQuick 2.0
 
-Rectangle {
+Item {
     id: root
     width: 200
     height: 200
-    color: "#cabf1b"
+    //color: "#cabf1b"
 
     NoteToolbar {
         id: toolbar
@@ -27,5 +27,14 @@ Rectangle {
             right: root.right
         }
         wrapMode: TextEdit.WrapAnywhere
+    }
+
+    BorderImage {
+        id: noteImage
+        anchors.fill: parent
+
+        source: "images/personal_note.png"
+        border.left: 20; border.top: 20
+        border.right: 20; border.bottom: 20
     }
 }

@@ -23,41 +23,73 @@ Rectangle {
     Rectangle {
         id: toolbar
 
-        width: 50
+        width:50
 
         color: "#444a4b"
+
         anchors {
-            left: window.left
+            left:window.left
             top: window.top
-            bottom: window.bottom
-            topMargin: 100;
-            bottomMargin: 100
+        }
+
+
+        Rectangle {
+            anchors.fill: parent
+            color: "white"
+            opacity: 0.15
+
+            anchors {
+                left: window.left
+                top: window.top
+                bottom: window.bottom
+                topMargin: 100;
+                bottomMargin: 100
+            }
+
+            radius: 16
+            border {
+                color: "#600"
+                width: 4
+            }
         }
 
         Column {
             anchors.fill: parent
-            anchors.topMargin: 30
-            spacing: 20
+            spacing: 16
+            anchors {
+                top: window.top
+                left: window.left
+                bottom: window.bottom
+                topMargin: 50
+                bottomMargin: 50
+                leftMargin: 8
+            }
 
-            Repeater {
-                model: 2
+            Tool {
+                id: newNoteTool
+                source: "images/add.png"
+            }
 
-                Rectangle {
-                    width: 50;
-                    height: 50;
-                    color: "red"
-                }
+            Tool {
+                id: clearAllTool
+                source: "images/clear.png"
             }
         }
     }
 
-    Page {
-        id: page1
+    PagePanel {
+        id: pagePanel
+
+        state: markerPanel.activeMarker
         anchors {
-            top: window.top
-            bottom: window.bottom
             right: markerPanel.left
             left: toolbar.right
+            top : parent.top
+            bottom: parent.bottom
+            leftMargin: 1
+            rightMargin: -50
+            topMargin: 3
+            bottomMargin: 15
         }
     }
 }

@@ -1,19 +1,31 @@
 import QtQuick 2.0
 
-Rectangle {
+Item {
     id: root
-    width: 50
-    height: 300
+    width: 150
+    height: 450
+
+    property string activeMarker: "personal"
+
+    property variant markerData: [
+        { markerid: "personal", img: "images/personalmarker.png" },
+        { markerid: "fun", img: "images/funmarker.png" },
+        { markerid: "work", img: "images/workmarker.png" }
+    ]
 
     Column {
         id: layout
         anchors.fill: parent
-        spacing: 10
+        spacing: 5
 
         Repeater {
-            model: 3
+            model: markerData
             delegate:
-                Marker { id : marker }
+                Marker {
+                    id : marker
+                    source: modelData.img
+                    onClicked: root.activeMarker = modelData.markerid
+                }
         }
     }
 }
