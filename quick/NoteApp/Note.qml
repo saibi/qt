@@ -4,7 +4,10 @@ Item {
     id: root
     width: 200
     height: 200
-    //color: "#cabf1b"
+
+    property string markerId
+    property int nodeId
+    property alias noteText: editArea.text
 
     NoteToolbar {
         id: toolbar
@@ -17,9 +20,16 @@ Item {
         }
 
         drag.target: root
+
+        Tool {
+            id: deleteItem
+            source: "images/delete.png"
+            onClicked: root.destroy()
+        }
     }
 
     TextEdit {
+        id: editArea
         anchors {
             top: toolbar.bottom
             bottom: root.bottom
@@ -27,7 +37,21 @@ Item {
             right: root.right
         }
         wrapMode: TextEdit.WrapAnywhere
+
+        onPaintedHeightChanged: updateNoteHeight()
     }
+
+    function updateNoteHeight() {
+        var noteMinHeight = 200;
+        var currentHeight = editArea.paintedHeight + toolbar.height + 40;
+        root.height = noteMinHeight;
+
+        if ( currentHeight >= noteMinHeight ) {
+            root.height = currentHeight;
+        }
+    }
+
+    Behavior on height { NumberAnimation {} }
 
     BorderImage {
         id: noteImage

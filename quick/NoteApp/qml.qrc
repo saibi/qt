@@ -8,5 +8,6 @@
         <file>MarkerPanel.qml</file>
         <file>PagePanel.qml</file>
         <file>Tool.qml</file>
+        <file>noteDB.js</file>
     </qresource>
 </RCC>

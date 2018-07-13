@@ -1,23 +1,49 @@
 import QtQuick 2.0
+import "noteDB.js" as NoteDB
 
 Item {
     id: root
     width: 600
     height: 400
-//    color: "#222525"
     opacity: 0.0
 
-    Note {
-        id:note1
+    property string markerId
+    property alias notes: container.children
 
-        x: 105; y:144
-
+    Component {
+        id: noteComponent
+        Note { }
     }
 
-    Note {
-        id:note2
+    Item {
+        id: container
+        anchors.fill: parent
+    }
 
-        x: 344; y:83
+    function newNote() {
+        newNoteObject( {"markerId": root.markerId } )
+    }
 
+    function newNoteObject(args) {
+        var note = noteComponent.createObject(container, args);
+        if ( note === null ) {
+            console.log("note object failed to be created!");
+        }
+    }
+
+    function clear() {
+        for( var i = 0 ; i < container.children.length; ++i )
+        {
+            container.children[i].destroy();
+        }
+    }
+
+    Component.onCompleted: loadNotes()
+
+    function loadNotes() {
+        var noteItems = NoteDB.readNotesFromPage(markerId);
+        for ( var i in noteItems) {
+            newNoteObject(noteItems[i]);
+        }
     }
 }
