@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adj_rules version="0.1">
+	<rule id="1" title="rimless size adj" prerequisite="0" >
+		<desc>blablabla...</desc>
+		<job type="internal">PATTERN</job>
+		<job_option>
+			CIRC=145.20;145.20
+			FTYP=3
+			DBL=17.00
+			MPD=75.00
+			LTYP=SV;SV
+			LTYPE=SV;SV
+			IPD=32.00;32.00
+			OCHT=19.00;19.00
+			HBOX=58.00;58.00
+			VBOX=34.01;34.01
+			FBFCUP=0.00;0.00
+			FBFCIN=0.00;0.00
+			ETYP=3
+			LMATTYPE=1;1
+			BEVP=1;1
+			BEVM=1.60;1.60
+			POLISH=0
+			GWIDTH=0.60;0.60
+			GDEPTH=0.40;0.40
+			EPRESS=0
+			FPINB=0.00;0.00
+			PINB=0.00;0.00
+			AX=0.00;0.00
+			BSIZ=0.00;0.00
+			REM=HVDY=2.00;2.00
+			REM=HVOT=0;0
+			REM=HVBIDIA=28.00;28.00
+			REM=HVEF=8;100;0;0;0;1;2
+			REM=HVBT=0;0
+			REM=HVBFH=0.0;0.0
+			REM=HVBRH=0.0;0.0
+			REM=HVGT=0;0
+			REM=HVGSA=0.0;0.0
+			REM=HVGEA=0.0;0.0
+			REM=HVDF=0;5.00
+			REM=HVDTYP=65540
+		</job_option>
+		<dp>
+			<rotate>0</rotate>
+			<size>0</size>
+		</dp>
+
+		<input_list>
+			<input id="sval" text="size val" type="float" min="-3.0" max="3.0" default="0.0" step="0.1" />
+			<input id="sval2" text="size val" type="float" min="-3.0" max="3.0" default="0.0" step="0.1" />
+		</input_list>
+		<apply_list>
+			<apply src="sval" target="M_size_adj[0]" op="set" />
+			<apply src="sval" target="M_size_adj[1]" op="set" />
+		</apply_list>
+	</rule>
+
+	<rule id="2" title="bevel size adj" prerequisite="1" >
+		<job type="file">bevel_size_adj.job</job>
+		<desc>hohohoho...</desc>
+		<job_option>
+			ETYP=3
+			BEVP=1;1
+			BEVM=1.60;1.60
+		</job_option>
+		<dp>
+			<size>-10.0</size>
+		</dp>
+		<input_list>
+			<input id="bval" text="size val" type="float" min="-1.0" max="1.0" default="0.0" step="0.1" />
+		</input_list>
+		<apply_list>
+			<apply src="bval" target="M_bev_size_adj[3]" op="add" />
+			<apply src="bval" target="M_bev_size_adj[4]" op="set" />
+		</apply_list>
+	</rule>
+</adj_rules>

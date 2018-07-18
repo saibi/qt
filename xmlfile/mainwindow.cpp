@@ -6,6 +6,8 @@
 #include <QXmlStreamReader>
 #include <QDebug>
 
+#include "esaxmlreader.h"
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
@@ -40,6 +42,12 @@ void MainWindow::on_actionOpen_triggered()
 
 
 
+	EsaXmlReader esaxml;
+
+	esaxml.read(filePath);
+
+
+#if 0
 
 
 	QFile xmlFile(filePath);
@@ -51,6 +59,8 @@ void MainWindow::on_actionOpen_triggered()
 			return;
 	}
 
+
+
 	QXmlStreamReader xmlReader(&xmlFile);
 
 
@@ -59,7 +69,7 @@ void MainWindow::on_actionOpen_triggered()
 			// Read next element
 			QXmlStreamReader::TokenType token = xmlReader.readNext();
 
-			qDebug() << xmlReader.name();
+			qDebug() << xmlReader.lineNumber() << xmlReader.name() << token;
 
 			//If token is just StartDocument - go to next
 			if(token == QXmlStreamReader::StartDocument) {
@@ -76,6 +86,10 @@ void MainWindow::on_actionOpen_triggered()
 						qDebug() << xmlReader.readElementText();
 					}
 			}
+			if ( token == QXmlStreamReader::Characters )
+			{
+				qDebug() << xmlReader.text();
+			}
 	}
 
 	if(xmlReader.hasError()) {
@@ -88,5 +102,5 @@ void MainWindow::on_actionOpen_triggered()
 	//close reader and flush file
 	xmlReader.clear();
 	xmlFile.close();
-
+#endif
 }
