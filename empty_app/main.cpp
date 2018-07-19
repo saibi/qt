@@ -4,10 +4,12 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-
 	QTime t;
 	t.start();
+
+	qDebug("DBG before qapplication %d", t.elapsed());
+
+	QApplication a(argc, argv);
 
 	qDebug("DBG before widget %d", t.elapsed());
 
