@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>esa.xml</file>
+    </qresource>
+</RCC>
