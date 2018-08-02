@@ -9,6 +9,13 @@ ESAWidget::ESAWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+//	setWindowFlags(Qt::FramelessWindowHint);
+//	setAttribute(Qt::WA_NoSystemBackground);
+//	setAttribute(Qt::WA_TranslucentBackground);
+//	setAttribute(Qt::WA_TransparentForMouseEvents);
+
+	setWindowOpacity(0.8);
+
 	EsaXmlReader esa;
 
 	esa.read(":/esa.xml");

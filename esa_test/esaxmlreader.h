@@ -2,6 +2,7 @@
 #define ESAXMLREADER_H
 
 #include <QXmlStreamReader>
+#include "adjrule.h"
 
 class EsaXmlReader
 {
@@ -20,8 +21,12 @@ private:
 	void readApplyList();
 
 
+	void dumpAdjRule(const AdjRule & rule);
+
 	QXmlStreamReader m_xml;
 
+	AdjRule m_rule;
+	QList <AdjRule> m_ruleList;
 };
 
 #endif // ESAXMLREADER_H

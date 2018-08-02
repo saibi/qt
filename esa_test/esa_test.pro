@@ -25,12 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        esawidget.cpp \
-    esaxmlreader.cpp
+		esawidget.cpp \
+	esaxmlreader.cpp \
+	adjrule.cpp
 
 HEADERS += \
         esawidget.h \
-    esaxmlreader.h
+    esaxmlreader.h \
+    adjrule.h
 
 FORMS += \
         esawidget.ui

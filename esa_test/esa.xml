@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <adj_rules version="0.1">
-	<rule id="1" title="rimless size adj" prerequisite="0" >
+	<rule id="rim_size" title="rimless size adj" prerequisite="" >
 		<desc>blablabla...</desc>
 		<job type="internal">PATTERN</job>
 		<job_option>
@@ -56,7 +56,7 @@
 		</apply_list>
 	</rule>
 
-	<rule id="2" title="bevel size adj" prerequisite="1" >
+	<rule id="bev_size" title="bevel size adj" prerequisite="rim_size,feeler,haha" >
 		<job type="file">bevel_size_adj.job</job>
 		<desc>hohohoho...</desc>
 		<job_option>
