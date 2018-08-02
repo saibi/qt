@@ -1,19 +1,19 @@
 #include "esaxmlreader.h"
 #include <QFile>
-#include <QDebug>
 
 EsaXmlReader::EsaXmlReader()
 {
 }
 
-bool EsaXmlReader::read(const QString & path)
+int EsaXmlReader::read(const QString & path, QList <AdjRule> & ruleList)
 {
 	QFile file(path);
+	int ret = 0;
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		qDebug("[EsaXmlReader::read] file open error %s", qPrintable(path));
-		return false;
+		qDebug("[EsaXmlReader::read] [%s] open error", qPrintable(path));
+		return -1;
 	}
 
 	m_xml.setDevice(&file);
@@ -21,16 +21,25 @@ bool EsaXmlReader::read(const QString & path)
 	if (m_xml.readNextStartElement()) {
 		if (m_xml.name() == "adj_rules" && m_xml.attributes().value("version") == "0.1")
 		{
-			readAdjRules();
-
-			for (int i = 0 ; i < m_ruleList.size(); ++i )
-				dumpAdjRule(m_ruleList.at(i));
+			readAdjRules(ruleList);
 		}
 		else
-			m_xml.raiseError(QObject::tr("The file is not an ESA xml file."));
+		{
+			ret = -2;
+			m_xml.raiseError("The file is not an ESA xml file.");
+			qDebug("[EsaXmlReader::read] [%s] is not an ESA xml file.", qPrintable(path));
+		}
 	}
 
-	return !m_xml.error();
+	if ( m_xml.error() )
+		ret = -3;
+	else if ( ret == 0 )
+		ret = ruleList.size();
+
+	m_xml.clear();
+	file.close();
+
+	return ret;
 }
 
 QString EsaXmlReader::errorString() const
@@ -38,7 +47,7 @@ QString EsaXmlReader::errorString() const
 	return QObject::tr("Line %1, column %2 : %3").arg(m_xml.lineNumber()).arg(m_xml.columnNumber()).arg(m_xml.errorString());
 }
 
-void EsaXmlReader::readAdjRules()
+void EsaXmlReader::readAdjRules(QList <AdjRule> & ruleList)
 {
 	while (m_xml.readNextStartElement())
 	{
@@ -57,7 +66,7 @@ void EsaXmlReader::readAdjRules()
 			}
 			readRule();
 			if ( !m_rule.isEmpty() )
-				m_ruleList.append(m_rule);
+				ruleList.append(m_rule);
 		}
 		else
 			m_xml.skipCurrentElement();
@@ -71,8 +80,6 @@ void EsaXmlReader::readRule()
 {
 	while (m_xml.readNextStartElement())
 	{
-		qDebug() << m_xml.lineNumber() << m_xml.name();
-
 		if (m_xml.name() == "desc")
 			m_rule.desc = m_xml.readElementText().trimmed();
 		else if ( m_xml.name() == "job" )
@@ -157,40 +164,3 @@ void EsaXmlReader::readApplyList()
 	}
 }
 
-void EsaXmlReader::dumpAdjRule(const AdjRule &rule)
-{
-	if ( rule.isEmpty() )
-	{
-		qDebug("invalid rule");
-		return;
-	}
-	qDebug("* rule id [%s], title [%s]", qPrintable(rule.id), qPrintable(rule.title));
-
-	for ( int i = 0 ; i < rule.prerequisite.size(); ++i )
-		qDebug("  prerequisite : %s", qPrintable(rule.prerequisite.at(i)));
-
-	qDebug("desc [%s]", qPrintable(rule.desc));
-
-	qDebug("job [%s] type-%d", qPrintable(rule.job), rule.jobType);
-
-	if ( !rule.jobOptions.isEmpty() )
-		qDebug("==========\n%s\n==========", qPrintable(rule.jobOptions));
-
-	if ( !rule.dp.isEmpty() )
-		qDebug("dp rotate %f, size %f", rule.dp.rotate, rule.dp.size);
-
-	for ( int i = 0 ; i < rule.inputList.size(); ++i )
-	{
-		const AR_InputData & data = rule.inputList.at(i);
-		if ( !data.isEmpty() )
-			qDebug("input #%d id [%s] type [%d] min %f, max %f, default %f, step %f",
-				   i, qPrintable(data.id), data.type, data.min, data.max, data.defaultValue, data.step );
-	}
-
-	for ( int i = 0 ; i < rule.applyList.size(); ++i )
-	{
-		const AR_ApplyMethod & method = rule.applyList.at(i);
-		if ( !method.isEmpty() )
-			qDebug("apply #%d %s -> %s : %d", i, qPrintable(method.src), qPrintable(method.target), method.op );
-	}
-}

@@ -11,6 +11,7 @@ public:
 	AR_DigitalPatternData();
 	void clear();
 	bool isEmpty() const;
+	void dump() const;
 
 	float rotate;
 	float size;
@@ -22,6 +23,7 @@ public:
 	AR_InputData();
 	void clear();
 	bool isEmpty() const;
+	void dump() const;
 
 	QString id;
 	int type;
@@ -37,6 +39,7 @@ public:
 	AR_ApplyMethod();
 	void clear();
 	bool isEmpty() const;
+	void dump() const;
 
 	QString src;
 	QString target;
@@ -50,6 +53,7 @@ public:
 	AdjRule();
 	void clear();
 	bool isEmpty() const;
+	void dump() const;
 
 	QString id;
 	QString title;

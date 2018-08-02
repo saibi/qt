@@ -17,8 +17,15 @@ ESAWidget::ESAWidget(QWidget *parent) :
 	setWindowOpacity(0.8);
 
 	EsaXmlReader esa;
+	QList <AdjRule> ruleList;
 
-	esa.read(":/esa.xml");
+	int ret = esa.read(":/esa.xml", ruleList);
+	if ( ret > 0 )
+	{
+		qDebug("DBG %d rules", ruleList.size());
+		for( int i = 0 ; i < ruleList.size(); ++i )
+			ruleList.at(i).dump();
+	}
 }
 
 ESAWidget::~ESAWidget()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<adj_rules version="0.1">
+<adj_rules version="0.1" >
 	<rule id="rim_size" title="rimless size adj" prerequisite="" >
 		<desc>blablabla...</desc>
 		<job type="internal">PATTERN</job>

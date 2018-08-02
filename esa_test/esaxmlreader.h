@@ -9,24 +9,19 @@ class EsaXmlReader
 public:
 	EsaXmlReader();
 
-	bool read(const QString & path);
+	int read(const QString & path, QList <AdjRule> & ruleList);
 
 private:
 	QString errorString() const;
 
-	void readAdjRules();
+	void readAdjRules(QList <AdjRule> & ruleList);
 	void readRule();
 	void readDp();
 	void readInputList();
 	void readApplyList();
 
-
-	void dumpAdjRule(const AdjRule & rule);
-
 	QXmlStreamReader m_xml;
-
 	AdjRule m_rule;
-	QList <AdjRule> m_ruleList;
 };
 
 #endif // ESAXMLREADER_H
