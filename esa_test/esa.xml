@@ -66,6 +66,9 @@
 		</job_option>
 		<dp>
 			<size>-10.0</size>
+			<width>2.0</width>
+			<height>3.0</height>
+			<rotate>90.0</rotate>
 		</dp>
 		<input_list>
 			<input id="bval" text="size val" type="float" min="-1.0" max="1.0" default="0.0" step="0.1" />

@@ -13,8 +13,11 @@ public:
 	bool isEmpty() const;
 	void dump() const;
 
-	float rotate;
 	float size;
+	float width;
+	float height;
+
+	float rotate;
 };
 
 class AR_InputData

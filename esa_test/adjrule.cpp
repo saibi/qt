@@ -62,19 +62,21 @@ AR_DigitalPatternData::AR_DigitalPatternData()
 
 void AR_DigitalPatternData::clear()
 {
-	rotate = 0.0;
 	size = 0.0;
+	width = 0.0;
+	height = 0.0;
+	rotate = 0.0;
 }
 
 bool AR_DigitalPatternData::isEmpty() const
 {
-	return rotate == 0.0 && size == 0.0;
+	return rotate == 0.0 && size == 0.0 && width == 0.0 && height == 0.0;
 }
 
 void AR_DigitalPatternData::dump() const
 {
 	if ( !isEmpty() )
-		qDebug("dp rotate %f, size %f", rotate, size);
+		qDebug("dp size %.2f, width %.2f, height %.2f, rotate %.2f", size, width, height, rotate);
 }
 
 AR_InputData::AR_InputData()

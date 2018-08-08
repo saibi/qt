@@ -110,6 +110,10 @@ void EsaXmlReader::readDp()
 			m_rule.dp.rotate = m_xml.readElementText().toFloat();
 		else if ( m_xml.name() == "size" )
 			m_rule.dp.size = m_xml.readElementText().toFloat();
+		else if ( m_xml.name() == "width" )
+			m_rule.dp.width = m_xml.readElementText().toFloat();
+		else if ( m_xml.name() == "height" )
+			m_rule.dp.height = m_xml.readElementText().toFloat();
 		else
 			m_xml.skipCurrentElement();
 	}
