@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "task.h"
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +16,13 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+public slots:
+	void addTask();
+
 private:
 	Ui::MainWindow *ui;
+
+	QVector<Task*> mTasks;
 };
 
 #endif // MAINWINDOW_H
