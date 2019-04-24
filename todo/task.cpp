@@ -11,10 +11,16 @@ Task::Task(const QString & name, QWidget *parent) :
 	setName(name);
 
 	connect(ui->editButton, SIGNAL(clicked()), this, SLOT(slotRename()));
-	connect(ui->removeButton, &QPushButton::clicked, [this, name] {
-		qDebug() << "Trying to remove" << name;
+
+	auto prettyName = [] (const QString & taskName) -> QString {
+		return "-------- " + taskName.toUpper();
+	};
+	connect(ui->removeButton, &QPushButton::clicked, [this, name, prettyName] {
+		qDebug() << "Trying to remove" << name << prettyName(name);
 		this->emit signalRemoved(this);
 	} );
+
+	connect(ui->checkBox, SIGNAL(toggled(bool)), this, SLOT(slotChecked(bool)));
 }
 
 Task::~Task()
@@ -47,4 +53,13 @@ void Task::slotRename()
 	if ( ok && !value.isEmpty() )
 		setName(value);
 
+}
+
+void Task::slotChecked(bool checked)
+{
+	QFont font(ui->checkBox->font());
+
+	font.setStrikeOut(checked);
+	ui->checkBox->setFont(font);
+	emit signalStatusChanged(this);
 }

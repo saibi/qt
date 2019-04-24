@@ -18,7 +18,7 @@
     <item>
      <layout class="QHBoxLayout" name="toolbarLayout">
       <item>
-       <widget class="QLabel" name="stausLabel">
+       <widget class="QLabel" name="statusLabel">
         <property name="text">
          <string>Status: 0 todo / 0 done</string>
         </property>

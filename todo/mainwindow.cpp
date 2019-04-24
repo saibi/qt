@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::addTask);
+	connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::slotAddTask);
+
+	updateStatus();
 }
 
 MainWindow::~MainWindow()
@@ -18,7 +20,7 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::addTask()
+void MainWindow::slotAddTask()
 {
 	bool ok;
 
@@ -29,7 +31,39 @@ void MainWindow::addTask()
 		qDebug() << "Adding new task";
 
 		Task * task = new Task(name);
+		connect(task, &Task::signalRemoved, this, &MainWindow::slotRemoveTask);
+		connect(task, SIGNAL(signalStatusChanged(Task*)), this, SLOT(slotTaskStatusChanged(Task*)));
 		mTasks.append(task);
 		ui->taskLayout->addWidget(task);
+		updateStatus();
 	}
+}
+
+void MainWindow::slotRemoveTask(Task *task)
+{
+	mTasks.removeOne(task);
+	ui->taskLayout->removeWidget(task);
+	task->setParent(0);
+	delete task;
+	updateStatus();
+}
+
+void MainWindow::slotTaskStatusChanged(Task *)
+{
+	updateStatus();
+}
+
+void MainWindow::updateStatus()
+{
+	int completedCount = 0;
+
+	for ( auto t : mTasks)
+	{
+		if ( t->isCompleted() )
+			completedCount++;
+	}
+
+	int todoCount = mTasks.size() - completedCount;
+
+	ui->statusLabel->setText(QString("Status: %1 todo / %2 completed").arg(todoCount).arg(completedCount));
 }

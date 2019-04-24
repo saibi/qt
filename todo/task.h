@@ -25,6 +25,10 @@ public slots:
 
 signals:
 	void signalRemoved(Task * task);
+	void signalStatusChanged(Task * task);
+
+private slots:
+	void slotChecked(bool checked);
 
 private:
 	Ui::Task *ui;
