@@ -44,18 +44,16 @@ HEADERS += \
 FORMS += \
         mainwindow.ui
 
-
-windows {
-	SOURCES += sysinfowindowsimpl.cpp
-	HEADERS += sysinfowindowsimpl.h
-}
+COMPILE_MSG = "compiling on"
 
 linux {
 	SOURCES += sysinfolinuximpl.cpp
 	HEADERS += sysinfolinuximpl.h
-}
-
-macx {
+	message($$COMPILE_MSG linux)
+} else:windows {
+	SOURCES += sysinfowindowsimpl.cpp
+	HEADERS += sysinfowindowsimpl.h
+} else:macx {
 	SOURCES += sysinfomacimpl.cpp
 	HEADERS += sysinfomacimpl.h
 }
