@@ -1,36 +1,39 @@
 #include "albumdao.h"
+
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QVariant>
-#include "databasemanager.h"
+
 #include "album.h"
+#include "databasemanager.h"
+
+using namespace std;
 
 AlbumDao::AlbumDao(QSqlDatabase& database) :
 	mDatabase(database)
 {
-
 }
 
 void AlbumDao::init() const
 {
-	if ( !mDatabase.tables().contains("albums")) {
+	if (!mDatabase.tables().contains("albums")) {
 		QSqlQuery query(mDatabase);
 		query.exec("CREATE TABLE albums (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+		DatabaseManager::debugQuery(query);
 	}
 }
 
-
-void AlbumDao::addAlbum(Album &album) const
+void AlbumDao::addAlbum(Album& album) const
 {
 	QSqlQuery query(mDatabase);
-	query.prepare("INSERT INTO album (name) VALUES (:name)");
+	query.prepare("INSERT INTO albums (name) VALUES (:name)");
 	query.bindValue(":name", album.name());
 	query.exec();
 	album.setId(query.lastInsertId().toInt());
 	DatabaseManager::debugQuery(query);
 }
 
-void AlbumDao::updateAlbum(const Album &album) const
+void AlbumDao::updateAlbum(const Album& album)const
 {
 	QSqlQuery query(mDatabase);
 	query.prepare("UPDATE albums SET name = (:name) WHERE id = (:id)");
@@ -49,20 +52,16 @@ void AlbumDao::removeAlbum(int id) const
 	DatabaseManager::debugQuery(query);
 }
 
-std::unique_ptr<std::vector<std::unique_ptr<Album>>> AlbumDao::albums() const
+unique_ptr<vector<unique_ptr<Album>>> AlbumDao::albums() const
 {
 	QSqlQuery query("SELECT * FROM albums", mDatabase);
 	query.exec();
-
-	std::unique_ptr<std::vector<std::unique_ptr<Album>>> list(new std::vector<std::unique_ptr<Album>>());
-
-	while (query.next())
-	{
-		std::unique_ptr<Album> album(new Album());
-		album->setId( query.value("id").toInt());
+	unique_ptr<vector<unique_ptr<Album>>> list(new vector<unique_ptr<Album>>());
+	while(query.next()) {
+		unique_ptr<Album> album(new Album());
+		album->setId(query.value("id").toInt());
 		album->setName(query.value("name").toString());
-		list->push_back(std::move(album));
+		list->push_back(move(album));
 	}
-
 	return list;
 }
