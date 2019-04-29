@@ -1,28 +1,27 @@
-import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtQuick 2.6
+import QtQuick.Controls 2.0
 
 ApplicationWindow {
-    visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
 
-    menuBar: MenuBar {
-        Menu {
-            title: qsTr("File")
-            MenuItem {
-                text: qsTr("&Open")
-                onTriggered: console.log("Open action triggered");
-            }
-            MenuItem {
-                text: qsTr("Exit")
-                onTriggered: Qt.quit();
-            }
-        }
+    readonly property alias pageStack: stackView
+
+    id: app
+    visible: true
+    width: 768
+    height: 1280
+
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        initialItem: AlbumListPage {}
     }
 
-    Label {
-        text: qsTr("Hello Wrold !!!")
-        anchors.centerIn: parent
+    onClosing: {
+        if ( Qt.platform.os == "android" ) {
+            if (stackView.depth > 1 ) {
+                close.accepted = false
+                stackView.pop();
+            }
+        }
     }
 }
