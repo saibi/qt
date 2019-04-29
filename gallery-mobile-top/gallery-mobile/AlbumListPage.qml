@@ -1,15 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
+import "."
 
-Page {
-    header: ToolBar {
-        Label {
-            Layout.fillWidth: true
-            text: "Albums"
-            font.pointSize: 30
-        }
-    }
+PageTheme {
+
+    toolbarTitle: "Albums"
 
     ListView {
         id: albumList
@@ -20,12 +16,12 @@ Page {
         delegate: Rectangle {
             width: parent.width
             height: 120
-            color: "#d0d1d2"
+            color: Style.buttonBackground
 
             Text {
                 text: name
                 font.pointSize: 16
-                color: "#000000"
+                color: Style.text
                 anchors.verticalCenter: parent.verticalCenter
             }
 

@@ -7,8 +7,8 @@ ApplicationWindow {
 
     id: app
     visible: true
-    width: 768
-    height: 1280
+    width: 480
+    height: 640
 
     StackView {
         id: stackView

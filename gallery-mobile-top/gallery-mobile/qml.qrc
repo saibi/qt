@@ -8,5 +8,9 @@
         <file>res/icons/photo-add.svg</file>
         <file>res/icons/photo-delete.svg</file>
         <file>AlbumListPage.qml</file>
+        <file>Style.qml</file>
+        <file>qmldir</file>
+        <file>ToolBarTheme.qml</file>
+        <file>PageTheme.qml</file>
     </qresource>
 </RCC>
