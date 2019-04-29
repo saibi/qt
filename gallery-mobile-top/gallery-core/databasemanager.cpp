@@ -7,7 +7,18 @@
 
 DatabaseManager& DatabaseManager::instance()
 {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+	QFile assetDbFile(":/database/" + DATABASE_FILENAME);
+	QString destinationDbFile = QStandardPaths::writableLocation( QStandardPaths::AppLocalDataLocation).append("/" + DATABASE_FILENAME);
+
+	if ( !QFile::exists(destinationDbFile) ) {
+		assetDbFile.copy(desticationDbFile);
+		QFile::setPermissions(destinationDbFile, QFile::WriteOwner | QFile::ReadOwner);
+	}
+	static DatabaseManager singleton(destinationDbFile);
+#else
 	static DatabaseManager singleton;
+#endif
 
 	return singleton;
 }

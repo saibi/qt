@@ -6,6 +6,25 @@ import "."
 PageTheme {
 
     toolbarTitle: "Albums"
+    toolbarButtons: ToolButton {
+        background: Image {
+            source: "qrc:/res/icons/album-add.svg"
+        }
+        onClicked: {
+            newAlbumDialog.open();
+        }
+    }
+
+    InputDialog {
+        id: newAlbumDialog
+        title: "New album"
+        label: "Album name:"
+        hint: "My Album"
+
+        onAccepted: {
+            albumModel.addAlbumFromName(editText.text);
+        }
+    }
 
     ListView {
         id: albumList
@@ -30,7 +49,7 @@ PageTheme {
                 onClicked: {
                     albumList.currentIndex = index;
                     pictureModel.setAlbumId(id);
-                    pageStack.push("qrc:/qml/AlbumPage.qml", { albumName: name, albumRowIndex: index } );
+                    pageStack.push("qrc:/AlbumPage.qml", { albumName: name, albumRowIndex: index } );
                 }
             }
         }

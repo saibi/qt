@@ -25,6 +25,7 @@ public:
 	PictureModel(const AlbumModel& albumModel, QObject* parent = 0);
 
 	QModelIndex addPicture(const Picture& picture);
+	Q_INVOKABLE void addPictureFromUrl(const QUrl& fileUrl);
 
 	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 	QVariant data(const QModelIndex& index, int role) const override;

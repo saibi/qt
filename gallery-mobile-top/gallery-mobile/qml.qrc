@@ -12,5 +12,8 @@
         <file>qmldir</file>
         <file>ToolBarTheme.qml</file>
         <file>PageTheme.qml</file>
+        <file>database/gallery.db</file>
+        <file>InputDialog.qml</file>
+        <file>AlbumPage.qml</file>
     </qresource>
 </RCC>
