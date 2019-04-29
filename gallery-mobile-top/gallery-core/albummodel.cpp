@@ -25,6 +25,11 @@ void AlbumModel::addAlbumFromName(const QString &name)
 	addAlbum(Album(name));
 }
 
+void AlbumModel::rename(int row, const QString &name)
+{
+	setData(index(row), name, Roles::NameRole);
+}
+
 int AlbumModel::rowCount(const QModelIndex& parent) const
 {
 	Q_UNUSED(parent);

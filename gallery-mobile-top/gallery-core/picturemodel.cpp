@@ -89,7 +89,9 @@ bool PictureModel::removeRows(int row, int count, const QModelIndex& parent)
 QHash<int, QByteArray> PictureModel::roleNames() const
 {
 	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "name";
 	roles[Roles::FilePathRole] = "filepath";
+	roles[Roles::UrlRole] = "url";
 	return roles;
 }
 

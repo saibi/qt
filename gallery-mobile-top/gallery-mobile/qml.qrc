@@ -15,5 +15,6 @@
         <file>database/gallery.db</file>
         <file>InputDialog.qml</file>
         <file>AlbumPage.qml</file>
+        <file>PicturePage.qml</file>
     </qresource>
 </RCC>

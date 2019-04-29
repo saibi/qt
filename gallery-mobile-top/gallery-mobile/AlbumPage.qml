@@ -21,6 +21,35 @@ PageTheme {
                 dialog.open();
             }
         }
+        ToolButton {
+            background: Image {
+                source: "qrc:/res/icons/album-edit.svg"
+            }
+            onClicked: {
+                renameAlbumDialog.open();
+            }
+        }
+        ToolButton {
+            background: Image {
+                source: "qrc:/res/icons/album-delete.svg"
+            }
+            onClicked: {
+                albumModel.removeRows(albumRowIndex, 1);
+                stackView.pop();
+            }
+        }
+    }
+
+    InputDialog {
+        id: renameAlbumDialog
+        title: "Rename album"
+        label: "Album name:"
+        hint: albumName
+
+        onAccepted: {
+            albumModel.rename(albumRowIndex, editText.text);
+            albumName = editText.text
+        }
     }
 
     FileDialog {
@@ -56,6 +85,14 @@ PageTheme {
                 cache: false
                 source: "image://pictures/" + index + "/thumbnail"
 
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    thumbnailList.currentIndex = index;
+                    pageStack.push("qrc:/PicturePage.qml", { pictureName: name, pictureIndex: index} );
+                }
             }
         }
     }
