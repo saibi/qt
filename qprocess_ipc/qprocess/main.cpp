@@ -22,5 +22,5 @@ int main(int argc, char *argv[])
 
 	childProcess->start("/tmp/helloname"); // hello binary path
 
-	return 0;
+	return a.exec();
 }
