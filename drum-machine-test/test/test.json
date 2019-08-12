@@ -1,0 +1,6 @@
+{
+    "myBool": true,
+    "myDouble": 5.2,
+    "myInt": 1,
+    "myString": "hello"
+}
