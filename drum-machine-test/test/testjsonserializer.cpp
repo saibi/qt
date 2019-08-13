@@ -1,8 +1,7 @@
 #include "testjsonserializer.h"
 
 #include "dummyserializable.h"
-
-#include <QString>
+#include "track.h"
 
 const QString FILENAME = "test.json";
 const QString DUMMY_FILE_CONTENT = "{\n    \"myBool\": true,\n    \"myDouble\": 5.2,\n    \"myInt\": 1,\n    \"myString\": \"hello\"\n}\n";
@@ -62,6 +61,31 @@ void TestJsonSerializer::loadDummy()
 void TestJsonSerializer::cleanup()
 {
 	QFile(FILENAME).remove();
+}
+
+void TestJsonSerializer::saveTrack_data()
+{
+	QTest::addColumn<int>("soundEventCount");
+
+	QTest::newRow("1") << 1;
+	QTest::newRow("100") << 100;
+	QTest::newRow("1000") << 1000;
+}
+
+void TestJsonSerializer::saveTrack()
+{
+	QFETCH(int, soundEventCount);
+
+	Track track;
+	track.record();
+	for (int i = 0; i < soundEventCount; ++i)
+		track.addSoundEvent(i % 4);
+
+	track.stop();
+
+	QBENCHMARK {
+		mSerializer.save(track, FILENAME);
+	}
 }
 
 //QTEST_MAIN(TestJsonSerializer)

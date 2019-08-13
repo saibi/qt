@@ -16,6 +16,9 @@ private slots:
 	void saveDummy();
 	void loadDummy();
 
+	void saveTrack_data();
+	void saveTrack();
+
 private:
 	QString loadFileContent();
 
