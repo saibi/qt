@@ -24,9 +24,14 @@ DEPENDPATH += $$DRUM_MACHINE_PATH
 include (../drum-machine-src.pri)
 
 SOURCES += \
+	main.cpp \
     dummyserializable.cpp \
-    testjsonserializer.cpp
+    testjsonserializer.cpp \
+    testxmlserializer.cpp \
+    testtrack.cpp
 
 HEADERS += \
     dummyserializable.h \
-    testjsonserializer.h
+    testjsonserializer.h \
+    testxmlserializer.h \
+    testtrack.h

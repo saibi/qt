@@ -61,7 +61,7 @@ void TestJsonSerializer::loadDummy()
 
 void TestJsonSerializer::cleanup()
 {
-	//QFile(FILENAME).remove();
+	QFile(FILENAME).remove();
 }
 
-QTEST_MAIN(TestJsonSerializer)
+//QTEST_MAIN(TestJsonSerializer)
