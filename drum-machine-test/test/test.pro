@@ -28,10 +28,12 @@ SOURCES += \
     dummyserializable.cpp \
     testjsonserializer.cpp \
     testxmlserializer.cpp \
-    testtrack.cpp
+    testtrack.cpp \
+    testgui.cpp
 
 HEADERS += \
     dummyserializable.h \
     testjsonserializer.h \
     testxmlserializer.h \
-    testtrack.h
+    testtrack.h \
+    testgui.h
