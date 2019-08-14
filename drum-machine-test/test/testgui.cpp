@@ -3,6 +3,8 @@
 #include <QtTest/QtTest>
 #include <QPushButton>
 
+#include "soundeffectwidget.h"
+
 TestGui::TestGui(QObject *parent) :
 	QObject(parent),
 	mMainWindow()
@@ -23,4 +25,16 @@ void TestGui::controlButtonState()
 	QCOMPARE(stopButton->isEnabled(), true);
 	QCOMPARE(playButton->isEnabled(), false);
 	QCOMPARE(recordButton->isEnabled(), false);
+}
+
+void TestGui::playSound()
+{
+	SoundEffectWidget widget;
+	QSignalSpy spy(&widget, &SoundEffectWidget::soundPlayed);
+	widget.setId(2);
+	widget.play();
+
+	QCOMPARE(spy.count(), 1);
+	QList<QVariant> arguments = spy.takeFirst();
+	QCOMPARE(arguments.at(0).toInt(), 2);
 }

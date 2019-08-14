@@ -12,6 +12,7 @@ public:
 
 private slots:
 	void controlButtonState();
+	void playSound();
 
 private:
 	MainWindow mMainWindow;
