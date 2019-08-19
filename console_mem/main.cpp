@@ -43,5 +43,10 @@ int main(int argc, char *argv[])
 
 	qDebug() << "Person info" << person;
 
+
+	qSetMessagePattern("[%{time yyyy-MM-dd hh:mm:ss}] [%{type}] %{function} %{message}");
+
+	qInfo() << "a.exec...";
+
 	return a.exec();
 }
