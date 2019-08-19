@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <QCommandLineParser>
+
 void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString & message)
 {
 
@@ -86,9 +88,34 @@ int main(int argc, char *argv[])
 
 	qSetMessagePattern("[%{time yyyy-MM-dd hh:mm:ss}] [%{type}] %{function} %{message}");
 
+	qInstallMessageHandler(0);
+
+
 	qInfo() << "a.exec...";
 
 
+	QCoreApplication::setApplicationName("tips");
+	QCoreApplication::setApplicationVersion("0.0.1");
+
+	QCommandLineParser parser;
+
+	parser.setApplicationDescription("help");
+	parser.addHelpOption();
+	parser.addVersionOption();
+
+	parser.addOptions( {
+						   { "debug", "Enable the debug mode."},
+						   { {"f", "file" }, "Write the logs into <file>.", "logfile" },
+						   { {"l", "level"}, "Restrict the logs to level <level>. Default is 'fatal'.", "level", "fatal" },
+						   { "hello", "hello world mode." },
+					   } );
+
+	parser.process(a);
+
+	qDebug() << "debug mode:" << parser.isSet("debug");
+	qDebug() << "file:" << parser.value("file");
+	qDebug() << "level:" << parser.value("level");
+	qDebug() << "hello world mode: " << parser.isSet("hello");
 
 	return a.exec();
 }
