@@ -3,6 +3,44 @@
 #include <QDebug>
 #include <QDateTime>
 
+#include <QFile>
+#include <QTextStream>
+
+void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString & message)
+{
+
+	QString levelText;
+
+	switch(type) {
+	case QtDebugMsg:
+		levelText = "Debug";
+		break;
+
+	case QtInfoMsg:
+		levelText = "Info";
+		break;
+
+	case QtWarningMsg:
+		levelText = "Warning";
+		break;
+
+	case QtCriticalMsg:
+		levelText = "Critical";
+		break;
+
+	case QtFatalMsg:
+		levelText = "Fatal";
+		break;
+
+	}
+
+	QString text = QString("[%1] %2").arg(levelText).arg(message);
+
+	QFile file("/tmp/log_test.txt");
+	file.open(QIODevice::WriteOnly | QIODevice::Append);
+	QTextStream textStream(&file);
+	textStream << text << endl;
+}
 
 struct Person {
 	QString name;
@@ -35,9 +73,11 @@ int main(int argc, char *argv[])
 	qDebug() << "*integerpointer is:" << *integerPointer;
 	qDebug() << "done!";
 
+	qInstallMessageHandler(messageHandler);
+
+
 	qsrand(QDateTime::currentDateTime().toTime_t());
 	qDebug() << qrand() % 10 << qrand() % 10;
-
 
 	Person person = { "Lenna", 64 };
 
@@ -47,6 +87,8 @@ int main(int argc, char *argv[])
 	qSetMessagePattern("[%{time yyyy-MM-dd hh:mm:ss}] [%{type}] %{function} %{message}");
 
 	qInfo() << "a.exec...";
+
+
 
 	return a.exec();
 }
