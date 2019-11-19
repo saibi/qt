@@ -1,12 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QtCharts>
+#include <QChartView>
+#include <QBarSet>
+#include <QBarSeries>
+
+#include <QPieSeries>
+#include <QPieSlice>
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
 
+#if 0
 	QBarSet * set0 = new QBarSet("Jane");
 	QBarSet * set1 = new QBarSet("John");
 	QBarSet * set2 = new QBarSet("Axel");
@@ -40,8 +49,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	QChartView *chartView = new QChartView(chart);
 	chartView->setParent(ui->verticalFrame);
+#endif
 
+	QPieSeries *series = new QPieSeries();
+	series->append("Jane", 10);
+	series->append("Joe", 20);
+	series->append("Andy", 30);
+	series->append("Barbara", 40);
+	series->append("Jason", 50);
 
+	QPieSlice *slice = series->slices().at(1);
+	slice->setExploded();
+	slice->setLabelVisible();
+	slice->setPen(QPen(Qt::darkGreen, 2));
+	slice->setBrush(Qt::green);
+
+	QChart *chart = new QChart();
+	chart->addSeries(series);
+	chart->setTitle("Students Performance");
+
+	QChartView *chartView = new QChartView(chart);
+	chartView->setParent(ui->verticalFrame);
 }
 
 MainWindow::~MainWindow()
