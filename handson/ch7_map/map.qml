@@ -11,10 +11,10 @@ Item {
         name: "osm"
     }
 
-    function addMarker(latitude, longitude)
+    function addMarker(name, latitude, longitude)
     {
         var component = Qt.createComponent("qrc:///qml/marker.qml")
-        var item = component.createObject(window, { coordinate: QtPositioning.coordinate(latitude, longitude) } )
+        var item = component.createObject(window, { coordinate: QtPositioning.coordinate(latitude, longitude), labelText: name } )
         map.addMapItem(item)
     }
 
@@ -28,9 +28,9 @@ Item {
 
         Component.onCompleted:
         {
-            addMarker(37.399061, 126.965953)
-            addMarker(37.399712, 126.965669)
-            addMarker(37.398685, 126.964541)
+            addMarker("HUVITZ", 37.399061, 126.965953)
+            addMarker("hello", 37.399712, 126.965669)
+            addMarker("world", 37.398685, 126.964541)
         }
     }
 }
