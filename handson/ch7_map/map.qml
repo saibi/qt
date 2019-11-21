@@ -11,22 +11,11 @@ Item {
         name: "osm"
     }
 
-    Image
+    function addMarker(latitude, longitude)
     {
-        id: icon
-        source: "qrc:///images/map-marker-icon.png"
-        sourceSize.width: 50
-        sourceSize.height: 50
-    }
-
-    MapQuickItem
-    {
-        id: marker
-        anchorPoint.x: marker.width / 4
-        anchorPoint.y: marker.height
-        coordinate: QtPositioning.coordinate(37.399061, 126.965953);
-
-        sourceItem: icon
+        var component = Qt.createComponent("qrc:///qml/marker.qml")
+        var item = component.createObject(window, { coordinate: QtPositioning.coordinate(latitude, longitude) } )
+        map.addMapItem(item)
     }
 
     Map
@@ -39,7 +28,9 @@ Item {
 
         Component.onCompleted:
         {
-            map.addMapItem(marker)
+            addMarker(37.399061, 126.965953)
+            addMarker(37.399712, 126.965669)
+            addMarker(37.398685, 126.964541)
         }
     }
 }
