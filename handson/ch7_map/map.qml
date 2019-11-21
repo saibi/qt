@@ -44,18 +44,18 @@ Item {
         id: map
         anchors.fill: parent
         plugin: mapPlugin
-        center: QtPositioning.coordinate(40.7274175,-73.99835)
+        center: QtPositioning.coordinate(37.399061,126.965953)
         zoomLevel: 14
 
         Component.onCompleted:
         {
-            addCircle(40.7274175,-73.99835, 250, "green", 3);
-            addRectangle(40.7274175,-73.99835, 40.7376432, -73.98602, "red", 2);
-            var path = [{ latitude: 40.7324281, longitude: -73.97602 },
-                { latitude: 40.7396432, longitude: -73.98666 },
-                { latitude: 40.7273266, longitude: -73.99835 },
-                { latitude: 40.7264281, longitude: -73.98602 }];
-            addPolygon(path, "blue", 3);
+//            addCircle(40.7274175,-73.99835, 250, "green", 3);
+//            addRectangle(40.7274175,-73.99835, 40.7376432, -73.98602, "red", 2);
+//            var path = [{ latitude: 40.7324281, longitude: -73.97602 },
+//                { latitude: 40.7396432, longitude: -73.98666 },
+//                { latitude: 40.7273266, longitude: -73.99835 },
+//                { latitude: 40.7264281, longitude: -73.98602 }];
+//            addPolygon(path, "blue", 3);
         }
     }
 }
