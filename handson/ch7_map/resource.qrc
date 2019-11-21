@@ -2,6 +2,9 @@
     <qresource prefix="/qml">
         <file>map.qml</file>
         <file>marker.qml</file>
+        <file>circle.qml</file>
+        <file>polygon.qml</file>
+        <file>rectangle.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>map-marker-icon.png</file>

@@ -35,7 +35,10 @@ FORMS += \
 
 DISTFILES += \
     map.qml \
-    marker.qml
+    marker.qml \
+    circle.qml \
+    rectangle.qml \
+    polygon.qml
 
 RESOURCES += \
     resource.qrc
