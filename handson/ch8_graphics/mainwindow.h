@@ -12,6 +12,12 @@
 
 #include <QDebug>
 
+#include <QFont>
+#include <QGraphicsItemGroup>
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
+
+
 namespace Ui {
 class MainWindow;
 }

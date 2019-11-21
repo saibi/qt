@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "profilebox.h"
+
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
@@ -12,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::selectionChanged);
 
+#if 0
 	QBrush greenBrush(Qt::green);
 	QBrush blueBrush(Qt::blue);
 	QPen pen(Qt::black);
@@ -28,7 +32,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	QGraphicsTextItem * text = scene->addText("Hello World!", QFont("Times", 25));
 	text->setFlag(QGraphicsItem::ItemIsMovable);
 	text->setFlag(QGraphicsItem::ItemIsSelectable);
+#endif
 
+	ProfileBox * box = new ProfileBox();
+	box->init("John Doe", this, scene);
 
 }
 
