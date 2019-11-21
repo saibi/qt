@@ -28,9 +28,9 @@ Item {
 
         Component.onCompleted:
         {
-            addMarker("HUVITZ", 37.399061, 126.965953)
-            addMarker("hello", 37.399712, 126.965669)
-            addMarker("world", 37.398685, 126.964541)
+//            addMarker("HUVITZ", 37.399061, 126.965953)
+//            addMarker("hello", 37.399712, 126.965669)
+//            addMarker("world", 37.398685, 126.964541)
         }
     }
 }
