@@ -16,8 +16,17 @@ MainWindow::MainWindow(QWidget *parent) :
 	pen.setWidth(2);
 
 	QGraphicsRectItem * rectangle = scene->addRect(80, 0, 80, 80, pen, greenBrush);
+	rectangle->setFlag(QGraphicsItem::ItemIsMovable);
+	rectangle->setFlag(QGraphicsItem::ItemIsSelectable);
+
 	QGraphicsEllipseItem * ellipse = scene->addEllipse(0, -80, 200, 60, pen, blueBrush);
+	ellipse->setFlag(QGraphicsItem::ItemIsMovable);
+	ellipse->setFlag(QGraphicsItem::ItemIsSelectable);
+
 	QGraphicsTextItem * text = scene->addText("Hello World!", QFont("Times", 25));
+	text->setFlag(QGraphicsItem::ItemIsMovable);
+	text->setFlag(QGraphicsItem::ItemIsSelectable);
+
 
 }
 
