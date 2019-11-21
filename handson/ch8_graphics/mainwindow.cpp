@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
 
+	connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::selectionChanged);
+
 	QBrush greenBrush(Qt::green);
 	QBrush blueBrush(Qt::blue);
 	QPen pen(Qt::black);
@@ -33,4 +35,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::selectionChanged()
+{
+	qDebug() << "Item selected";
 }
