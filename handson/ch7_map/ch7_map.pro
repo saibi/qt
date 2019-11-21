@@ -34,7 +34,8 @@ FORMS += \
         mainwindow.ui
 
 DISTFILES += \
-    map.qml
+    map.qml \
+    marker.qml
 
 RESOURCES += \
     resource.qrc
