@@ -3,6 +3,7 @@
 
 #include "profilebox.h"
 
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -47,4 +48,15 @@ MainWindow::~MainWindow()
 void MainWindow::selectionChanged()
 {
 	qDebug() << "Item selected";
+}
+
+void MainWindow::on_pushButton_add_clicked()
+{
+	bool ok;
+	QString name = QInputDialog::getText(this, tr("Employee Name"), tr("Please insert employee's full name here:"), QLineEdit::Normal, "John Doe", &ok);
+	if ( ok && !name.isEmpty() )
+	{
+		ProfileBox * box = new ProfileBox();
+		box->init(name, this, scene);
+	}
 }
