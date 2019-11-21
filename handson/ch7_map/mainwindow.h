@@ -6,6 +6,11 @@
 #include <QGeoPositionInfo>
 #include <QGeoPositionInfoSource>
 
+#include <QGeoServiceProvider>
+#include <QGeoRoutingManager>
+#include <QGeoRouteRequest>
+#include <QGeoRouteReply>
+
 namespace Ui {
 class MainWindow;
 }
@@ -20,6 +25,8 @@ public:
 
 private slots:
 	void positionUpdated(const QGeoPositionInfo &info);
+	void routeCalculated(QGeoRouteReply * reply);
+	void routeError(QGeoRouteReply *reply, QGeoRouteReply::Error error, const QString & errorString);
 
 private:
 	Ui::MainWindow *ui;
