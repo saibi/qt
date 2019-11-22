@@ -81,3 +81,30 @@ void MainWindow::updateLines()
 			lines.at(i)->updateLine();
 	}
 }
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+	qDebug() << "Key pressed: " + event->text();
+
+	if ( event->key() == Qt::Key_Delete )
+	{
+		if ( scene->selectedItems().size() > 0 )
+		{
+			QGraphicsItem * item = scene->selectedItems().at(0);
+			scene->removeItem(item);
+
+			for ( int i = lines.size() - 1 ; i >= 0 ; --i )
+			{
+				ProfileLine * line = lines.at(i);
+				if ( line->startBox == item || line->endBox == item)
+				{
+					lines.removeAt(i);
+					scene->removeItem(line);
+					delete line;
+
+				}
+			}
+			delete item;
+		}
+	}
+}

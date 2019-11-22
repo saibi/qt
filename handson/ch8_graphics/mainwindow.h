@@ -16,6 +16,7 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
+#include <QKeyEvent>
 
 class ProfileLine;
 
@@ -32,6 +33,8 @@ public:
 	~MainWindow();
 
 	void updateLines();
+
+	void keyReleaseEvent(QKeyEvent *event);
 
 public slots:
 	void selectionChanged();
