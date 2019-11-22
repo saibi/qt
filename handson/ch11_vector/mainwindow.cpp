@@ -18,6 +18,9 @@ void MainWindow::paintEvent(QPaintEvent *event)
 	QPainter painter;
 	painter.begin(this);
 
+	painter.setFont(QFont("Times", 14, QFont::Bold));
+	painter.drawText(QPoint(20, 30), "Hello World!");
+
 	painter.drawLine(QPoint(50, 60), QPoint(100, 100));
 
 	painter.setBrush(Qt::BDiagPattern);
