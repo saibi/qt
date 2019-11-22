@@ -69,3 +69,43 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 		drawing = false;
 	}
 }
+
+void MainWindow::on_action2px_triggered()
+{
+	brushSize = 2;
+}
+
+void MainWindow::on_action5px_triggered()
+{
+	brushSize = 5;
+}
+
+void MainWindow::on_action10px_triggered()
+{
+	brushSize = 10;
+}
+
+void MainWindow::on_actionBlack_triggered()
+{
+	brushColor = Qt::black;
+}
+
+void MainWindow::on_actionWhite_triggered()
+{
+	brushColor = Qt::white;
+}
+
+void MainWindow::on_actionRed_triggered()
+{
+	brushColor = Qt::red;
+}
+
+void MainWindow::on_actionGreen_triggered()
+{
+	brushColor = Qt::green;
+}
+
+void MainWindow::on_actionBlue_triggered()
+{
+	brushColor = Qt::blue;
+}

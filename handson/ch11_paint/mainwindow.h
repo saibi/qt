@@ -25,6 +25,23 @@ public:
 	virtual void paintEvent(QPaintEvent *event);
 	virtual void resizeEvent(QResizeEvent *event);
 
+private slots:
+	void on_action2px_triggered();
+
+	void on_action5px_triggered();
+
+	void on_action10px_triggered();
+
+	void on_actionBlack_triggered();
+
+	void on_actionWhite_triggered();
+
+	void on_actionRed_triggered();
+
+	void on_actionGreen_triggered();
+
+	void on_actionBlue_triggered();
+
 private:
 	Ui::MainWindow *ui;
 
