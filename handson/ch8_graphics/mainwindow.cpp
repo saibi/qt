@@ -5,6 +5,8 @@
 
 #include <QInputDialog>
 
+#include "profileline.h"
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
@@ -58,5 +60,24 @@ void MainWindow::on_pushButton_add_clicked()
 	{
 		ProfileBox * box = new ProfileBox();
 		box->init(name, this, scene);
+
+		if ( scene->selectedItems().size() > 0 )
+		{
+			ProfileLine * line = new ProfileLine();
+			line->initLine(box, scene->selectedItems().at(0) );
+			scene->addItem(line);
+
+			lines.push_back(line);
+
+		}
+	}
+}
+
+void MainWindow::updateLines()
+{
+	if (lines.size() > 0 )
+	{
+		for ( int i = 0 ; i < lines.size() ; ++i )
+			lines.at(i)->updateLine();
 	}
 }

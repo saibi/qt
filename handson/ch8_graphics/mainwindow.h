@@ -17,6 +17,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 
+class ProfileLine;
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +31,8 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+	void updateLines();
+
 public slots:
 	void selectionChanged();
 
@@ -40,6 +43,8 @@ private:
 	Ui::MainWindow *ui;
 
 	QGraphicsScene * scene;
+
+	QList <ProfileLine *> lines;
 };
 
 #endif // MAINWINDOW_H

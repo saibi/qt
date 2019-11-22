@@ -41,3 +41,15 @@ void ProfileBox::init(QString name, MainWindow *window, QGraphicsScene *scene)
 	mainWindow = window;
 	scene->addItem(this);
 }
+
+QVariant ProfileBox::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	if ( change == QGraphicsItem::ItemPositionChange )
+	{
+		qDebug() << "Item moved";
+
+		mainWindow->updateLines();
+	}
+
+	return QGraphicsItem::itemChange(change, value);
+}

@@ -10,8 +10,9 @@ class ProfileBox : public QGraphicsItemGroup
 public:
 	explicit ProfileBox(QGraphicsItemGroup * parent = nullptr);
 
-
 	void init(QString name, MainWindow * window, QGraphicsScene * scene);
+
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
 private:
 	QGraphicsTextItem * nameTag;

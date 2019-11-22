@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    profilebox.cpp
+    profilebox.cpp \
+    profileline.cpp
 
 HEADERS += \
         mainwindow.h \
-    profilebox.h
+    profilebox.h \
+    profileline.h
 
 FORMS += \
         mainwindow.ui
