@@ -10,9 +10,16 @@ MainWindow::MainWindow(QWidget *parent) :
 	image = QImage(this->size(), QImage::Format_RGB32);
 	image.fill(Qt::white);
 
+	QImage tux;
+	tux.load("../ch11_paint/tux.png");
+	QPainter painter(&image);
+	painter.drawImage(QPoint(100, 100), tux);
+
+
 	drawing = false;
 	brushColor = Qt::black;
 	brushSize = 2;
+
 }
 
 MainWindow::~MainWindow()
