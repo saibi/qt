@@ -34,13 +34,20 @@ private slots:
 
 	void on_pushButton_capture_clicked();
 
+	void on_pushButton_record_clicked();
+
+	void recordError(QMediaRecorder::Error error);
+
 private:
 	Ui::MainWindow *ui;
 
 	QCamera * camera;
 	QCameraViewfinder * viewfinder;
 	QCameraImageCapture * imageCapture;
+	QMediaRecorder * recorder;
+
 	bool connected;
+	bool recording;
 };
 
 #endif // MAINWINDOW_H

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 
 	connected = false;
+	recording = false;
 
 	camera = new QCamera();
 
@@ -92,4 +93,37 @@ void MainWindow::on_pushButton_capture_clicked()
 
 		qDebug() << "capture saved in " << qApp->applicationDirPath();
 	}
+}
+
+void MainWindow::on_pushButton_record_clicked()
+{
+	if ( connected )
+	{
+		if (!recording)
+		{
+			recorder = new QMediaRecorder(camera);
+			connect(recorder, SIGNAL(error(QMediaRecorder::Error)), this, SLOT(recordError(QMediaRecorder::Error)));
+
+			camera->setCaptureMode(QCamera::CaptureVideo);
+			recorder->setOutputLocation(QUrl(qApp->applicationDirPath()));
+
+
+			recorder->record();
+			recording = true;
+
+			qDebug() << "recording start : " << qApp->applicationDirPath();
+		}
+		else
+		{
+			recorder->stop();
+			recording = false;
+			qDebug() << "recording stop";
+		}
+	}
+}
+
+
+void MainWindow::recordError(QMediaRecorder::Error error)
+{
+	qDebug() << error;
 }
