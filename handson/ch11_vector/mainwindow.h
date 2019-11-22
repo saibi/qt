@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <QPainter>
+#include <QtSvg/QSvgGenerator>
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,11 @@ public:
 	~MainWindow();
 
 	virtual void paintEvent(QPaintEvent *event);
+
+	void paintAll(QSvgGenerator *generator = 0);
+
+private slots:
+	void on_actionSave_as_SVG_triggered();
 
 private:
 	Ui::MainWindow *ui;
