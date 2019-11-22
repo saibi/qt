@@ -116,3 +116,18 @@ void MainWindow::on_actionBlue_triggered()
 {
 	brushColor = Qt::blue;
 }
+
+void MainWindow::on_actionClear_triggered()
+{
+	image.fill(Qt::white);
+	this->update();
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+	QString filePath = QFileDialog::getSaveFileName(this, "Save Image", "", "PNG (*.png);;JPEG (*.jpg *.jpeg);;All files (*.*)");
+	if ( filePath == "")
+		return;
+
+	image.save(filePath);
+}

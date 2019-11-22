@@ -42,6 +42,10 @@ private slots:
 
 	void on_actionBlue_triggered();
 
+	void on_actionClear_triggered();
+
+	void on_actionSave_triggered();
+
 private:
 	Ui::MainWindow *ui;
 
