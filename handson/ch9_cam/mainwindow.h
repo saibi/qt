@@ -24,11 +24,22 @@ public:
 	explicit MainWindow(QWidget *parent = nullptr);
 	~MainWindow();
 
+
+	void connectCamera();
+
+private slots:
+	void on_pushButton_connect_clicked();
+
+	void cameraError(QCamera::Error error);
+
+	void on_pushButton_capture_clicked();
+
 private:
 	Ui::MainWindow *ui;
 
 	QCamera * camera;
 	QCameraViewfinder * viewfinder;
+	QCameraImageCapture * imageCapture;
 	bool connected;
 };
 
