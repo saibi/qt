@@ -30,6 +30,13 @@ public:
 
 private slots:
 	void downloadFileListFinished();
+	void uploadFileProgress(qint64 bytesSent, qint64 bytesTotal);
+	void uploadFileFinished();
+	void uploadFileListFinished();
+
+	void on_pushButton_open_clicked();
+
+	void on_pushButton_upload_clicked();
 
 private:
 	Ui::MainWindow *ui;

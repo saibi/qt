@@ -76,5 +76,129 @@ void MainWindow::downloadFileListFinished()
 void MainWindow::on_pushButton_open_clicked()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, "Select File", qApp->applicationDirPath());
-	ui->uploadFileInput->setText(fileName);
+	ui->lineEdit_upload->setText(fileName);
+}
+
+void MainWindow::on_pushButton_upload_clicked()
+{
+
+	qDebug("DBG [%s]", Q_FUNC_INFO);
+	QFile * file = new QFile(ui->lineEdit_upload->text());
+	QFileInfo fileInfo(*file);
+
+	uploadFileName = fileInfo.fileName();
+
+	QUrl ftpPath;
+	ftpPath.setUrl(ftpAddress + "/home/saibi/" + uploadFileName);
+	ftpPath.setUserName(username);
+	ftpPath.setPassword(password);
+	ftpPath.setPort(ftpPort);
+
+	if ( file->open(QIODevice::ReadOnly) )
+	{
+		ui->progressBar_upload->setEnabled(true);
+		ui->progressBar_upload->setValue(0);
+
+		QNetworkRequest request;
+		request.setUrl(ftpPath);
+
+		uploadFileReply = manager->put(request, file);
+		connect(uploadFileReply, SIGNAL(uploadProgress(qint64, qint64)), this, SLOT(uploadFileProgress(qint64, qint64)));
+		connect(uploadFileReply, SIGNAL(finished()), this, SLOT(uploadFileFinished()));
+	}
+	else
+	{
+		QMessageBox::warning(this, "Invalid File", "Failed to open file for uplaod.");
+	}
+}
+
+
+void MainWindow::uploadFileProgress(qint64 bytesSent, qint64 bytesTotal)
+{
+	qDebug("DBG [%s] %d, %d", Q_FUNC_INFO, bytesSent, bytesTotal);
+
+	if ( bytesTotal > 0 )
+	{
+		qint64 percentage = 100 * bytesSent / bytesTotal;
+		ui->progressBar_upload->setValue((int) percentage );
+	}
+}
+
+
+void MainWindow::uploadFileFinished()
+{
+	if (uploadFileReply->error() != QNetworkReply::NoError )
+	{
+		QMessageBox::warning(this, "Failed", "Failed to upload file: " + uploadFileReply->errorString());
+	}
+	else
+	{
+		bool exists = false;
+
+		if ( fileList.size() > 0 )
+		{
+			for ( int i = 0 ;  i < fileList.size(); ++i )
+			{
+				if ( fileList.at(i) == uploadFileName )
+				{
+					exists = true;
+				}
+			}
+		}
+
+		if ( !exists )
+		{
+			fileList.append(uploadFileName);
+
+			QString fileName = "files.txt";
+			QFile * file = new QFile(qApp->applicationDirPath() + "/" + fileName);
+
+			file->open(QIODevice::ReadWrite);
+			if ( fileList.size() > 0 )
+			{
+				for (int j = 0 ; j < fileList.size(); j++ )
+				{
+					if ( fileList.at(j) != "" )
+					{
+						file->write(QString(fileList.at(j) + ",").toUtf8());
+					}
+				}
+			}
+			file->close();
+
+
+			QFile *newFile = new QFile(qApp->applicationDirPath() + "/" + fileName);
+
+			if ( newFile->open(QIODevice::ReadOnly) )
+			{
+				QUrl ftpPath;
+				ftpPath.setUrl(ftpAddress + "/home/saibi/" + fileName);
+				ftpPath.setUserName(username);
+				ftpPath.setPassword(password);
+				ftpPath.setPort(ftpPort);
+
+				QNetworkRequest request;
+				request.setUrl(ftpPath);
+				uploadFileListReply = manager->put(request, newFile);
+				connect(uploadFileListReply, SIGNAL(finished()), this, SLOT(uploadFileListFinished()));
+				file->close();
+			}
+		}
+
+		QMessageBox::information(this, "Success", "File successfully uploaded.");
+
+	}
+}
+
+
+void MainWindow::uploadFileListFinished()
+{
+	if ( uploadFileListReply->error() != QNetworkReply::NoError )
+	{
+		QMessageBox::warning(this, "Failed", "Failed to update file list: " + uploadFileListReply->errorString());
+	}
+	else
+	{
+		getFileList();
+	}
 }
