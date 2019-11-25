@@ -81,8 +81,6 @@ void MainWindow::on_pushButton_open_clicked()
 
 void MainWindow::on_pushButton_upload_clicked()
 {
-
-	qDebug("DBG [%s]", Q_FUNC_INFO);
 	QFile * file = new QFile(ui->lineEdit_upload->text());
 	QFileInfo fileInfo(*file);
 
@@ -115,8 +113,6 @@ void MainWindow::on_pushButton_upload_clicked()
 
 void MainWindow::uploadFileProgress(qint64 bytesSent, qint64 bytesTotal)
 {
-	qDebug("DBG [%s] %d, %d", Q_FUNC_INFO, bytesSent, bytesTotal);
-
 	if ( bytesTotal > 0 )
 	{
 		qint64 percentage = 100 * bytesSent / bytesTotal;
@@ -200,5 +196,77 @@ void MainWindow::uploadFileListFinished()
 	else
 	{
 		getFileList();
+	}
+}
+
+void MainWindow::on_pushButton_folder_clicked()
+{
+	QString folder = QFileDialog::getExistingDirectory(this, "Open Directory", qApp->applicationDirPath(), QFileDialog::ShowDirsOnly);
+	ui->lineEdit_download->setText(folder);
+}
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+	downloadFileName = item->text();
+
+	QString folder = ui->lineEdit_download->text();
+
+	if ( folder != "" && QDir(folder).exists() )
+	{
+		QUrl ftpPath;
+
+		ftpPath.setUrl(ftpAddress + "/home/saibi/" + downloadFileName);
+		ftpPath.setUserName(username);
+		ftpPath.setPassword(password);
+		ftpPath.setPort(ftpPort);
+
+		QNetworkRequest request;
+		request.setUrl(ftpPath);
+
+		downloadFileReply = manager->get(request);
+		connect(downloadFileReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadFileProgress(qint64, qint64)));
+		connect(downloadFileReply, SIGNAL(finished()), this, SLOT(downloadFileFinished()));
+	}
+	else
+	{
+		QMessageBox::warning(this, "Invalid Path", "Please set the download path before download.");
+	}
+}
+
+void MainWindow::downloadFileProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+	if ( bytesTotal > 0 )
+	{
+		qint64 percentage = 100 * bytesReceived/ bytesTotal;
+		ui->progressBar_download->setValue((int)percentage);
+	}
+}
+
+
+void MainWindow::downloadFileFinished()
+{
+	if ( downloadFileReply->error() != QNetworkReply::NoError )
+	{
+		QMessageBox::warning(this, "Failed", "Failed to download file: " + downloadFileReply->errorString() );
+	}
+	else
+	{
+		QByteArray responseData;
+		if ( downloadFileReply->isReadable() )
+		{
+			responseData = downloadFileReply->readAll();
+		}
+
+		if ( !responseData.isEmpty() )
+		{
+			QString folder = ui->lineEdit_download->text();
+			QFile file(folder + "/" + downloadFileName);
+			file.open(QIODevice::WriteOnly);
+			file.write(responseData);
+			file.close();
+
+			QMessageBox::information(this, "Success", "File successfully downloaded.");
+
+		}
 	}
 }

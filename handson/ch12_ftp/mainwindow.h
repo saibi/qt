@@ -33,10 +33,16 @@ private slots:
 	void uploadFileProgress(qint64 bytesSent, qint64 bytesTotal);
 	void uploadFileFinished();
 	void uploadFileListFinished();
+	void downloadFileProgress(qint64 bytesReceived, qint64 bytesTotal);
+	void downloadFileFinished();
 
 	void on_pushButton_open_clicked();
 
 	void on_pushButton_upload_clicked();
+
+	void on_pushButton_folder_clicked();
+
+	void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
 	Ui::MainWindow *ui;
