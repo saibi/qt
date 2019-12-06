@@ -9,10 +9,14 @@ QT       += testlib
 QT       -= gui
 
 TARGET = client-tests
+TEMPLATE = app
+
+CONFIG += c++14
 CONFIG   += console
 CONFIG   -= app_bundle
 
-TEMPLATE = app
+INCLUDEPATH += source
+
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -27,6 +31,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        client-tests.cpp 
+	source/models/client-tests.cpp
 
-DEFINES += SRCDIR=\\\"$$PWD/\\\"
+#DEFINES += SRCDIR=\\\"$$PWD/\\\"
