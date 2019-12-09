@@ -1,7 +1,6 @@
 <RCC>
-	<qresource prefix="/">
-		<file>main.qml</file>
-	</qresource>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>size.qml</file>
+    </qresource>
 </RCC>
-
-
