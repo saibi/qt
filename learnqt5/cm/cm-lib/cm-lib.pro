@@ -4,6 +4,15 @@
 #
 #-------------------------------------------------
 
+include(../qmake-target-platform.pri)
+include(../qmake-destination-path.pri)
+
+DESTDIR = $$PWD/../binaries/$$DESTINATION_PATH
+OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/.obj
+MOC_DIR = $$PWD/build/$$DESTINATION_PATH/.moc
+RCC_DIR = $$PWD/build/$$DESTINATION_PATH/.qrc
+UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
+
 QT       -= gui
 
 TARGET = cm-lib
@@ -27,13 +36,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-	source/models/client.cpp
+	source/models/client.cpp \
+    source/controllers/master-controller.cpp
 
 HEADERS += \
 	source/models/client.h \
-	source/cm-lib_global.h
+	source/cm-lib_global.h \
+    source/controllers/master-controller.h
 
 #unix {
 #    target.path = /usr/lib
 #    INSTALLS += target
 #}
+
+message(cm-lib project dir: $${PWD})
+
+message(cm-lib output dir: $${DESTDIR})
+
