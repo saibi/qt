@@ -42,7 +42,8 @@ SOURCES += \
 HEADERS += \
 	source/models/client.h \
 	source/cm-lib_global.h \
-    source/controllers/master-controller.h
+    source/controllers/master-controller.h \
+    source/controllers/navigation-controller.h
 
 #unix {
 #    target.path = /usr/lib
