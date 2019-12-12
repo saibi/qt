@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 
 import assets 1.0
+import components 1.0
 
 Window {
     visible: true
@@ -57,42 +58,23 @@ Window {
 //        }
 
         Column {
-            Text {
-                font {
-                    family: Style.fontAwesome
-                    pixelSize: 42
-                }
-                color: "#ffffff"
-                text: "\uf0c9"
+            NavigationButton {
+                iconCharacter: "\uf0c9"
+                description: ""
+            }
+            NavigationButton {
+                iconCharacter: "\uf015"
+                description: "Dashboard"
             }
 
-            Text {
-                font {
-                    family: Style.fontAwesome
-                    pixelSize: 42
-                }
-                color: "#ffffff"
-                text: "\uf015"
+            NavigationButton {
+                iconCharacter: "\uf234"
+                description: "New Client"
             }
-
-            Text {
-                font {
-                    family: Style.fontAwesome
-                    pixelSize: 42
-                }
-                color: "#ffffff"
-                text: "\uf234"
+            NavigationButton {
+                iconCharacter: "\uf002"
+                description: "Find Client"
             }
-            Text {
-                font {
-                    family: Style.fontAwesome
-                    pixelSize: 42
-                }
-                color: "#ffffff"
-                text: "\uf002"
-            }
-
-
         }
 
         clip: true

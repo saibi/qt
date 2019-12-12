@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>components/NavigationButton.qml</file>
+        <file>components/qmldir</file>
+    </qresource>
+</RCC>
