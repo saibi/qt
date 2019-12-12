@@ -19,7 +19,8 @@ Item {
     readonly property real widthNavigationButton: widthNavigationButtonIcon + widthNavigationButtonDescription
     readonly property real heightNavigationButton: Math.max(heightNavigationButtonIcon, heightNavigationButtonDescription)
 
-
+    readonly property real widthNavigationBarCollapsed: widthNavigationButtonIcon
+    readonly property real heightNavigationBarExpanded: widthNavigationButton
 
     FontLoader {
         id: fontAwesomeLoader

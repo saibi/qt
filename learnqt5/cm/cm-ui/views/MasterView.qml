@@ -24,60 +24,8 @@ Window {
         onGoFindClientView: contentFrame.replace("qrc:/views/FindClientView.qml")
     }
 
-    Rectangle {
+    NavigationBar {
         id: navigationBar
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
-            left: parent.left
-        }
-
-        width: 100
-        color: "#000000"
-
-
-//        Column {
-//            Button {
-//                text: "Dashboard"
-//                onClicked: masterController.ui_navigationController.goDashboardView()
-
-//            }
-
-//            Button {
-//                text: "New Client"
-//                onClicked: masterController.ui_navigationController.goCreateClientView()
-
-//            }
-
-//            Button {
-//                text: "Find Client"
-//                onClicked: masterController.ui_navigationController.goFindClientView()
-
-//            }
-
-//        }
-
-        Column {
-            NavigationButton {
-                iconCharacter: "\uf0c9"
-                description: ""
-            }
-            NavigationButton {
-                iconCharacter: "\uf015"
-                description: "Dashboard"
-            }
-
-            NavigationButton {
-                iconCharacter: "\uf234"
-                description: "New Client"
-            }
-            NavigationButton {
-                iconCharacter: "\uf002"
-                description: "Find Client"
-            }
-        }
-
-        clip: true
     }
 
     StackView {
