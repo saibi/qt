@@ -39,6 +39,8 @@ Item {
                     pixelSize: Style.pixelSizeNavigationBarIcon
                 }
                 color: Style.colourNavigationBarFont
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
                 text: "\uf11a"
             }
             Text {
@@ -46,6 +48,8 @@ Item {
                 width: Style.widthNavigationButtonDescription
                 height: Style.heightNavigationButtonDescription
                 color: Style.colourNavigationBarFont
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: Style.pixelSizeNavigationBarText
                 text: "SET ME!!"
             }
         }

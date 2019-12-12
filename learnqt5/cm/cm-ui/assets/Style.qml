@@ -13,7 +13,7 @@ Item {
     readonly property real widthNavigationButtonIcon: 80
     readonly property real heightNavigationButtonIcon: widthNavigationButtonIcon
 
-    readonly property real widthNavigationButtonDescription: 240
+    readonly property real widthNavigationButtonDescription: 160
     readonly property real heightNavigationButtonDescription: heightNavigationButtonIcon
 
     readonly property real widthNavigationButton: widthNavigationButtonIcon + widthNavigationButtonDescription
@@ -21,6 +21,8 @@ Item {
 
     readonly property real widthNavigationBarCollapsed: widthNavigationButtonIcon
     readonly property real heightNavigationBarExpanded: widthNavigationButton
+
+    readonly property int pixelSizeNavigationBarText: 22
 
     FontLoader {
         id: fontAwesomeLoader
