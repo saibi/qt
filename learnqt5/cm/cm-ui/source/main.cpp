@@ -3,6 +3,8 @@
 
 #include <controllers/master-controller.h>
 #include <QQmlContext>
+#include <controllers/command-controller.h>
+#include <framework/command.h>
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +14,8 @@ int main(int argc, char *argv[])
 
 	qmlRegisterType<cm::controllers::MasterController>("CM", 1, 0, "MasterController");
 	qmlRegisterType<cm::controllers::NavigationController>("CM", 1, 0, "NavigationController");
+	qmlRegisterType<cm::controllers::CommandController>("CM", 1, 0, "CommandController");
+	qmlRegisterType<cm::controllers::Command>("CM", 1, 0, "Command");
 
 	cm::controllers::MasterController masterController;
 

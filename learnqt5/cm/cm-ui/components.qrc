@@ -3,5 +3,7 @@
         <file>components/NavigationButton.qml</file>
         <file>components/qmldir</file>
         <file>components/NavigationBar.qml</file>
+        <file>components/CommandBar.qml</file>
+        <file>components/CommandButton.qml</file>
     </qresource>
 </RCC>

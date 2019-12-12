@@ -37,13 +37,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 	source/models/client.cpp \
-    source/controllers/master-controller.cpp
+	source/controllers/master-controller.cpp \
+	source/controllers/command-controller.cpp \
+	source/framework/command.cpp
 
 HEADERS += \
 	source/models/client.h \
 	source/cm-lib_global.h \
-    source/controllers/master-controller.h \
-    source/controllers/navigation-controller.h
+	source/controllers/master-controller.h \
+	source/controllers/navigation-controller.h \
+	source/controllers/command-controller.h \
+	source/framework/command.h
 
 #unix {
 #    target.path = /usr/lib

@@ -15,6 +15,8 @@ public:
 	MasterController* masterController{nullptr};
 	NavigationController* navigationController{nullptr};
 	QString welcomeMessage = "This is MasterController to Major Tom";
+
+	CommandController* commandController{nullptr};
 };
 
 MasterController::MasterController(QObject* parent)
@@ -35,6 +37,11 @@ NavigationController* MasterController::navigationController()
 const QString& MasterController::welcomeMessage() const
 {
 	return implementation->welcomeMessage;
+}
+
+CommandController* MasterController::commandController()
+{
+	return implementation->commandController;
 }
 
 }}
