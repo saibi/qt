@@ -22,6 +22,8 @@ Item {
             NavigationButton {
                 iconCharacter: "\uf0c9"
                 description: ""
+                hoverColour: "#993333"
+                onNavigationButtonClicked: isCollapsed = !isCollapsed
             }
             NavigationButton {
                 iconCharacter: "\uf015"
