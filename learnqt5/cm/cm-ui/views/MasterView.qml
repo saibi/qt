@@ -53,6 +53,7 @@ Window {
             }
 
         }
+        clip: true
     }
 
     StackView {
