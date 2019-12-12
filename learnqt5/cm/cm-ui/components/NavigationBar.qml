@@ -3,17 +3,20 @@ import QtQuick 2.9
 import assets 1.0
 
 Item {
+    property bool isCollapsed: true
+
     anchors {
         top: parent.top
         bottom: parent.bottom
         left: parent.left
     }
 
-    width: 100
+
+    width: isCollapsed ? Style.widthNavigationBarCollapsed : Style.heightNavigationBarExpanded
 
     Rectangle {
         anchors.fill: parent
-        color: "#000000"
+        color: Style.colourNavigationBarBackground
 
         Column {
             NavigationButton {
