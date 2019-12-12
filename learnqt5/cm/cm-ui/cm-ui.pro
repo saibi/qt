@@ -29,10 +29,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
 	source/main.cpp
 
-RESOURCES += views.qrc
+RESOURCES += views.qrc \
+    assets.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH = $$PWD
+QML_IMPORT_PATH += $$PWD
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -44,3 +45,6 @@ QML_DESIGNER_IMPORT_PATH =
 
 
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
+
+DISTFILES += \
+    assets/Style.qml

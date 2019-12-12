@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 
+import assets 1.0
 
 Window {
     visible: true
@@ -33,26 +34,67 @@ Window {
         width: 100
         color: "#000000"
 
+
+//        Column {
+//            Button {
+//                text: "Dashboard"
+//                onClicked: masterController.ui_navigationController.goDashboardView()
+
+//            }
+
+//            Button {
+//                text: "New Client"
+//                onClicked: masterController.ui_navigationController.goCreateClientView()
+
+//            }
+
+//            Button {
+//                text: "Find Client"
+//                onClicked: masterController.ui_navigationController.goFindClientView()
+
+//            }
+
+//        }
+
         Column {
-            Button {
-                text: "Dashboard"
-                onClicked: masterController.ui_navigationController.goDashboardView()
-
+            Text {
+                font {
+                    family: Style.fontAwesome
+                    pixelSize: 42
+                }
+                color: "#ffffff"
+                text: "\uf0c9"
             }
 
-            Button {
-                text: "New Client"
-                onClicked: masterController.ui_navigationController.goCreateClientView()
-
+            Text {
+                font {
+                    family: Style.fontAwesome
+                    pixelSize: 42
+                }
+                color: "#ffffff"
+                text: "\uf015"
             }
 
-            Button {
-                text: "Find Client"
-                onClicked: masterController.ui_navigationController.goFindClientView()
-
+            Text {
+                font {
+                    family: Style.fontAwesome
+                    pixelSize: 42
+                }
+                color: "#ffffff"
+                text: "\uf234"
             }
+            Text {
+                font {
+                    family: Style.fontAwesome
+                    pixelSize: 42
+                }
+                color: "#ffffff"
+                text: "\uf002"
+            }
+
 
         }
+
         clip: true
     }
 

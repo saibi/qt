@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 	cm::controllers::MasterController masterController;
 
 	QQmlApplicationEngine engine;
+	engine.addImportPath("qrc:/");
 
 	engine.rootContext()->setContextProperty("masterController", &masterController);
 
