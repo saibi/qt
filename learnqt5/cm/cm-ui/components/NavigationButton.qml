@@ -5,20 +5,37 @@ Item {
     property alias iconCharacter: textIcon.text
     property alias description: textDescription.text
 
-    Row {
-        Text {
-            id: textIcon
-            font {
-                family: Style.fontAwesome
-                pixelSize: 42
+    width: Style.widthNavigationButton
+    height: Style.heightNavigationButton
+
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Style.colourNavigationBarBackground
+
+        Row {
+
+            Text {
+                id: textIcon
+                width: Style.widthNavigationButtonIcon
+                height: Style.heightNavigationButtonIcon
+
+                font {
+                    family: Style.fontAwesome
+                    pixelSize: Style.pixelSizeNavigationBarIcon
+                }
+                color: Style.colourNavigationBarFont
+                text: "\uf11a"
             }
-            color: "#ffffff"
-            text: "\uf11a"
+            Text {
+                id: textDescription
+                width: Style.widthNavigationButtonDescription
+                height: Style.heightNavigationButtonDescription
+                color: Style.colourNavigationBarFont
+                text: "SET ME!!"
+            }
         }
-        Text {
-            id: textDescription
-            color: "#ffffff"
-            text: "SET ME!!"
-        }
+
     }
+
 }
