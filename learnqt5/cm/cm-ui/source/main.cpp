@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	qmlRegisterType<cm::controllers::MasterController>("CM", 1, 0, "MasterController");
 	qmlRegisterType<cm::controllers::NavigationController>("CM", 1, 0, "NavigationController");
 	qmlRegisterType<cm::controllers::CommandController>("CM", 1, 0, "CommandController");
-	qmlRegisterType<cm::controllers::Command>("CM", 1, 0, "Command");
+	qmlRegisterType<cm::framework::Command>("CM", 1, 0, "Command");
 
 	cm::controllers::MasterController masterController;
 
