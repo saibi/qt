@@ -11,35 +11,37 @@ namespace controllers {
 class CommandController::Implementation
 {
 public:
-	Implementation(CommandController* _commandController) : commandController(_commandController)
-	{
-		Command* createClientSaveCommand = new Command(commandController, QChar(0xf0c7), "Save");
-		QObject::connect( createClientSaveCommand, &Command::executed, commandController, &CommandController::onCreateClientSaveExecuted );
-		createClientViewContextCommands.append( createClientSaveCommand );
-	}
+		Implementation(CommandController* _commandController)
+				: commandController(_commandController)
+		{
+				Command* createClientSaveCommand = new Command( commandController, QChar( 0xf0c7 ), "Save" );
+				QObject::connect( createClientSaveCommand, &Command::executed, commandController, &CommandController::onCreateClientSaveExecuted );
+				createClientViewContextCommands.append( createClientSaveCommand );
+		}
 
-	CommandController *commandController{nullptr};
-	QList<Command*> createClientViewContextCommands{};
+		CommandController* commandController{nullptr};
+
+		QList<Command*> createClientViewContextCommands{};
 };
 
-CommandController::CommandController(QObject * parent) : QObject(parent)
+CommandController::CommandController(QObject* parent)
+		: QObject(parent)
 {
-	implementation.reset(new Implementation(this));
+		implementation.reset(new Implementation(this));
 }
 
 CommandController::~CommandController()
 {
-
 }
 
 QQmlListProperty<Command> CommandController::ui_createClientViewContextCommands()
 {
-	return QQmlListProperty<Command>(this, implementation->createClientViewContextCommands);
+		return QQmlListProperty<Command>(this, implementation->createClientViewContextCommands);
 }
 
 void CommandController::onCreateClientSaveExecuted()
 {
-	qDebug() << "You executed the Save command!";
+		qDebug() << "You executed the Save command!";
 }
 
 }}

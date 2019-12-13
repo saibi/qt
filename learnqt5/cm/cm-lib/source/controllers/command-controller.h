@@ -11,25 +11,24 @@ namespace controllers {
 
 class CMLIBSHARED_EXPORT CommandController : public QObject
 {
-	Q_OBJECT
-
-	Q_PROPERTY(QQmlListProperty<cm::framework::Command> ui_createClientViewContextCommands READ ui_createClientViewContextCommands CONSTANT)
+		Q_OBJECT
+		Q_PROPERTY(QQmlListProperty<cm::framework::Command> ui_createClientViewContextCommands READ ui_createClientViewContextCommands CONSTANT)
 
 public:
-	explicit CommandController(QObject * _parent = nullptr);
-	~CommandController();
+		explicit CommandController(QObject* _parent = nullptr);
+		~CommandController();
 
-	QQmlListProperty<framework::Command> ui_createClientViewContextCommands();
+		QQmlListProperty<framework::Command> ui_createClientViewContextCommands();
 
 public slots:
-	void onCreateClientSaveExecuted();
+		void onCreateClientSaveExecuted();
 
 private:
-	class Implementation;
-	QScopedPointer<Implementation> implementation;
-
+		class Implementation;
+		QScopedPointer<Implementation> implementation;
 };
 
 }}
+
 
 #endif

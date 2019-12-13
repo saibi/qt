@@ -6,42 +6,42 @@ namespace controllers {
 class MasterController::Implementation
 {
 public:
-	Implementation(MasterController* _masterController)
-		: masterController(_masterController)
-	{
-		navigationController = new NavigationController(masterController);
-	}
+		Implementation(MasterController* _masterController)
+				: masterController(_masterController)
+		{
+				commandController = new CommandController(masterController);
+				navigationController = new NavigationController(masterController);
+		}
 
-	MasterController* masterController{nullptr};
-	NavigationController* navigationController{nullptr};
-	QString welcomeMessage = "This is MasterController to Major Tom";
-
-	CommandController* commandController{nullptr};
+		MasterController* masterController{nullptr};
+		CommandController* commandController{nullptr};
+		NavigationController* navigationController{nullptr};
+		QString welcomeMessage = "This is MasterController to Major Tom";
 };
 
 MasterController::MasterController(QObject* parent)
-	: QObject(parent)
+		: QObject(parent)
 {
-	implementation.reset(new Implementation(this));
+		implementation.reset(new Implementation(this));
 }
 
 MasterController::~MasterController()
 {
 }
 
+CommandController* MasterController::commandController()
+{
+		return implementation->commandController;
+}
+
 NavigationController* MasterController::navigationController()
 {
-	return implementation->navigationController;
+		return implementation->navigationController;
 }
 
 const QString& MasterController::welcomeMessage() const
 {
-	return implementation->welcomeMessage;
-}
-
-CommandController* MasterController::commandController()
-{
-	return implementation->commandController;
+		return implementation->welcomeMessage;
 }
 
 }}

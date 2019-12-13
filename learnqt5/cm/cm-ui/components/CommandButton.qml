@@ -40,7 +40,7 @@ Item {
 
             }
             font.pixelSize: Style.pixelSizeNavigationBarText
-            color: command.ui_canExecute ? Stype.ColourCommandBarFont : Style.colourCommandBarFontDisabled
+            color: command.ui_canExecute ? Stype.colourCommandBarFont : Style.colourCommandBarFontDisabled
             text: command.ui_description
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
