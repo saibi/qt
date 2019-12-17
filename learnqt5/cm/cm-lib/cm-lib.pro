@@ -39,7 +39,13 @@ SOURCES += \
 	source/models/client.cpp \
 	source/controllers/master-controller.cpp \
 	source/controllers/command-controller.cpp \
-	source/framework/command.cpp
+	source/framework/command.cpp \
+    source/data/data-decorator.cpp \
+    source/data/string-decorator.cpp \
+    source/data/int-decorator.cpp \
+    source/data/datetime-decorator.cpp \
+    source/data/enumerator-decorator.cpp \
+    source/data/entity.cpp
 
 HEADERS += \
 	source/models/client.h \
@@ -47,7 +53,14 @@ HEADERS += \
 	source/controllers/master-controller.h \
 	source/controllers/navigation-controller.h \
 	source/controllers/command-controller.h \
-	source/framework/command.h
+	source/framework/command.h \
+    source/data/data-decorator.h \
+    source/data/string-decorator.h \
+    source/data/int-decorator.h \
+    source/data/datetime-decorator.h \
+    source/data/enumerator-decorator.h \
+    source/data/entity.h \
+    source/data/entity-collection.h
 
 #unix {
 #    target.path = /usr/lib
