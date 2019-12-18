@@ -12,6 +12,7 @@ private Q_SLOTS:
 	void initTestCase();
 	void cleanupTestCase();
 	void testCase1();
+	void testCase2();
 };
 
 ClientTests::ClientTests()
@@ -31,6 +32,11 @@ void ClientTests::testCase1()
 	QVERIFY2(true, "Failure");
 }
 
-QTEST_APPLESS_MAIN(ClientTests)
+void ClientTests::testCase2()
+{
+	QVERIFY2(false, "Failure");
+}
+
+//QTEST_APPLESS_MAIN(ClientTests)
 
 #include "client-tests.moc"

@@ -25,7 +25,8 @@ CONFIG += c++14
 CONFIG   += console
 CONFIG   -= app_bundle
 
-INCLUDEPATH += source
+INCLUDEPATH += source \
+	../cm-lib/source
 
 
 # The following define makes your compiler emit warnings if you use
@@ -41,8 +42,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-	source/models/client-tests.cpp
+	source/models/client-tests.cpp \
+    source/test-suite.cpp \
+    source/main.cpp \
+    source/controllers/master-controller-tests.cpp
 
 #DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
+
+HEADERS += \
+    source/test-suite.h \
+    source/controllers/master-controller-tests.h
