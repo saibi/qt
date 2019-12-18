@@ -45,7 +45,10 @@ SOURCES += \
     source/data/int-decorator.cpp \
     source/data/datetime-decorator.cpp \
     source/data/enumerator-decorator.cpp \
-    source/data/entity.cpp
+    source/data/entity.cpp \
+    source/models/address.cpp \
+    source/models/appointment.cpp \
+    source/models/contact.cpp
 
 HEADERS += \
 	source/models/client.h \
@@ -60,7 +63,10 @@ HEADERS += \
     source/data/datetime-decorator.h \
     source/data/enumerator-decorator.h \
     source/data/entity.h \
-    source/data/entity-collection.h
+    source/data/entity-collection.h \
+    source/models/address.h \
+    source/models/appointment.h \
+    source/models/contact.h
 
 #unix {
 #    target.path = /usr/lib

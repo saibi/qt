@@ -8,6 +8,7 @@
 #include <cm-lib_global.h>
 #include <controllers/navigation-controller.h>
 #include <controllers/command-controller.h>
+#include <models/client.h>
 
 namespace cm {
 namespace controllers {
@@ -19,6 +20,7 @@ class CMLIBSHARED_EXPORT MasterController : public QObject
 	Q_PROPERTY( QString ui_welcomeMessage READ welcomeMessage CONSTANT )
 	Q_PROPERTY( cm::controllers::NavigationController* ui_navigationController READ navigationController CONSTANT )
 	Q_PROPERTY( cm::controllers::CommandController* ui_commandController READ commandController CONSTANT)
+	Q_PROPERTY( cm::models::Client * ui_newClient READ newClient CONSTANT)
 
 public:
 	explicit MasterController(QObject* parent = nullptr);
@@ -28,6 +30,8 @@ public:
 	const QString& welcomeMessage() const;
 
 	CommandController * commandController();
+
+	models::Client * newClient();
 
 private:
 	class Implementation;
