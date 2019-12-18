@@ -28,11 +28,6 @@ int main(int argc, char *argv[])
 
 
 
-
-
-
-
-
 	cm::controllers::MasterController masterController;
 
 	QQmlApplicationEngine engine;

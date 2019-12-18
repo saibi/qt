@@ -10,9 +10,9 @@ Item {
         anchors.fill: parent
         color: Style.colourBackground
 
-        Text {
-            anchors.centerIn: parent
-            text: "Create Client View"
+        StringEditorSingleLine {
+            stringDecorator: newClient.ui_name
+
         }
     }
 
