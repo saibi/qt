@@ -19,7 +19,7 @@ public:
 		MasterController* masterController{nullptr};
 		CommandController* commandController{nullptr};
 		NavigationController* navigationController{nullptr};
-		QString welcomeMessage = "This is MasterController to Major Tom";
+		QString welcomeMessage = "Welcome to the Client Management System!";
 		models::Client * newClient{nullptr};
 };
 

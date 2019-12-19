@@ -41,7 +41,7 @@ namespace controllers {
 
 void MasterControllerTests::welcomeMessage_returnsCorrectMessage()
 {
-	QCOMPARE( masterController.welcomeMessage(), QString("Welcome to the Client Management system!") );
+	QCOMPARE( masterController.welcomeMessage(), QString("Welcome to the Client Management System!") );
 }
 
 }
