@@ -46,7 +46,8 @@ SOURCES += \
     source/test-suite.cpp \
     source/main.cpp \
     source/controllers/master-controller-tests.cpp \
-    source/int-decorator-tests.cpp
+    source/data/int-decorator-tests.cpp \
+    source/data/string-decorator-tests.cpp
 
 #DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -55,4 +56,5 @@ LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
 HEADERS += \
     source/test-suite.h \
     source/controllers/master-controller-tests.h \
-    source/int-decorator-tests.h
+    source/data/int-decorator-tests.h \
+    source/data/string-decorator-tests.h
