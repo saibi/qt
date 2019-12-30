@@ -48,7 +48,8 @@ SOURCES += \
     source/controllers/master-controller-tests.cpp \
     source/data/int-decorator-tests.cpp \
     source/data/string-decorator-tests.cpp \
-    source/data/datetime-decorator-tests.cpp
+    source/data/datetime-decorator-tests.cpp \
+    source/data/enumerator-decorator-tests.cpp
 
 #DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -59,4 +60,5 @@ HEADERS += \
     source/controllers/master-controller-tests.h \
     source/data/int-decorator-tests.h \
     source/data/string-decorator-tests.h \
-    source/data/datetime-decorator-tests.h
+    source/data/datetime-decorator-tests.h \
+    source/data/enumerator-decorator-tests.h
