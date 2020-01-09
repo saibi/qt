@@ -61,4 +61,5 @@ HEADERS += \
     source/data/int-decorator-tests.h \
     source/data/string-decorator-tests.h \
     source/data/datetime-decorator-tests.h \
-    source/data/enumerator-decorator-tests.h
+    source/data/enumerator-decorator-tests.h \
+    source/models/client-tests.h
