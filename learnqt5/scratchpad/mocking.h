@@ -37,6 +37,21 @@ public:
 	}
 };
 
+class ClientTestSuite
+{
+public:
+	void saveTests()
+	{
+
+		DatabaseController databaseController;
+		Client client1(databaseController);
+		client1.save();
+		Client client2(databaseController);
+		client2.save();
+
+		qDebug() << "Test passed!";
+	}
+};
 
 
 #endif // MOCKING_H
