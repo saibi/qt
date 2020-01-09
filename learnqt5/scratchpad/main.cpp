@@ -12,9 +12,10 @@ int main(int argc, char *argv[])
 
 	qDebug() << "Running the production code...";
 
-	Client client1;
+	DatabaseController databaseController;
+	Client client1(databaseController);
 	client1.save();
-	Client client2;
+	Client client2(databaseController);
 	client2.save();
 
 	return app.exec();

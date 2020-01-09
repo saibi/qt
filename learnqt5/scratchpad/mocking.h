@@ -23,9 +23,13 @@ public:
 
 class Client
 {
-	DatabaseController databaseController;
+	DatabaseController & databaseController;
 
 public:
+	Client(DatabaseController & _databaseController) : databaseController(_databaseController)
+	{
+	}
+
 	void save()
 	{
 		qDebug() << "Saving Client";
