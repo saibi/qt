@@ -9,6 +9,7 @@
 #include <cm-lib_global.h>
 #include <data/data-decorator.h>
 #include <data/entity-collection.h>
+#include <data/string-decorator.h>
 
 namespace cm {
 namespace data {
@@ -26,6 +27,7 @@ public:
 	const QString& key() const;
 	void update(const QJsonObject& jsonObject);
 	QJsonObject toJson() const;
+	const QString& id() const;
 
 signals:
 	void childEntitiesChanged();
@@ -36,6 +38,7 @@ protected:
 	Entity* addChild(Entity* entity, const QString& key);
 	DataDecorator* addDataItem(DataDecorator* dataDecorator);
 	EntityCollectionBase* addChildCollection(EntityCollectionBase* entityCollection);
+	void setPrimaryKey(StringDecorator *primaryKey);
 
 protected:
 	class Implementation;

@@ -320,6 +320,27 @@ void ClientTests::verifyDefaultContacts(const QList<Contact*>& contacts)
 	QCOMPARE(contacts.size(), 0);
 }
 
+void ClientTests::id_givenPrimaryKeyWithNoValue_returnsUuid()
+{
+	Client testClient(this);
 
+	// Using individual character checks
+	QCOMPARE(testClient.id().left(1), QString("{"));
+	QCOMPARE(testClient.id().mid(9, 1), QString("-"));
+	QCOMPARE(testClient.id().mid(14, 1), QString("-"));
+	QCOMPARE(testClient.id().mid(19, 1), QString("-"));
+	QCOMPARE(testClient.id().mid(24, 1), QString("-"));
+	QCOMPARE(testClient.id().right(1), QString("}"));
+
+	// Using regular expression pattern matching
+	QVERIFY(QRegularExpression("\\{.{8}-(.{4})-(.{4})-(.{4})-(.{12})\\}").match(testClient.id()).hasMatch());
 }
+
+void ClientTests::id_givenPrimaryKeyWithValue_returnsPrimaryKey()
+{
+	Client testClient(this, QJsonDocument::fromJson(jsonByteArray).object());
+	QCOMPARE(testClient.reference->value(), QString("CM0001"));
+	QCOMPARE(testClient.id(), testClient.reference->value());
 }
+
+}}

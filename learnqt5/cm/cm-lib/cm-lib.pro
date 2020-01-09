@@ -15,6 +15,8 @@ UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
 QT       -= gui
 
+QT += sql
+
 TARGET = cm-lib
 TEMPLATE = lib
 
@@ -48,7 +50,8 @@ SOURCES += \
     source/data/entity.cpp \
     source/models/address.cpp \
     source/models/appointment.cpp \
-    source/models/contact.cpp
+    source/models/contact.cpp \
+    source/controllers/database-controller.cpp
 
 HEADERS += \
 	source/models/client.h \
@@ -66,7 +69,9 @@ HEADERS += \
     source/data/entity-collection.h \
     source/models/address.h \
     source/models/appointment.h \
-    source/models/contact.h
+    source/models/contact.h \
+    source/controllers/i-database-controller.h \
+    source/controllers/database-controller.h
 
 #unix {
 #    target.path = /usr/lib
