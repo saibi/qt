@@ -8,3 +8,6 @@ SOURCES += main.cpp
 
 RESOURCES += qml.qrc
 
+HEADERS += \
+    mocking.h
+
