@@ -34,3 +34,9 @@ FORMS += \
         mainwindow.ui
 
 RESOURCES +=
+
+linux-arm-a20-g++ {
+	# remote deploy path
+	target.path = /tmp
+	INSTALLS += target
+}
