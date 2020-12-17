@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \ 
-    Usecases_check_available_groceries
+    check_available_groceries
