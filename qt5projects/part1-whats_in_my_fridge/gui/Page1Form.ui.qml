@@ -5,9 +5,15 @@ Item {
     id: item1
     width: 400
     height: 400
+    property alias groceriesListView: groceriesListView
+    property alias addItemField: addItemField
+    property alias addItemButton: addItemButton
 
     ListView {
-        id: listView
+        id: groceriesListView
+
+        signal itemRemoved(string itemName)
+
         anchors.fill: parent
 
         delegate: ItemDelegate {
@@ -15,10 +21,16 @@ Item {
             text: modelData.name || model.name
             font.bold: true
             Button {
+                id: removeItemButton
                 width: height
                 height: parent.height
                 text: "X"
                 anchors.right: parent.right
+                Connections {
+                    target: removeItemButton
+                    onClicked: groceriesListView.itemRemoved(modelData.name
+                                                             || model.name)
+                }
             }
         }
 
@@ -53,12 +65,12 @@ Item {
         anchors.bottom: parent.bottom
 
         TextField {
-            id: textField
+            id: addItemField
             text: qsTr("enter item name")
         }
 
         Button {
-            id: button
+            id: addItemButton
             text: qsTr("Add item")
             focusPolicy: Qt.NoFocus
         }

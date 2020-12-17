@@ -15,7 +15,7 @@ Q_OBJECT
 public:
 	explicit CheckAvailableGroceries(entities::GroceryItems* groceryItems, QObject *parent = nullptr);
 
-	void run();
+	Q_INVOKABLE void run();
 
 signals:
 	void failure(QString message);

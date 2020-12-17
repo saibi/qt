@@ -53,12 +53,36 @@ QVariantList GroceryItems::list() const
 
 void GroceryItems::onAllRecordsRetrieved(const QVariantList& records)
 {
-	m_list = records;
-	sortBy("name","ASC");
-	emit listChanged();
-	emit allRetrieved("ENTITIES_GROCERY_ITEMS__ALL_RETRIEVED");
+        m_list = records;
+        sortBy("name","ASC");
+        emit listChanged();
+        emit allRetrieved("ENTITIES_GROCERY_ITEMS__ALL_RETRIEVED");
 }
 
+void GroceryItems::create(const QString & name)
+{
+    m_isSortedByNameAsc = false;
+    m_list.append(QVariantMap{{"name", name}});
+    sortBy("name", "ASC");
+
+    emit listChanged();
+    emit created("ENTITIES_GROCERY_ITEMS__CREATED");
+}
+
+bool GroceryItems::contains(const QString &field, const QString &value) const
+{
+    return m_list.contains(QVariantMap{{field, value}});
+}
+
+void GroceryItems::remove(const QString & name)
+{
+    m_isSortedByNameAsc = false;
+    m_list.removeOne(QVariantMap{{"name", name}});
+    sortBy("name", "ASC");
+
+    emit listChanged();
+    emit removed("ENTITIES_GROCERY_ITEMS__REMOVED");
+}
 
 
 } // namespace
