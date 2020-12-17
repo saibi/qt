@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
     usecases \
     entities \
-    repositories
+    repositories \
+    tui
 
 #    gui \
