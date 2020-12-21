@@ -1,5 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.7
 import QtQuick.Controls 2.3
+import QtQuick.Layouts 1.3
 
 Item {
     id: item1
@@ -51,6 +52,14 @@ Item {
                 name: "Eggs"
             }
         }
+
+        /*
+        onItemRemoved: {
+            // design mode message : JavaScript blocks are not supported in a Qt Quick UI form. (M223) (Line: 56)
+            console.log("remove item", itemName)
+            removeGroceryItem.run(itemName)
+        }
+        */
     }
 
     Row {

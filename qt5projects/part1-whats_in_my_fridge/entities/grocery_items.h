@@ -13,6 +13,9 @@ namespace entities {
 class GroceryItems : public QObject
 {
 	Q_OBJECT
+
+	Q_PROPERTY(QVariantList list READ list NOTIFY listChanged)
+
 public:
 	explicit GroceryItems(QObject *parent = nullptr);
 	~GroceryItems();
@@ -21,18 +24,19 @@ public:
 	void setRepository(repositories::GroceryItemsRepo* repository);
 	void retrieveAll();
 	QVariantList list() const;
-        void create(const QString & name);
-        bool contains(const QString &field, const QString &value) const;
-        void remove(const QString & name);
+
+	void create(const QString & name);
+	bool contains(const QString &field, const QString &value) const;
+	void remove(const QString & name);
 
 signals:
 	void allRetrieved(QString message);
 	void allNotRetrieved(QString message);
 	void listChanged();
-        void created(QString message);
-        void notCreated(QString message);
-        void removed(QString message);
-        void notRemoved(QString message);
+	void created(QString message);
+	void notCreated(QString message);
+	void removed(QString message);
+	void notRemoved(QString message);
 
 private:
 	bool m_isSortedByNameAsc;
