@@ -4,5 +4,6 @@
         <file>ComicPage.qml</file>
         <file>CCPanels.qml</file>
         <file>ComicPanel.qml</file>
+        <file>PanelButton.qml</file>
     </qresource>
 </RCC>

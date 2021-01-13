@@ -4,15 +4,25 @@ import QtQuick.Layouts 1.3
 
 
 TableSurface {
+    ListModel {
+        id: panelsEntity
+    }
 
     ComicPage {
         id: pageFace
         anchors.centerIn: parent
         panelsRepeater.delegate: ComicPanel {
+            displayText: pid || 0
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
-        panelsRepeater.model: 2
+        panelsRepeater.model: panelsEntity
+        panelAdder.onClicked: panelsEntity.append( {"pid": panelsEntity.count} )
+
+        panelRemover.onClicked: if (panelsEntity.count > 0 ) {
+                                    panelsEntity.remove(panelsEntity.count - 1)
+                                }
+
     }
 
     DropShadow {
@@ -23,5 +33,6 @@ TableSurface {
         radius: 8.0
         color: "#80000000"
     }
+
 
 }

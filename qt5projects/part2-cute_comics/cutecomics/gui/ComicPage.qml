@@ -5,6 +5,8 @@ Item {
     id: page
 
     property alias panelsRepeater: panelsRepeater
+    property alias panelAdder: panelAdder
+    property alias panelRemover: panelRemover
 
     width: 480
     height: width
@@ -30,6 +32,22 @@ Item {
         }
     }
 
+    PanelButton {
+        id: panelAdder
+        anchors.right: parent.right
+        text: "+"
+    }
+
+    PanelButton {
+        id: panelRemover
+        anchors.top: panelAdder.bottom
+        anchors.right: parent.right
+        text: "-"
+    }
+
+
+/* PanelButton
+
     Item {
         id: panelAdder
 
@@ -50,4 +68,5 @@ Item {
 
         }
     }
+*/
 }
