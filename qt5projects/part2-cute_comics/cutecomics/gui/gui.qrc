@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>TableSurface.qml</file>
+        <file>ComicPage.qml</file>
+        <file>CCPanels.qml</file>
+        <file>ComicPanel.qml</file>
+    </qresource>
+</RCC>
