@@ -1,8 +1,11 @@
 import QtQuick 2.9
+import QtQuick.Controls 2.2
 
 Item {
     id: panel
-    signal clicked()
+
+    signal cameraClicked()
+    signal existingClicked()
 
     property alias displayText: textItem.text
     property alias imageSource: image.source
@@ -25,13 +28,23 @@ Item {
 
     Text {
         id: textItem
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    Button {
+        id: cameraButton
         anchors.centerIn: parent
+        text: "take picture"
+        onClicked: panel.cameraClicked()
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: panel.clicked()
+    Button {
+        id: existingButton
+        anchors.top: cameraButton.bottom
+        anchors.margins: 16
+        anchors.horizontalCenter: cameraButton.horizontalCenter
+        text: "load existing picture"
+        onClicked: panel.existingClicked()
     }
-
 
 }

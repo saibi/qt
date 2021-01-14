@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import QtMultimedia 5.9
+import QtQuick.Dialogs 1.2
 
 
 TableSurface {
@@ -20,9 +21,13 @@ TableSurface {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            onClicked: {
+            onCameraClicked: {
                 panelsEntity.currentIndex = index;
                 camera.imageCapture.capture();
+            }
+            onExistingClicked: {
+                panelsEntity.currentIndex = index;
+                fileDialog.open();
             }
         }
         panelsRepeater.model: panelsEntity
@@ -32,6 +37,15 @@ TableSurface {
                                     panelsEntity.remove(panelsEntity.count - 1)
                                 }
 
+    }
+
+    DropShadow {
+        source: pageFace
+        anchors.fill: source
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8.0
+        color: "#80000000"
     }
 
     Camera {
@@ -52,15 +66,11 @@ TableSurface {
         anchors.margins: 16
     }
 
-
-    DropShadow {
-        source: pageFace
-        anchors.fill: source
-        horizontalOffset: 3
-        verticalOffset: 3
-        radius: 8.0
-        color: "#80000000"
+    FileDialog {
+        id: fileDialog
+        folder: shortcuts.home
+        nameFilters: [ "Image files (*.jpg *.png *.bmp)"]
+        onAccepted: panelsEntity.get(panelsEntity.currentIndex).pictureSource = Qt.resolvedUrl(fileUrl)
     }
-
 
 }
