@@ -5,5 +5,8 @@
         <file>CCPanels.qml</file>
         <file>ComicPanel.qml</file>
         <file>PanelButton.qml</file>
+        <file>Preview3D.qml</file>
+        <file>Element.qml</file>
+        <file>Composition.qml</file>
     </qresource>
 </RCC>
