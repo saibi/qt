@@ -4,4 +4,7 @@ SUBDIRS += \
     cutecomics/entities \
     cutecomics/usecases \
     cutecomics/gui \
-    ccpanels
+    ccpanels \
+    cccomposer
+
+QML_IMPORT_PATH += $$PWD
