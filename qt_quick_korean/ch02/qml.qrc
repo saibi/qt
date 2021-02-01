@@ -9,5 +9,7 @@
         <file>rectangle.qml</file>
         <file>image.qml</file>
         <file>images/qtlogo.png</file>
+        <file>animatedimage.qml</file>
+        <file>images/ani.gif</file>
     </qresource>
 </RCC>
