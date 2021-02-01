@@ -33,5 +33,8 @@
         <file>keys.qml</file>
         <file>flickable.qml</file>
         <file>images/background.jpg</file>
+        <file>flickable_ground.qml</file>
+        <file>images/ground.jpg</file>
+        <file>images/player.png</file>
     </qresource>
 </RCC>
