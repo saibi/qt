@@ -43,5 +43,8 @@
         <file>signal_method.qml</file>
         <file>dynamic_main.qml</file>
         <file>page1.qml</file>
+        <file>loader_component.qml</file>
+        <file>loader_connections.qml</file>
+        <file>myitem.qml</file>
     </qresource>
 </RCC>
