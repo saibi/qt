@@ -23,5 +23,7 @@
         <file>fontloader.qml</file>
         <file>repeater.qml</file>
         <file>transformation.qml</file>
+        <file>Button.qml</file>
+        <file>accessible_test.qml</file>
     </qresource>
 </RCC>
