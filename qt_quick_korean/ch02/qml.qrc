@@ -7,5 +7,7 @@
         <file>images/stick.png</file>
         <file>images/wheel.png</file>
         <file>rectangle.qml</file>
+        <file>image.qml</file>
+        <file>images/qtlogo.png</file>
     </qresource>
 </RCC>
