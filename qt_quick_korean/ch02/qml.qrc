@@ -18,5 +18,6 @@
         <file>images/signout.png</file>
         <file>images/login.png</file>
         <file>gradient.qml</file>
+        <file>systempalette.qml</file>
     </qresource>
 </RCC>

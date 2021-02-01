@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QGuiApplication app(argc, argv);
 
 	QQmlApplicationEngine engine;
-	engine.load(QUrl(QStringLiteral("qrc:/gradient.qml")));
+	engine.load(QUrl(QStringLiteral("qrc:/systempalette.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
 
