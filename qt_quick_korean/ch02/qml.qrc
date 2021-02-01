@@ -6,5 +6,6 @@
         <file>images/background.png</file>
         <file>images/stick.png</file>
         <file>images/wheel.png</file>
+        <file>rectangle.qml</file>
     </qresource>
 </RCC>
