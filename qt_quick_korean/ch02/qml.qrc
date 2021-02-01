@@ -19,5 +19,8 @@
         <file>images/login.png</file>
         <file>gradient.qml</file>
         <file>systempalette.qml</file>
+        <file>screen.qml</file>
+        <file>fontloader.qml</file>
+        <file>repeater.qml</file>
     </qresource>
 </RCC>
