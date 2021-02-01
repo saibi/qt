@@ -41,5 +41,7 @@
         <file>SquareButton.qml</file>
         <file>usersignal.qml</file>
         <file>signal_method.qml</file>
+        <file>dynamic_main.qml</file>
+        <file>page1.qml</file>
     </qresource>
 </RCC>
