@@ -40,5 +40,6 @@
         <file>connection.qml</file>
         <file>SquareButton.qml</file>
         <file>usersignal.qml</file>
+        <file>signal_method.qml</file>
     </qresource>
 </RCC>
