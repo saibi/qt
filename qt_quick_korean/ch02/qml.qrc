@@ -11,5 +11,11 @@
         <file>images/qtlogo.png</file>
         <file>animatedimage.qml</file>
         <file>images/ani.gif</file>
+        <file>anchors.qml</file>
+        <file>text_image_anchors.qml</file>
+        <file>images/bluebackground.png</file>
+        <file>images/bluebutton.png</file>
+        <file>images/signout.png</file>
+        <file>images/login.png</file>
     </qresource>
 </RCC>

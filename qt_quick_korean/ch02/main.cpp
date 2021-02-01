@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QGuiApplication app(argc, argv);
 
 	QQmlApplicationEngine engine;
-	engine.load(QUrl(QStringLiteral("qrc:/animatedimage.qml")));
+	engine.load(QUrl(QStringLiteral("qrc:/text_image_anchors.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
 
