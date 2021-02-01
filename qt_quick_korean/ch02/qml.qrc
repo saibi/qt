@@ -48,5 +48,6 @@
         <file>myitem.qml</file>
         <file>keyreader.qml</file>
         <file>loader_keys.qml</file>
+        <file>loader_2.qml</file>
     </qresource>
 </RCC>
