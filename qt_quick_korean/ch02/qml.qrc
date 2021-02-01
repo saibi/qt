@@ -46,5 +46,7 @@
         <file>loader_component.qml</file>
         <file>loader_connections.qml</file>
         <file>myitem.qml</file>
+        <file>keyreader.qml</file>
+        <file>loader_keys.qml</file>
     </qresource>
 </RCC>
