@@ -25,5 +25,6 @@
         <file>transformation.qml</file>
         <file>Button.qml</file>
         <file>accessible_test.qml</file>
+        <file>mousearea.qml</file>
     </qresource>
 </RCC>
