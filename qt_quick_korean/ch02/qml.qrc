@@ -26,5 +26,6 @@
         <file>Button.qml</file>
         <file>accessible_test.qml</file>
         <file>mousearea.qml</file>
+        <file>containmouse.qml</file>
     </qresource>
 </RCC>
