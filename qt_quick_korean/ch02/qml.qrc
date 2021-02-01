@@ -30,5 +30,6 @@
         <file>drag.qml</file>
         <file>textinput.qml</file>
         <file>keynavigation.qml</file>
+        <file>keys.qml</file>
     </qresource>
 </RCC>
