@@ -29,5 +29,6 @@
         <file>containmouse.qml</file>
         <file>drag.qml</file>
         <file>textinput.qml</file>
+        <file>keynavigation.qml</file>
     </qresource>
 </RCC>
