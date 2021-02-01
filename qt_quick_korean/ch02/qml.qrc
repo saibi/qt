@@ -49,5 +49,8 @@
         <file>keyreader.qml</file>
         <file>loader_keys.qml</file>
         <file>loader_2.qml</file>
+        <file>loader_status.qml</file>
+        <file>excomponent.qml</file>
+        <file>loader_change.qml</file>
     </qresource>
 </RCC>
