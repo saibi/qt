@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QGuiApplication app(argc, argv);
 
 	QQmlApplicationEngine engine;
-	engine.load(QUrl(QStringLiteral("qrc:/loader_change.qml")));
+	engine.load(QUrl(QStringLiteral("qrc:/loader_dynamic.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
 

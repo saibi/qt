@@ -52,5 +52,8 @@
         <file>loader_status.qml</file>
         <file>excomponent.qml</file>
         <file>loader_change.qml</file>
+        <file>loader_dynamic.qml</file>
+        <file>menu1.qml</file>
+        <file>menu2.qml</file>
     </qresource>
 </RCC>
