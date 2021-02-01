@@ -27,5 +27,6 @@
         <file>accessible_test.qml</file>
         <file>mousearea.qml</file>
         <file>containmouse.qml</file>
+        <file>drag.qml</file>
     </qresource>
 </RCC>
