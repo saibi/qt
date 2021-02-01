@@ -28,5 +28,6 @@
         <file>mousearea.qml</file>
         <file>containmouse.qml</file>
         <file>drag.qml</file>
+        <file>textinput.qml</file>
     </qresource>
 </RCC>
