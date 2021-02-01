@@ -31,5 +31,7 @@
         <file>textinput.qml</file>
         <file>keynavigation.qml</file>
         <file>keys.qml</file>
+        <file>flickable.qml</file>
+        <file>images/background.jpg</file>
     </qresource>
 </RCC>
