@@ -38,5 +38,7 @@
         <file>images/player.png</file>
         <file>onclicked.qml</file>
         <file>connection.qml</file>
+        <file>SquareButton.qml</file>
+        <file>usersignal.qml</file>
     </qresource>
 </RCC>
