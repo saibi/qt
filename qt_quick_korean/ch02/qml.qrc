@@ -3,5 +3,8 @@
         <file>main.qml</file>
         <file>rocket.qml</file>
         <file>images/rocket.png</file>
+        <file>images/background.png</file>
+        <file>images/stick.png</file>
+        <file>images/wheel.png</file>
     </qresource>
 </RCC>
