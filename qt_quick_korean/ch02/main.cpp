@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QGuiApplication app(argc, argv);
 
 	QQmlApplicationEngine engine;
-	engine.load(QUrl(QStringLiteral("qrc:/repeater.qml")));
+	engine.load(QUrl(QStringLiteral("qrc:/transformation.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
 

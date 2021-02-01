@@ -22,5 +22,6 @@
         <file>screen.qml</file>
         <file>fontloader.qml</file>
         <file>repeater.qml</file>
+        <file>transformation.qml</file>
     </qresource>
 </RCC>
