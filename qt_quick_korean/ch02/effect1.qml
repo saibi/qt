@@ -68,13 +68,22 @@ Window {
 //            source: lenna
 //            gamma: 2.0
 //        }
-        HueSaturation {
-            anchors.fill: lenna
-            source: lenna
-            saturation: 0
-            lightness: 0
-        }
+//        HueSaturation {
+//            anchors.fill: lenna
+//            source: lenna
+//            saturation: 0
+//            lightness: 0
+//        }
 
+        LevelAdjust {
+            anchors.fill: butterfly
+            source: butterfly
+
+            minimumInput: "#00000070"
+            maximumInput: "#ffffff"
+            minimumOutput: "#000000"
+            maximumOutput: "#ffffff"
+        }
     }
 
 }
