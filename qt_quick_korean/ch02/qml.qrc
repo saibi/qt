@@ -57,5 +57,8 @@
         <file>menu2.qml</file>
         <file>canvas.qml</file>
         <file>canvas_mouse.qml</file>
+        <file>effect1.qml</file>
+        <file>images/butterfly.png</file>
+        <file>images/lenna.png</file>
     </qresource>
 </RCC>
