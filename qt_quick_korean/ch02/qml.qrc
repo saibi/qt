@@ -56,5 +56,6 @@
         <file>menu1.qml</file>
         <file>menu2.qml</file>
         <file>canvas.qml</file>
+        <file>canvas_mouse.qml</file>
     </qresource>
 </RCC>
