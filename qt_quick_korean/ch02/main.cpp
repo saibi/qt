@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QGuiApplication app(argc, argv);
 
 	QQmlApplicationEngine engine;
-	engine.load(QUrl(QStringLiteral("qrc:/positioner.qml")));
+	engine.load(QUrl(QStringLiteral("qrc:/calendar.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
 
