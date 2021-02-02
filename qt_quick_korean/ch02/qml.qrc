@@ -55,5 +55,6 @@
         <file>loader_dynamic.qml</file>
         <file>menu1.qml</file>
         <file>menu2.qml</file>
+        <file>canvas.qml</file>
     </qresource>
 </RCC>
