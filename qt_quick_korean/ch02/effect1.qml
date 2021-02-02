@@ -63,12 +63,18 @@ Window {
 //            desaturation: 1.0
 //        }
 
-        GammaAdjust {
+//        GammaAdjust {
+//            anchors.fill: lenna
+//            source: lenna
+//            gamma: 2.0
+//        }
+        HueSaturation {
             anchors.fill: lenna
             source: lenna
-            gamma: 2.0
-
+            saturation: 0
+            lightness: 0
         }
+
     }
 
 }
