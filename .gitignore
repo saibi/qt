@@ -4,5 +4,6 @@ moc_*.cpp
 ui_*.h
 Makefile
 build-*
+*.autosave
 
 *.qmlc
