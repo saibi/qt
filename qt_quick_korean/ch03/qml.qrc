@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>numberanimation.qml</file>
+        <file>images/qtlogo.png</file>
+    </qresource>
+</RCC>
