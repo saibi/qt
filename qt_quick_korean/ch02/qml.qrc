@@ -60,5 +60,7 @@
         <file>effect1.qml</file>
         <file>images/butterfly.png</file>
         <file>images/lenna.png</file>
+        <file>images/bug.jpg</file>
+        <file>effect_gradient.qml</file>
     </qresource>
 </RCC>
