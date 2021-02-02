@@ -85,5 +85,6 @@
         <file>dialog.qml</file>
         <file>colordialog.qml</file>
         <file>filedialog.qml</file>
+        <file>fontdialog.qml</file>
     </qresource>
 </RCC>
