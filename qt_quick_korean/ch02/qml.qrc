@@ -73,5 +73,6 @@
         <file>module_checkbox.qml</file>
         <file>images/checked.svg</file>
         <file>images/unchecked.svg</file>
+        <file>property_binding.qml</file>
     </qresource>
 </RCC>
