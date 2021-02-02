@@ -87,5 +87,6 @@
         <file>filedialog.qml</file>
         <file>fontdialog.qml</file>
         <file>messagedialog.qml</file>
+        <file>rowlayout.qml</file>
     </qresource>
 </RCC>
