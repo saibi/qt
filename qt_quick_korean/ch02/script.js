@@ -1,4 +1,7 @@
-function jsFunction()
+Qt.include("factorial.js")
+
+
+function showCalculations(value)
 {
-    console.log("Called JavaScript function!")
+    console.log("Call factorial() from script.js : ", factorial(value))
 }
