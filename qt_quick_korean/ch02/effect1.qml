@@ -123,12 +123,38 @@ Window {
 //            length:32
 //            samples: 24
 //        }
-        RadialBlur {
-            anchors.fill: lenna
-            source: lenna
-            samples: 24
-            angle: 30
-        }
+//        RadialBlur {
+//            anchors.fill: lenna
+//            source: lenna
+//            samples: 24
+//            angle: 30
+//        }
+//        Glow {
+//            anchors.fill: ball
+//            source: ball
+//            radius: 30
+//            samples: 16
+//            color: "green"
+//        }
+
+       Rectangle {
+           id: rect
+           color: "black"
+           anchors.centerIn: parent
+           width: Math.round(parent.width / 1.5)
+           height: Math.round(parent.height / 2.0)
+           radius: 25
+       }
+
+       RectangularGlow {
+           id: effect
+           anchors.fill: rect
+           glowRadius: 10
+           spread: 0.2
+           color: "white"
+           cornerRadius: rect.radius + glowRadius
+
+       }
     }
 
 }
