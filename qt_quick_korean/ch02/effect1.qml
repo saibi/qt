@@ -35,6 +35,13 @@ Window {
             visible: false
         }
 
+        Image {
+            id: ball
+            source: "images/ball.png"
+            sourceSize: Qt.size(parent.width, parent.height)
+            smooth: true
+            visible: false
+        }
 //        Blend {
 //            anchors.fill: lenna
 //            source: lenna
@@ -75,14 +82,27 @@ Window {
 //            lightness: 0
 //        }
 
-        LevelAdjust {
-            anchors.fill: butterfly
-            source: butterfly
+//        LevelAdjust {
+//            anchors.fill: butterfly
+//            source: butterfly
 
-            minimumInput: "#00000070"
-            maximumInput: "#ffffff"
-            minimumOutput: "#000000"
-            maximumOutput: "#ffffff"
+//            minimumInput: "#00000070"
+//            maximumInput: "#ffffff"
+//            minimumOutput: "#000000"
+//            maximumOutput: "#ffffff"
+//        }
+
+        DropShadow {
+            anchors.fill: ball
+
+            radius: 8.0
+            samples: 16
+            horizontalOffset: 0
+            verticalOffset:20
+            spread: 0
+            source: ball
+            color: "#aa000000"
+
         }
     }
 
