@@ -74,5 +74,7 @@
         <file>images/checked.svg</file>
         <file>images/unchecked.svg</file>
         <file>property_binding.qml</file>
+        <file>javascript.qml</file>
+        <file>javascript2.qml</file>
     </qresource>
 </RCC>
