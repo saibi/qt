@@ -78,5 +78,7 @@
         <file>javascript2.qml</file>
         <file>import_js.qml</file>
         <file>script.js</file>
+        <file>factorial.js</file>
+        <file>import_js2.qml</file>
     </qresource>
 </RCC>
