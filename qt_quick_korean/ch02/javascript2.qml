@@ -8,9 +8,21 @@ Window {
     width: 200
     height: 200
 
+    function factorial(a) {
+        a = parseInt(a);
+        if ( a <= 0 )
+            return 1;
+        else
+            return a * factorial(a - 1);
+
+    }
+
     MouseArea {
         anchors.fill: parent
-        onClicked: label.moveTo(mouse.x, mouse.y)
+        onClicked: {
+            console.log(factorial(10))
+            label.moveTo(mouse.x, mouse.y)
+        }
     }
 
     Text {
