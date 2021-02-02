@@ -67,5 +67,11 @@
         <file>images/glass_normal.png</file>
         <file>LineEdit.qml</file>
         <file>module1.qml</file>
+        <file>LineEdit2.qml</file>
+        <file>module2.qml</file>
+        <file>sub/MyCheckBox.qml</file>
+        <file>module_checkbox.qml</file>
+        <file>images/checked.svg</file>
+        <file>images/unchecked.svg</file>
     </qresource>
 </RCC>
