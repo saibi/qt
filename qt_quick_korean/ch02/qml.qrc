@@ -82,5 +82,6 @@
         <file>import_js3.qml</file>
         <file>js/jslib.js</file>
         <file>import_js4.qml</file>
+        <file>dialog.qml</file>
     </qresource>
 </RCC>
