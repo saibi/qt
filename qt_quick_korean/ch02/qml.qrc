@@ -62,5 +62,8 @@
         <file>images/lenna.png</file>
         <file>images/bug.jpg</file>
         <file>effect_gradient.qml</file>
+        <file>effect_displacement.qml</file>
+        <file>images/ball.png</file>
+        <file>images/glass_normal.png</file>
     </qresource>
 </RCC>
