@@ -89,5 +89,6 @@
         <file>messagedialog.qml</file>
         <file>rowlayout.qml</file>
         <file>columnlayout.qml</file>
+        <file>gridlayout.qml</file>
     </qresource>
 </RCC>
