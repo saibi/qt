@@ -84,5 +84,6 @@
         <file>import_js4.qml</file>
         <file>dialog.qml</file>
         <file>colordialog.qml</file>
+        <file>filedialog.qml</file>
     </qresource>
 </RCC>
