@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>numberanimation.qml</file>
         <file>images/qtlogo.png</file>
+        <file>propertyanimation.qml</file>
     </qresource>
 </RCC>
