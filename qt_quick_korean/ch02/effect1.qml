@@ -19,13 +19,13 @@ Window {
             visible: false
         }
 
-//        Image {
-//            id: butterfly
-//            source: "images/butterfly.png"
-//            sourceSize: Qt.size(parent.width, parent.height)
-//            smooth: true
-//            visible: false
-//        }
+        Image {
+            id: butterfly
+            source: "images/butterfly.png"
+            sourceSize: Qt.size(parent.width, parent.height)
+            smooth: true
+            visible: false
+        }
 
 //        Blend {
 //            anchors.fill: lenna
@@ -35,12 +35,20 @@ Window {
 //            cached: true
 //        }
 
-        BrightnessContrast {
-            anchors.fill: lenna
-            source: lenna
-            brightness: 0.5
-            contrast: 0.5
+//        BrightnessContrast {
+//            anchors.fill: lenna
+//            source: lenna
+//            brightness: 0.5
+//            contrast: 0.5
+//        }
+        Colorize {
+            anchors.fill: butterfly
+            source: butterfly
+            hue: 0.8
+            saturation: 1.0
+            lightness: 0.2
         }
+
     }
 
 }
