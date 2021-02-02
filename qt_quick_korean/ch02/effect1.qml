@@ -92,17 +92,42 @@ Window {
 //            maximumOutput: "#ffffff"
 //        }
 
-        DropShadow {
-            anchors.fill: ball
+//        DropShadow {
+//            anchors.fill: ball
 
-            radius: 8.0
-            samples: 16
-            horizontalOffset: 0
-            verticalOffset:20
-            spread: 0
-            source: ball
-            color: "#aa000000"
+//            radius: 8.0
+//            samples: 16
+//            horizontalOffset: 0
+//            verticalOffset:20
+//            spread: 0
+//            source: ball
+//            color: "#aa000000"
 
+//        }
+//        FastBlur {
+//            anchors.fill: lenna
+//            source: lenna
+//            radius: 32
+//        }
+//        GaussianBlur {
+//            anchors.fill: lenna
+//            source: lenna
+//            deviation: 4
+//            radius: 8
+//            samples: 16
+//        }
+//        DirectionalBlur {
+//            anchors.fill: lenna
+//            source: lenna
+//            angle: 90
+//            length:32
+//            samples: 24
+//        }
+        RadialBlur {
+            anchors.fill: lenna
+            source: lenna
+            samples: 24
+            angle: 30
         }
     }
 
