@@ -91,5 +91,6 @@
         <file>columnlayout.qml</file>
         <file>gridlayout.qml</file>
         <file>layouts.qml</file>
+        <file>positioner.qml</file>
     </qresource>
 </RCC>
