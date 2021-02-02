@@ -23,7 +23,6 @@
         <file>fontloader.qml</file>
         <file>repeater.qml</file>
         <file>transformation.qml</file>
-        <file>Button.qml</file>
         <file>accessible_test.qml</file>
         <file>mousearea.qml</file>
         <file>containmouse.qml</file>
@@ -81,5 +80,7 @@
         <file>factorial.js</file>
         <file>import_js2.qml</file>
         <file>import_js3.qml</file>
+        <file>js/jslib.js</file>
+        <file>import_js4.qml</file>
     </qresource>
 </RCC>
