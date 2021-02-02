@@ -57,12 +57,18 @@ Window {
 //            lightness: 0.2
 //        }
 
-        Desaturate {
-            anchors.fill: bug
-            source: bug
-            desaturation: 1.0
-        }
+//        Desaturate {
+//            anchors.fill: bug
+//            source: bug
+//            desaturation: 1.0
+//        }
 
+        GammaAdjust {
+            anchors.fill: lenna
+            source: lenna
+            gamma: 2.0
+
+        }
     }
 
 }
