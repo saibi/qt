@@ -65,5 +65,7 @@
         <file>effect_displacement.qml</file>
         <file>images/ball.png</file>
         <file>images/glass_normal.png</file>
+        <file>LineEdit.qml</file>
+        <file>module1.qml</file>
     </qresource>
 </RCC>
