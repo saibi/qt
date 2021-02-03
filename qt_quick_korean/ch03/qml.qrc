@@ -14,5 +14,7 @@
         <file>animations.qml</file>
         <file>easingcurve.qml</file>
         <file>pauseanimation.qml</file>
+        <file>bauncingball.qml</file>
+        <file>images/ball.png</file>
     </qresource>
 </RCC>
