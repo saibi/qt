@@ -13,5 +13,6 @@
         <file>parallelanimation.qml</file>
         <file>animations.qml</file>
         <file>easingcurve.qml</file>
+        <file>pauseanimation.qml</file>
     </qresource>
 </RCC>
