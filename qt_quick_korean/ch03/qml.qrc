@@ -12,5 +12,6 @@
         <file>sequentialanimation.qml</file>
         <file>parallelanimation.qml</file>
         <file>animations.qml</file>
+        <file>easingcurve.qml</file>
     </qresource>
 </RCC>
