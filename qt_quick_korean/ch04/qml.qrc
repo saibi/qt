@@ -9,5 +9,6 @@
         <file>images/104.jpg</file>
         <file>xmllistmodel.qml</file>
         <file>item.xml</file>
+        <file>chessboard.qml</file>
     </qresource>
 </RCC>
