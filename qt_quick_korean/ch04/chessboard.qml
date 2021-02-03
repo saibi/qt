@@ -39,6 +39,21 @@ Window {
                         "white"
 
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var x = index % 8
+                        var y = Math.floor(index/8)
+
+                        console.log("x, y : " + x + "," + y)
+
+                        if ((Math.abs(x - knight.cx) == 1 && Math.abs(y - knight.cy) == 2) ||
+                            (Math.abs(x - knight.cx) == 2 && Math.abs(y - knight.cy) == 1)) {
+                            knight.cx = x;
+                            knight.cy = y;
+                        }
+                    }
+                }
             }
 
         }
@@ -51,8 +66,8 @@ Window {
         property int cy
 
         source: "images/knight.png"
-        x: cellSpace + cellWidth * cx + (cellWidth - knight.width) / 2
-        y: cellSpace + cellWidth * cy + (cellWidth - knight.height) / 2
+        x: cellSpace + (cellWidth + cellSpace) * cx + (cellWidth - knight.width) / 2
+        y: cellSpace + (cellWidth + cellSpace) * cy + (cellWidth - knight.height) / 2
 
     }
 
