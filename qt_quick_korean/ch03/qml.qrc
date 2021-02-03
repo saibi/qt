@@ -6,5 +6,6 @@
         <file>propertyanimation.qml</file>
         <file>rotationanimation.qml</file>
         <file>animation_event.qml</file>
+        <file>behavior.qml</file>
     </qresource>
 </RCC>
