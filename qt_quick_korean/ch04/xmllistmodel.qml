@@ -15,8 +15,8 @@ Window {
         id: xmlModel
         source: "item.xml"
         query: "//item"
-        XmlRole { name: "title"; query: "string()" }
-        XmlRole { name: "link"; query: "@link/string()" }
+        XmlRole { name: "title"; query: "a/string()" }
+        XmlRole { name: "link"; query: "a/@href/string()" }
     }
 
     Component {
