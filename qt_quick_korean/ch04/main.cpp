@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QGuiApplication app(argc, argv);
 
 	QQmlApplicationEngine engine;
-	const QUrl url(QStringLiteral("qrc:/listmodel1.qml"));
+	const QUrl url(QStringLiteral("qrc:/gridview.qml"));
 	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
 					 &app, [url](QObject *obj, const QUrl &objUrl) {
 		if (!obj && url == objUrl)
