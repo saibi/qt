@@ -7,5 +7,7 @@
         <file>images/102.jpg</file>
         <file>images/103.jpg</file>
         <file>images/104.jpg</file>
+        <file>xmllistmodel.qml</file>
+        <file>item.xml</file>
     </qresource>
 </RCC>
