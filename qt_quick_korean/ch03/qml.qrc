@@ -17,5 +17,7 @@
         <file>bauncingball.qml</file>
         <file>images/ball.png</file>
         <file>state.qml</file>
+        <file>transition.qml</file>
+        <file>images/player.png</file>
     </qresource>
 </RCC>
