@@ -8,5 +8,6 @@
         <file>animation_event.qml</file>
         <file>behavior.qml</file>
         <file>smoothedanimation.qml</file>
+        <file>springanimation.qml</file>
     </qresource>
 </RCC>
