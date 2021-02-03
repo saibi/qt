@@ -22,13 +22,13 @@ Window {
 
         rows: 8
         columns: 8
-        spacing: root.cellSpace
+        spacing: cellSpace
 
         Repeater {
             model: parent.rows * parent.columns
             Rectangle {
-                width: root.cellWidth
-                height: root.cellWidth
+                width: cellWidth
+                height: cellWidth
                 color: {
                     var row = Math.floor(index / 8 )
                     var column = index % 8
@@ -43,4 +43,18 @@ Window {
 
         }
     }
+
+    Image {
+        id: knight
+
+        property int cx
+        property int cy
+
+        source: "images/knight.png"
+        x: cellSpace + cellWidth * cx + (cellWidth - knight.width) / 2
+        y: cellSpace + cellWidth * cy + (cellWidth - knight.height) / 2
+
+    }
+
+
 }

@@ -10,5 +10,6 @@
         <file>xmllistmodel.qml</file>
         <file>item.xml</file>
         <file>chessboard.qml</file>
+        <file>images/knight.png</file>
     </qresource>
 </RCC>
