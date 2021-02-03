@@ -10,5 +10,6 @@
         <file>smoothedanimation.qml</file>
         <file>springanimation.qml</file>
         <file>sequentialanimation.qml</file>
+        <file>parallelanimation.qml</file>
     </qresource>
 </RCC>
