@@ -19,5 +19,7 @@
         <file>state.qml</file>
         <file>transition.qml</file>
         <file>images/player.png</file>
+        <file>state_when.qml</file>
+        <file>images/clear.svg</file>
     </qresource>
 </RCC>
