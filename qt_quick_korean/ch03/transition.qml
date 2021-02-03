@@ -38,9 +38,17 @@ Window {
                 from: "*"
                 to: "*"
 
-                PropertyAnimation {
+//                PropertyAnimation {
+//                    target: player
+//                    properties: "rotation"
+//                    duration: 1000
+//                }
+
+                RotationAnimation {
                     target: player
-                    properties: "rotation"
+                    from: parent.from
+                    to: parent.to
+                    direction: RotationAnimation.Clockwise
                     duration: 1000
                 }
             }
