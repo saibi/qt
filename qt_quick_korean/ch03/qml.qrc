@@ -16,5 +16,6 @@
         <file>pauseanimation.qml</file>
         <file>bauncingball.qml</file>
         <file>images/ball.png</file>
+        <file>state.qml</file>
     </qresource>
 </RCC>
