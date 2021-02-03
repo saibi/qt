@@ -11,5 +11,6 @@
         <file>springanimation.qml</file>
         <file>sequentialanimation.qml</file>
         <file>parallelanimation.qml</file>
+        <file>animations.qml</file>
     </qresource>
 </RCC>
