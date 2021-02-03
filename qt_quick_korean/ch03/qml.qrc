@@ -21,5 +21,6 @@
         <file>images/player.png</file>
         <file>state_when.qml</file>
         <file>images/clear.svg</file>
+        <file>transition_animation.qml</file>
     </qresource>
 </RCC>
