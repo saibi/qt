@@ -9,6 +9,8 @@ int main(int argc, char *argv[])
 
 	QGuiApplication app(argc, argv);
 
+	qmlRegisterType<Message>("Message", 1, 0, "Msg");
+
 	Message msg;
 
 	QQmlApplicationEngine engine;

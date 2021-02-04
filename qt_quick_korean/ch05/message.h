@@ -25,9 +25,12 @@ public:
 
 signals:
 	void authorChanged();
+	void newMessagePosted(const QString & subject);
 
 public slots:
 	void refresh();
+
+	void timerTimeout();
 
 private:
 	QString m_author;
