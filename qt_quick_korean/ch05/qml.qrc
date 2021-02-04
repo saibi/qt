@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>customtimer.qml</file>
+        <file>images/loading.png</file>
     </qresource>
 </RCC>
