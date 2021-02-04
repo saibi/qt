@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>customtimer.qml</file>
         <file>images/loading.png</file>
+        <file>qquickpainteditem.qml</file>
     </qresource>
 </RCC>

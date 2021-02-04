@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "mytimer.h"
+#include <ellipseitem.h>
 
 int main(int argc, char *argv[])
 {
@@ -9,11 +9,11 @@ int main(int argc, char *argv[])
 
 	QGuiApplication app(argc, argv);
 
-	qmlRegisterType<MyTimer>("MyTimer", 1, 0, "MyTimer");
+	qmlRegisterType<EllipseItem>("MyShape", 1, 0, "Ellipse");
 
 
 	QQmlApplicationEngine engine;
-	const QUrl url(QStringLiteral("qrc:/customtimer.qml"));
+	const QUrl url(QStringLiteral("qrc:/qquickpainteditem.qml"));
 	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
 					 &app, [url](QObject *obj, const QUrl &objUrl) {
 		if (!obj && url == objUrl)
