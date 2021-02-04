@@ -16,4 +16,14 @@ Window {
             myText.text = msg.author
         }
     }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            var str = "Who are you?"
+            var result = msg.postMessage(str)
+            console.log("Result of postMessage():", result)
+            msg.refresh()
+        }
+    }
 }

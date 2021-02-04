@@ -21,9 +21,13 @@ public:
 		return m_author;
 	}
 
+	Q_INVOKABLE bool postMessage(const QString & msg);
+
 signals:
 	void authorChanged();
 
+public slots:
+	void refresh();
 
 private:
 	QString m_author;
