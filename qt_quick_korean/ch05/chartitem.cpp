@@ -12,10 +12,10 @@ void ChartItem::paint(QPainter *painter)
 	if ( m_bars.count() == 0 )
 		return;
 
-	qreal minimum = m_bars[0]->value();
-	qreal maximum = minimum;
+	qreal minimum = 0;
+	qreal maximum = 0;
 
-	for ( int i = 1; i < m_bars.count(); ++i )
+	for ( int i = 0; i < m_bars.count(); ++i )
 	{
 		minimum = qMin(minimum, m_bars[i]->value() );
 		maximum = qMax(maximum, m_bars[i]->value() );

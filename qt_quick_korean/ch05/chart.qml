@@ -12,7 +12,7 @@ Window {
         height: 200
 
         bars: [
-            Bar { color: "#a00000"; value: -20 },
+            Bar { color: "#a00000"; value: 50 },
             Bar { color: "#00a000"; value: 50 },
             Bar { color: "#0000a0"; value: 100 },
             Bar { color: "#ff00a0"; value: 40 },
