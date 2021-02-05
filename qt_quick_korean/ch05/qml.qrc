@@ -4,5 +4,6 @@
         <file>customtimer.qml</file>
         <file>images/loading.png</file>
         <file>qquickpainteditem.qml</file>
+        <file>chart.qml</file>
     </qresource>
 </RCC>
