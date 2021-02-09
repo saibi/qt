@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QQuickItem>
 
 class MyClass : public QObject
 {
@@ -11,8 +12,9 @@ class MyClass : public QObject
 public:
 
 public slots:
-	void cppSlot(const QString & msg) {
-		qDebug() << "Called the c++ slot with message: " << msg;
+	void cppSlot(const QVariant &v) {
+		QQuickItem *item = qobject_cast<QQuickItem*>(v.value<QObject*>());
+		qDebug() << "Item size: " << item->width() << item->height();
 	}
 };
 

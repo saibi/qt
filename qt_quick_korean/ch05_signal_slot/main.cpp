@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
 	MyClass myClass;
 
-	QObject::connect(item, SIGNAL(qmlSignal(QString)), &myClass, SLOT(cppSlot(QString)));
+	QObject::connect(item, SIGNAL(qmlSignal(QVariant)), &myClass, SLOT(cppSlot(QVariant)));
 
 	view.show();
 
