@@ -24,4 +24,10 @@ Item {
         for (var prop in anObject )
             console.log("Object item:", prop, "=", anObject[prop])
     }
+
+    function readDate(dt)
+    {
+        console.log("The given date is:" , dt.toUTCString());
+        return new Date();
+    }
 }

@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QQuickItem>
-#include <QDate>
+#include <QDateTime>
 
 #include "myclass.h"
 
@@ -32,6 +32,12 @@ int main(int argc, char *argv[])
 
 	QMetaObject::invokeMethod(item, "readValues", Q_ARG(QVariant, QVariant::fromValue(list)), Q_ARG(QVariant, QVariant::fromValue(map)));
 
+	QDateTime dateTime = QDateTime::currentDateTime();
+	QVariant retValue;
+
+	QMetaObject::invokeMethod(item, "readDate", Q_RETURN_ARG(QVariant, retValue), Q_ARG(QVariant, QVariant::fromValue(dateTime)) );
+
+	qDebug() << "Value returned from readDAte():" << retValue.toDateTime();
 	view.show();
 
 	return app.exec();
