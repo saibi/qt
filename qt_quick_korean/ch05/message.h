@@ -7,6 +7,7 @@ class Message : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString author READ author WRITE setAuthor NOTIFY authorChanged)
+	Q_ENUMS(Status)
 
 public:
 	explicit Message(QObject *parent = nullptr);
@@ -22,6 +23,12 @@ public:
 	}
 
 	Q_INVOKABLE bool postMessage(const QString & msg);
+
+	enum Status {
+		Ready,
+		Loading,
+		Error
+	};
 
 signals:
 	void authorChanged();
