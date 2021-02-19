@@ -1,0 +1,3 @@
+module chat.gui
+
+ChatWindow 1.0 ChatWindow.qml
