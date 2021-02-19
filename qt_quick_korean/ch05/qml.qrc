@@ -5,5 +5,6 @@
         <file>images/loading.png</file>
         <file>qquickpainteditem.qml</file>
         <file>chart.qml</file>
+        <file>view.qml</file>
     </qresource>
 </RCC>

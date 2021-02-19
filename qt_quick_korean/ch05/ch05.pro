@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         baritem.cpp \
         chartitem.cpp \
+        dataobject.cpp \
         ellipseitem.cpp \
         main.cpp \
         message.cpp \
@@ -37,6 +38,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
 	baritem.h \
 	chartitem.h \
+	dataobject.h \
 	ellipseitem.h \
 	message.h \
 	mytimer.h

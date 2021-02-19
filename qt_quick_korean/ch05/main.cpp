@@ -1,26 +1,28 @@
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "chartitem.h"
-#include "baritem.h"
+#include <QQuickView>
+#include "dataobject.h"
 
 int main(int argc, char *argv[])
 {
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
 	QGuiApplication app(argc, argv);
 
-	qmlRegisterType<ChartItem>("MyShape", 1, 0, "Chart");
-	qmlRegisterType<BarItem>("MyShape", 1, 0, "Bar");
+	QList<QObject *> dataList;
 
-	QQmlApplicationEngine engine;
-	const QUrl url(QStringLiteral("qrc:/chart.qml"));
-	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-					 &app, [url](QObject *obj, const QUrl &objUrl) {
-		if (!obj && url == objUrl)
-			QCoreApplication::exit(-1);
-	}, Qt::QueuedConnection);
-	engine.load(url);
+	dataList.append( new DataObject("Item 1", "red"));
+	dataList.append( new DataObject("Item 2", "green"));
+	dataList.append( new DataObject("Item 3", "blue"));
+	dataList.append( new DataObject("Item 4", "yellow"));
+
+	QQuickView view;
+
+	view.setResizeMode(QQuickView::SizeRootObjectToView);
+	QQmlContext *ctxt = view.rootContext();
+
+	ctxt->setContextProperty("MyModel", QVariant::fromValue(dataList));
+
+	view.setSource(QUrl("qrc:/view.qml"));
+	view.show();
 
 	return app.exec();
 }
