@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>control1.qml</file>
+        <file>control2.qml</file>
+        <file>Button.qml</file>
+    </qresource>
+</RCC>
