@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
+    ccscripter \
     cutecomics/entities \
     cutecomics/usecases \
     cutecomics/gui \
