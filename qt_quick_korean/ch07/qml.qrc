@@ -9,5 +9,8 @@
         <file>togglebutton.qml</file>
         <file>tumbler.qml</file>
         <file>tumbler_model.qml</file>
+        <file>circulargauge.qml</file>
+        <file>gauge.qml</file>
+        <file>statusindicator.qml</file>
     </qresource>
 </RCC>
