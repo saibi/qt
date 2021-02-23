@@ -2,5 +2,12 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>delaybutton.qml</file>
+        <file>dial.qml</file>
+        <file>piemenu.qml</file>
+        <file>images/pinwheel.png</file>
+        <file>images/qtlogo.png</file>
+        <file>togglebutton.qml</file>
+        <file>tumbler.qml</file>
+        <file>tumbler_model.qml</file>
     </qresource>
 </RCC>
