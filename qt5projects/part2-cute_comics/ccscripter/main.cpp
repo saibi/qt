@@ -5,6 +5,12 @@
 #include <QLineEdit>
 #include <QListView>
 #include <QTextEdit>
+#include <QAction>
+#include <QFileDialog>
+#include <QFile>
+#include <QMessageBox>
+#include <QDebug>
+
 #include "ui_mainwindow.h"
 
 #include "../cutecomics/entities/characters.h"
@@ -19,6 +25,7 @@ int main(int argc, char *argv[])
 	auto addCharacterButton = w.ui->pushButton_addCharacter;
 	auto addCharacterInput = w.ui->lineEdit_addCharacter;
 	auto scriptEditor = w.ui->textEdit_scriptEditor;
+	auto actionSaveAs = w.ui->actionSaveAs;
 
 	if (scriptEditor)
 		new ScriptHighlighter(scriptEditor->document());
@@ -43,6 +50,25 @@ int main(int argc, char *argv[])
 	{
 		QObject::connect(charactersListView, &QListView::doubleClicked, [characters, scriptEditor] (QModelIndex index) {
 			scriptEditor->append(QString("> %1:").arg(characters->data(index).toString()));
+		});
+	}
+
+	if ( actionSaveAs && scriptEditor )
+	{
+		QObject::connect(actionSaveAs, &QAction::triggered, [scriptEditor]() {
+			QString fileName = QFileDialog::getSaveFileName();
+			if ( !fileName.isEmpty() )
+			{
+				QFile file(fileName);
+
+				if ( !file.open(QIODevice::WriteOnly) )
+				{
+					QMessageBox::information(0, "Unable to open file", file.errorString());
+					return;
+				}
+				QDataStream out(&file);
+				out << scriptEditor->toPlainText();
+			}
 		});
 	}
 
