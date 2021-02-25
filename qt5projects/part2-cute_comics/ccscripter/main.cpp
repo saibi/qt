@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
 				addCharacterInput->clear();
 			}
 		});
+
+		addCharacterInput->setStyleSheet("background-color: #333; color: #eee;");
 	}
 
 	if ( charactersListView && scriptEditor )
