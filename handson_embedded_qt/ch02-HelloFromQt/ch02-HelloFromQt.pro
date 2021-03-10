@@ -19,6 +19,8 @@ FORMS += \
     mainwindow.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+#qnx: target.path = /tmp/$${TARGET}/bin
+#else: unix:!android: target.path = /opt/$${TARGET}/bin
+
+linux-rk3399-g++: target.path = /home/saibi/qt
 !isEmpty(target.path): INSTALLS += target
