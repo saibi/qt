@@ -16,6 +16,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-	QString name = ui->lineEdit->selectedText();
+	QString name = ui->lineEdit->text();
 	ui->label->setText(QString("Nice to meet you %1!").arg(name));
 }
