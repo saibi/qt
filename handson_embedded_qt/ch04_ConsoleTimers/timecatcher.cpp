@@ -4,7 +4,7 @@
 
 TimeCatcher::TimeCatcher(QObject *parent) : QObject(parent), m_count(0)
 {
-	connect(this, &TimeCatcher::newCount, this, &TimeCatcher::printCount, Qt::DirectConnection);
+	connect(this, &TimeCatcher::newCount, this, &TimeCatcher::printCount, Qt::QueuedConnection);
 	connect(&m_timer, &QTimer::timeout, this, &TimeCatcher::catchExpiredTimer);
 	m_timer.setSingleShot(false);
 	m_timer.start(5000);
