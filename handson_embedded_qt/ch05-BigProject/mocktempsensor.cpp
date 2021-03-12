@@ -10,7 +10,7 @@ MockTempSensor::MockTempSensor(QObject *parent) : TemperatureSensorIF(parent)
 	connect(&m_sendTempTimer, &QTimer::timeout, this, [this]() {
 		QDateTime now = QDateTime::currentDateTime();
 
-		float change = static_cast<float>(now.time().second() % 5 - 10);
+		float change = static_cast<float>(now.time().second() % 5 - 2);
 		m_lastTemp += change;
 		emit newTemperature(now, m_lastTemp);
 	});
