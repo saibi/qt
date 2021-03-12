@@ -1,11 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QDateTime>
-
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(TemperatureSensorIF *tempSensor, QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
+	, m_tempSensor(tempSensor)
 {
 	ui->setupUi(this);
 
@@ -15,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 	m_updateTimer.setInterval(1000);
 	m_updateTimer.start();
+
+	updateTempDisplay(QDateTime(), 0.0);
+	connect(m_tempSensor, &TemperatureSensorIF::newTemperature, this, &MainWindow::updateTempDisplay);
 }
 
 MainWindow::~MainWindow()
@@ -28,3 +30,7 @@ void MainWindow::updateDisplay()
 	ui->currentDateTime->setText(now.toString());
 }
 
+void MainWindow::updateTempDisplay(QDateTime date, float temp)
+{
+	ui->tempDisplay->setText(QString::number(temp) + " C");
+}

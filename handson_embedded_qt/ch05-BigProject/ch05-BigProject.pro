@@ -10,10 +10,14 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mocktempsensor.cpp \
+    temperaturesensorif.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    mocktempsensor.h \
+    temperaturesensorif.h
 
 FORMS += \
     mainwindow.ui
