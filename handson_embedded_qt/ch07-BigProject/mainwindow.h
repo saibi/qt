@@ -3,6 +3,8 @@
 
 #include "temperaturesensorif.h"
 #include "temperaturestorage.h"
+#include "hvaccontroller.h"
+#include "HVACControl.h"
 
 #include <QMainWindow>
 #include <QTimer>
@@ -29,5 +31,8 @@ private:
 	QTimer m_updateTimer;
 	TemperatureSensorIF *m_tempSensor;
 	TemperatureStorage *m_tempStorage;
+
+	HVACControl m_hvacSM;
+	HVACController m_hvacCtrl;
 };
 #endif // MAINWINDOW_H

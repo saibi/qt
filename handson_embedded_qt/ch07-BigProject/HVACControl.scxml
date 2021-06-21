@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" xmlns:qt="http://www.qt.io/2015/02/scxml-ext" name="HVACControl" qt:editorversion="4.14.0">
+    <qt:editorinfo removedInitial="Wait"/>
+    <state id="FanOff">
+        <qt:editorinfo geometry="86.75;127.57;-60;-101.04;191.64;326.58" scenegeometry="86.75;127.57;26.75;26.53;191.64;326.58"/>
+        <state id="Idle">
+            <qt:editorinfo geometry="51.64;87.17;-60;-50;120;101.21" scenegeometry="138.39;309.66;78.39;259.66;120;101.21"/>
+            <transition type="external" event="TooCold" target="Heating">
+                <qt:editorinfo endTargetFactors="19.61;85.23" movePoint="-23.47;6.13" startTargetFactors="55.50;90.05"/>
+            </transition>
+            <transition type="external" event="TooHot" target="Cooling">
+                <qt:editorinfo startTargetFactors="87.83;16.88"/>
+            </transition>
+        </state>
+    </state>
+    <state id="FanOn">
+        <qt:editorinfo geometry="446.01;157.07;-150.01;-148.40;545.01;365.43" scenegeometry="446.01;157.07;296;8.67;545.01;365.43"/>
+        <state id="Heating">
+            <qt:editorinfo geometry="16.83;147.03;-60;-50;120;100" scenegeometry="462.84;304.10;402.84;254.10;120;100"/>
+            <transition type="external" event="TargetReached" target="Wait">
+                <qt:editorinfo endTargetFactors="17.85;87.12" movePoint="2.05;26.64" startTargetFactors="76.40;82.65"/>
+            </transition>
+        </state>
+        <state id="Wait">
+            <qt:editorinfo geometry="289.17;47.15;-60;-50;120;100" scenegeometry="651.49;714.63;591.49;664.63;120;100"/>
+            <transition type="external" event="DoneWaiting" target="Idle"/>
+            <onentry>
+                <send delay="30s" target="Wait" event="DoneWaiting"/>
+            </onentry>
+        </state>
+        <state id="Cooling">
+            <qt:editorinfo geometry="17.94;-36.47;-60;-50;120;100" scenegeometry="463.95;120.60;403.95;70.60;120;100"/>
+            <transition type="external" event="TargetReached" target="Wait">
+                <qt:editorinfo endTargetFactors="93.92;63.96" movePoint="1.02;1.02"/>
+            </transition>
+        </state>
+    </state>
+</scxml>
