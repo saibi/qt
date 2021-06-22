@@ -19,10 +19,16 @@ public:
 	explicit DiscoverListForm(QWidget *parent = nullptr);
 	~DiscoverListForm();
 
+signals:
+	void signalDeviceSelected(const QString & id, const QString & ip);
+
 public slots:
 	void discoverUpdate(const QDateTime& timeStamp, const QString& name, const QString& address);
 
 	void clear();
+
+private slots:
+	void on_tableView_doubleClicked(const QModelIndex &index);
 
 private:
 	Ui::DiscoverListForm *ui;

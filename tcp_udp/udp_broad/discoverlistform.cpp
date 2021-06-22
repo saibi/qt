@@ -7,6 +7,8 @@ DiscoverListForm::DiscoverListForm(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
 	m_discoverRecord.setHorizontalHeaderLabels(QStringList({"Date & Time", "Name", "IP"}));
 
 	m_discoverProxy.setSourceModel(&m_discoverRecord);
@@ -37,4 +39,14 @@ void DiscoverListForm::discoverUpdate(const QDateTime & timeStamp, const QString
 void DiscoverListForm::clear()
 {
 	m_discoverRecord.clear();
+	m_discoverRecord.setHorizontalHeaderLabels(QStringList({"Date & Time", "Name", "IP"}));
+}
+
+void DiscoverListForm::on_tableView_doubleClicked(const QModelIndex &index)
+{
+	qDebug("[UI] [DiscoverListForm::on_tableView_doubleClicked]");
+
+	qDebug() << index.data() << index.siblingAtColumn(2).data();
+
+	emit signalDeviceSelected(index.siblingAtColumn(1).data().toString(), index.siblingAtColumn(2).data().toString());
 }
