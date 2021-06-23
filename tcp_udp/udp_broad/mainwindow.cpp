@@ -5,6 +5,8 @@
 #include <QHostAddress>
 #include <QTcpSocket>
 
+#include "tcpsocketthread.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -15,20 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
 	m_udpSocket = new QUdpSocket(this);
 	connect(m_udpSocket, &QUdpSocket::readyRead, this, &MainWindow::readPendingDatagrams );
 
-	m_tcpServer = new QTcpServer(this);
+	m_tcpServer = new TcpServer(this);
 
 	if ( !m_tcpServer->listen(QHostAddress::Any, 8279) )
 	{
 		qDebug() << "listen() error : " << m_tcpServer->errorString();
 		m_tcpServer->close();
 	}
-	else
-	{
-		connect(m_tcpServer, &QTcpServer::newConnection, this, &MainWindow::handleNewConnection);
-	}
 
 	connect(ui->widget_discoverList, &DiscoverListForm::signalDeviceSelected, this, &MainWindow::sendReqConnect);
-
 }
 
 MainWindow::~MainWindow()
@@ -69,21 +66,6 @@ void MainWindow::on_pushButton_broadcast_clicked()
 
 	QByteArray datagram = "ew hello";
 	m_udpSocket->writeDatagram(datagram, QHostAddress::Broadcast, 8279);
-}
-
-void MainWindow::handleNewConnection()
-{
-	QByteArray block;
-	QDataStream out(&block, QIODevice::WriteOnly);
-	out.setVersion(QDataStream::Qt_5_10);
-
-	out << "tcp connected";
-
-	QTcpSocket *clientConnection = m_tcpServer->nextPendingConnection();
-	connect(clientConnection, &QAbstractSocket::disconnected, clientConnection, &QObject::deleteLater);
-
-	clientConnection->write("tcp connected");
-	clientConnection->disconnectFromHost();
 }
 
 void MainWindow::sendReqConnect(const QString & id, const QString & ip)

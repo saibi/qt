@@ -6,7 +6,7 @@
 #include <QUdpSocket>
 #include <QNetworkDatagram>
 
-#include <QTcpServer>
+#include "tcpserver.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +25,6 @@ protected:
 	void readPendingDatagrams();
 	void processDatagram(QNetworkDatagram datagram);
 
-	void handleNewConnection();
 	void sendReqConnect(const QString & id, const QString & ip);
 
 private slots:
@@ -35,6 +34,6 @@ private:
 	Ui::MainWindow *ui;
 
 	QUdpSocket *m_udpSocket = nullptr;
-	QTcpServer *m_tcpServer = nullptr;
+	TcpServer *m_tcpServer = nullptr;
 };
 #endif // MAINWINDOW_H

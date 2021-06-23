@@ -11,11 +11,17 @@ CONFIG += c++11
 SOURCES += \
     discoverlistform.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    tcppacket.cpp \
+    tcpserver.cpp \
+    tcpsocketthread.cpp
 
 HEADERS += \
     discoverlistform.h \
-    mainwindow.h
+    mainwindow.h \
+    tcppacket.h \
+    tcpserver.h \
+    tcpsocketthread.h
 
 FORMS += \
     discoverlistform.ui \
