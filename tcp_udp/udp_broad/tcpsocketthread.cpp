@@ -19,35 +19,43 @@ void TcpSocketThread::run()
 
 	qDebug() << "DBG tcpsocketthread start";
 
-	int count = 5;
+	int count = 0;
 
 	while (! m_stopFlag)
 	{
-		qDebug() << (tcpSocket.isValid() ? "valid" : "not valid");
-
-		if ( tcpSocket.waitForReadyRead(1000) )
+		if ( tcpSocket.waitForReadyRead(2000) )
 		{
 			QByteArray data = tcpSocket.readAll();
-			qDebug() << "Recv [" << data << "]";
+			qDebug() << "Recv" << data.size() << "bytes =====\n" << data << "\n";
 
-			--count;
-			if ( count == 0 )
+
+			++count;
+			if ( count > 700 )
 			{
 				qDebug() << "DBG break";
 				m_stopFlag = true;
 			}
-
 		}
 		else
 		{
-			QString date = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss");
+			QByteArray data;
 
-			qDebug() << "Send [" << date << "]";
-			tcpSocket.write(date.toLocal8Bit());
+			for ( int i = 0 ; i < count; ++i)
+			{
+				data.append("1234567890");
+			}
+
+			QString date = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss;");
+			int ret = tcpSocket.write(date.toLocal8Bit());
+			qDebug() << "write" << ret <<" bytes";
+
+			ret = tcpSocket.write(data);
+			qDebug() << "write" << ret <<" bytes";
+
+			qDebug() << "Send :" << date;
 		}
 
 	}
-	//tcpSocket.disconnectFromHost();
 	tcpSocket.close();
 	if ( tcpSocket.state() == QAbstractSocket::UnconnectedState || tcpSocket.waitForDisconnected() )
 		qDebug() << "DBG disconnected";
@@ -56,11 +64,4 @@ void TcpSocketThread::run()
 
 
 	qDebug() << "DBG tcpsocketthread finished";
-#if 0
-	   QByteArray block;
-	   QDataStream out(&block, QIODevice::WriteOnly);
-	   out.setVersion(QDataStream::Qt_4_0);
-	   out << text;
-	   tcpSocket.write(block);
-#endif
 }
