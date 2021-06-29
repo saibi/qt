@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QTcpSocket>
+#include <QHostAddress>
 
 class TcpSocketThread : public QThread
 {
@@ -13,13 +14,18 @@ public:
 
 	void run() override;
 
+	QHostAddress clientAddress() const;
+
+	void setTransfer(int val) { m_transfer = val; }
+	void setRepeat(int val) { m_repeat = val; }
 signals:
 	void signalError(QTcpSocket::SocketError socketError);
 
 private:
 	int m_socketDescriptor;
 	bool m_stopFlag = false;
-
+	int m_transfer = 1000;
+	int m_repeat = 10;
 };
 
 #endif // TCPSOCKETTHREAD_H

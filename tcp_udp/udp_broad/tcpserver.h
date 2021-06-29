@@ -14,7 +14,8 @@ public:
 	TcpServer(QObject *parent = nullptr);
 
 signals:
-	void signalTcpSocketThreadCreated(TcpSocketThread *thread);
+	void signalConnected(TcpSocketThread *thread);
+	void signalDisconnected();
 
 protected:
 	void incomingConnection(qintptr socketDescriptor) override;

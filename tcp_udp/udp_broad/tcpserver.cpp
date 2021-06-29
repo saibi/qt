@@ -10,6 +10,6 @@ void TcpServer::incomingConnection(qintptr socketDescriptor)
 {
 	TcpSocketThread *thread = new TcpSocketThread(socketDescriptor, this);
 	connect(thread, &TcpSocketThread::finished, thread, &TcpSocketThread::deleteLater);
-	thread->start();
-	emit signalTcpSocketThreadCreated(thread);
+	connect(thread, &TcpSocketThread::finished, this, &TcpServer::signalDisconnected);
+	emit signalConnected(thread);
 }

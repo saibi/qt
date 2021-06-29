@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
+	ui->groupBox_device->setEnabled(false);
+
 	m_udpSocket = new QUdpSocket(this);
 	connect(m_udpSocket, &QUdpSocket::readyRead, this, &MainWindow::readPendingDatagrams );
 
@@ -24,8 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
 		qDebug() << "listen() error : " << m_tcpServer->errorString();
 		m_tcpServer->close();
 	}
-
-	connect(ui->widget_discoverList, &DiscoverListForm::signalDeviceSelected, this, &MainWindow::sendReqConnect);
+	connect(m_tcpServer, &TcpServer::signalConnected, this, &MainWindow::slot_clientConnected);
+	connect(m_tcpServer, &TcpServer::signalDisconnected, this, &MainWindow::slot_clientDisconnected);
+	connect(ui->widget_discoverList, &DiscoverListForm::signalDeviceSelected, this, &MainWindow::slot_clientSelected);
 }
 
 MainWindow::~MainWindow()
@@ -62,15 +65,54 @@ void MainWindow::on_pushButton_broadcast_clicked()
 {
 	qDebug("[UI] [MainWindow::on_pushButton_broadcast_clicked]");
 
+	ui->groupBox_device->setEnabled(false);
+	ui->label_ip->clear();
 	ui->widget_discoverList->clear();
 
 	QByteArray datagram = "ew hello";
 	m_udpSocket->writeDatagram(datagram, QHostAddress::Broadcast, 8279);
 }
 
-void MainWindow::sendReqConnect(const QString & id, const QString & ip)
+void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
 {
-	QByteArray datagram = "ew con 8279 " + id.toLocal8Bit();
+	m_clientId = id;
+	m_clientIp = ip;
 
-	m_udpSocket->writeDatagram(datagram, QHostAddress(ip), 8279);
+	ui->label_ip->setText(ip);
+	ui->groupBox_device->setEnabled(true);
 }
+
+void MainWindow::slot_clientConnected(TcpSocketThread *thread)
+{
+	m_thread = thread;
+	ui->groupBox_device->setEnabled(false);
+	m_thread->setTransfer(ui->lineEdit_transfer->text().toInt());
+	m_thread->setRepeat(ui->lineEdit_repeat->text().toInt());
+	m_thread->start();
+}
+
+void MainWindow::slot_clientDisconnected()
+{
+	m_thread = nullptr;
+	ui->groupBox_device->setEnabled(true);
+}
+
+
+void MainWindow::on_pushButton_connect_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_connect_clicked]");
+
+	QByteArray datagram = "ew con 8279 " + m_clientId.toLocal8Bit();
+
+	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), 8279);
+}
+
+void MainWindow::on_pushButton_delay_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_delay_clicked]");
+
+	QByteArray datagram = QString("ew delay " + ui->lineEdit_delay->text()).toLocal8Bit();
+
+	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), 8279);
+}
+
