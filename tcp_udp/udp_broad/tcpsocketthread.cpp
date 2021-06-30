@@ -3,6 +3,8 @@
 #include <QDateTime>
 #include <QElapsedTimer>
 
+#include "tcppacket.h"
+
 TcpSocketThread::TcpSocketThread(int socketDescriptor, QObject *parent) :
 	QThread(parent), m_socketDescriptor(socketDescriptor)
 {
@@ -36,8 +38,24 @@ void TcpSocketThread::run()
 	{
 		for ( int i = 0 ; i < repeat ; ++i )
 		{
+			QString date = QDateTime::currentDateTime().toString("yyyy.MM.ddThh:mm:ss");
+
+			TcpPacket packet;
+
+			packet.set("currentDateTime=" + date);
+
+			int send_bytes = 0;
+			int ret = tcpSocket.write(packet.header());
+			qDebug() << "write" << ret <<"bytes";
+			send_bytes += ret;
+
+
+			qDebug() << "#" << i+1 << ": Send" << send_bytes << "bytes :" << date;
+
+#if 0
 			int send_bytes = 0;
 			QByteArray data;
+
 
 			for ( int i = 0 ; i < transfer / 10; ++i)
 				data.append("1234567890");
@@ -60,6 +78,7 @@ void TcpSocketThread::run()
 
 			qDebug() << "Send" << send_bytes << "bytes :" << date;
 
+#endif
 
 			int recv_bytes = 0;
 			QByteArray recv_data;
@@ -75,7 +94,7 @@ void TcpSocketThread::run()
 					recv_data += data;
 				}
 			}
-			qDebug() << "Recv" << recv_bytes << "bytes [" << recv_data.left(20) << "~" << recv_data.right(10) << "]";
+			qDebug() << "Recv" << recv_bytes << "bytes [" << recv_data.left(40) << "~" << recv_data.right(4) << "]";
 		}
 		qDebug() << "DBG break";
 		m_stopFlag = true;

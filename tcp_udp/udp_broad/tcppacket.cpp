@@ -58,9 +58,9 @@ void TcpPacket::set(const QString & cmd, const QByteArray & data)
 		m_data = data;
 	}
 
-	m_header.fill(0, MAX_HEADER_SIZE);
-	qstrncpy(m_header.data(), header.toLocal8Bit().constData(), MAX_HEADER_SIZE);
-	m_header.truncate(MAX_HEADER_SIZE);
+	m_header.fill(0, HEADER_SIZE);
+	qstrncpy(m_header.data(), header.toLocal8Bit().constData(), HEADER_SIZE);
+	m_header.truncate(HEADER_SIZE);
 }
 
 void TcpPacket::set(const TcpPacket & packet)
@@ -98,7 +98,7 @@ int TcpPacket::fromByteArray(const QByteArray &raw)
 	}
 
 	m_header = raw;
-	m_header.truncate(MAX_HEADER_SIZE);
+	m_header.truncate(HEADER_SIZE);
 	return dataSize;
 }
 
