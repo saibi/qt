@@ -40,21 +40,41 @@ void TcpSocketThread::run()
 		{
 			QString date = QDateTime::currentDateTime().toString("yyyy.MM.ddThh:mm:ss");
 
+			QByteArray data;
+
+			for ( int i = 0 ; i < transfer / 10; ++i)
+			{
+				data.append(QString::asprintf("#%8d;", i).toLocal8Bit());
+			}
+
 			TcpPacket packet;
 
-			packet.set("currentDateTime=" + date);
+			if ( i % 2 == 0 )
+			{
+				packet.set("currentDateTime=" + date);
+			}
+			else
+			{
+				data.prepend(date.toLocal8Bit());
+				packet.set("file name_" + QString::number(i), data);
+			}
 
 			int send_bytes = 0;
 			int ret = tcpSocket.write(packet.header());
 			qDebug() << "write" << ret <<"bytes";
 			send_bytes += ret;
 
+			if ( packet.type() == TcpPacket::TCP_PACKET_HAVE_DATA )
+			{
+				ret = tcpSocket.write(packet.data());
+				qDebug() << "write" << ret <<"bytes";
+				send_bytes += ret;
+			}
 
 			qDebug() << "#" << i+1 << ": Send" << send_bytes << "bytes :" << date;
 
 #if 0
 			int send_bytes = 0;
-			QByteArray data;
 
 
 			for ( int i = 0 ; i < transfer / 10; ++i)
@@ -82,19 +102,45 @@ void TcpSocketThread::run()
 
 			int recv_bytes = 0;
 			QByteArray recv_data;
-
 			recv_data.clear();
-			while ( recv_bytes < send_bytes )
+			while ( recv_bytes < TcpPacket::HEADER_SIZE )
 			{
 				if ( tcpSocket.waitForReadyRead(1000) )
 				{
 					QByteArray data = tcpSocket.readAll();
-					qDebug() << "read" << data.size() << "bytes";
+					qDebug() << "read header" << data.size() << "bytes";
 					recv_bytes += data.size();
 					recv_data += data;
 				}
 			}
-			qDebug() << "Recv" << recv_bytes << "bytes [" << recv_data.left(40) << "~" << recv_data.right(4) << "]";
+			TcpPacket recvPacket;
+
+			int data_size = recvPacket.fromByteArray(recv_data);
+			if ( data_size < 0 )
+			{
+				qDebug() << "Recv unknown packet" << recv_bytes << "bytes [" << recv_data.left(40) << "~" << recv_data.right(4) << "]";
+			}
+			else
+			{
+				qDebug() << "Recv header :" << recvPacket.header();
+
+				if ( data_size > 0 )
+				{
+					recv_bytes = 0;
+					recv_data.clear();
+					while ( recv_bytes < data_size )
+					{
+						if ( tcpSocket.waitForReadyRead(1000) )
+						{
+							QByteArray data = tcpSocket.readAll();
+							qDebug() << "read data" << data.size() << "bytes";
+							recv_bytes += data.size();
+							recv_data += data;
+						}
+					}
+					qDebug() << "Recv data" << recv_bytes << "bytes [" << recv_data.left(40) << "~" << recv_data.right(4) << "]";
+				}
+			}
 		}
 		qDebug() << "DBG break";
 		m_stopFlag = true;

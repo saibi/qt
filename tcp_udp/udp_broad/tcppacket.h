@@ -33,6 +33,7 @@ public:
 
 	void clear();
 
+	int type() const { return m_type; }
 	const QByteArray & header() const { return m_header; }
 	const QByteArray & data() const { return m_data; }
 

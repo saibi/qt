@@ -4,7 +4,7 @@
 
 #define PREFIX_HEADER_ONLY "ewh "
 #define PREFIX_HAVE_DATA "ewd "
-#define EMPTY_CHECKSUM_FIELD " = "
+#define EMPTY_CHECKSUM_FIELD " d "
 
 
 TcpPacket::TcpPacket()
