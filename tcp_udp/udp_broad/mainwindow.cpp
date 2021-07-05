@@ -85,16 +85,16 @@ void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
 void MainWindow::slot_clientConnected(TcpSocketThread *thread)
 {
 	m_thread = thread;
-	ui->groupBox_device->setEnabled(false);
 	m_thread->setTransfer(ui->lineEdit_transfer->text().toInt());
 	m_thread->setRepeat(ui->lineEdit_repeat->text().toInt());
 	m_thread->start();
+	qDebug() << "DBG clientConnected";
 }
 
 void MainWindow::slot_clientDisconnected()
 {
 	m_thread = nullptr;
-	ui->groupBox_device->setEnabled(true);
+	qDebug() << "DBG clientDisConnected";
 }
 
 
@@ -116,3 +116,22 @@ void MainWindow::on_pushButton_delay_clicked()
 	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), 8279);
 }
 
+
+void MainWindow::on_pushButton_disconnect_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_disconnect_clicked]");
+	if ( m_thread )
+		m_thread->terminate();
+}
+
+void MainWindow::on_pushButton_test_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_test_clicked]");
+
+	if ( m_thread )
+	{
+		m_thread->setTransfer(ui->lineEdit_transfer->text().toInt());
+		m_thread->setRepeat(ui->lineEdit_repeat->text().toInt());
+		m_thread->sendTest();
+	}
+}

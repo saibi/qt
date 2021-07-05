@@ -14,6 +14,9 @@ public:
 
 	void run() override;
 
+	void sendTest();
+	void terminate();
+
 	QHostAddress clientAddress() const;
 
 	void setTransfer(int val) { m_transfer = val; }
@@ -26,6 +29,8 @@ private:
 	bool m_stopFlag = false;
 	int m_transfer = 1000;
 	int m_repeat = 10;
+
+	bool m_sendTest = false;
 };
 
 #endif // TCPSOCKETTHREAD_H

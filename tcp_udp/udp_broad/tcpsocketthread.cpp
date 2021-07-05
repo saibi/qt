@@ -3,7 +3,7 @@
 #include <QDateTime>
 #include <QElapsedTimer>
 
-#include "tcppacket.h"
+#include "tcppacket2.h"
 
 TcpSocketThread::TcpSocketThread(int socketDescriptor, QObject *parent) :
 	QThread(parent), m_socketDescriptor(socketDescriptor)
@@ -21,24 +21,18 @@ void TcpSocketThread::run()
 	}
 
 	qDebug() << "DBG tcpsocketthread start";
-	QElapsedTimer stopwatch;
-
-	stopwatch.start();
-
-
-	int transfer = m_transfer;
-	if ( transfer < 10 )
-		transfer = 10;
-
-	int repeat = m_repeat;
-	if ( repeat < 1 )
-		repeat = 1;
 
 	while (! m_stopFlag)
 	{
-		for ( int i = 0 ; i < repeat ; ++i )
+		if ( m_sendTest )
 		{
-			QString date = QDateTime::currentDateTime().toString("yyyy.MM.ddThh:mm:ss");
+			int transfer = m_transfer;
+			if ( transfer < 10 )
+				transfer = 10;
+
+			int repeat = m_repeat;
+			if ( repeat < 1 )
+				repeat = 1;
 
 			QByteArray data;
 
@@ -47,103 +41,32 @@ void TcpSocketThread::run()
 				data.append(QString::asprintf("#%8d;", i).toLocal8Bit());
 			}
 
-			TcpPacket packet;
-
-			if ( i % 2 == 0 )
+			for ( int i = 0 ; i < repeat ; ++i )
 			{
-				packet.set("currentDateTime=" + date);
-			}
-			else
-			{
-				data.prepend(date.toLocal8Bit());
-				packet.set("file name_" + QString::number(i), data);
-			}
+				TcpPacket2 packet;
 
-			int send_bytes = 0;
-			int ret = tcpSocket.write(packet.header());
-			qDebug() << "write" << ret <<"bytes";
-			send_bytes += ret;
-
-			if ( packet.type() == TcpPacket::TCP_PACKET_HAVE_DATA )
-			{
-				ret = tcpSocket.write(packet.data());
-				qDebug() << "write" << ret <<"bytes";
-				send_bytes += ret;
-			}
-
-			qDebug() << "#" << i+1 << ": Send" << send_bytes << "bytes :" << date;
-
-#if 0
-			int send_bytes = 0;
-
-
-			for ( int i = 0 ; i < transfer / 10; ++i)
-				data.append("1234567890");
-
-			QString date = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss;");
-
-			qDebug() << "#" << i+1 << "============================================================";
-
-			int ret = tcpSocket.write(date.toLocal8Bit());
-			qDebug() << "write" << ret <<"bytes";
-			send_bytes += ret;
-
-			ret = tcpSocket.write(data);
-			qDebug() << "write" << ret <<"bytes";
-			send_bytes += ret;
-
-			ret = tcpSocket.write(QString::asprintf("#%8d#", i+1).toLocal8Bit());
-			qDebug() << "write" << ret <<"bytes";
-			send_bytes += ret;
-
-			qDebug() << "Send" << send_bytes << "bytes :" << date;
-
-#endif
-
-			int recv_bytes = 0;
-			QByteArray recv_data;
-			recv_data.clear();
-			while ( recv_bytes < TcpPacket::HEADER_SIZE )
-			{
-				if ( tcpSocket.waitForReadyRead(1000) )
+				if ( (i % 3) == 2 )
 				{
-					QByteArray data = tcpSocket.readAll();
-					qDebug() << "read header" << data.size() << "bytes";
-					recv_bytes += data.size();
-					recv_data += data;
+					packet.set(TcpPacket2::FLAG_NONE, TcpPacket2::CMD_NONE + i, data);
 				}
-			}
-			TcpPacket recvPacket;
+				else
+					packet.set(TcpPacket2::FLAG_NONE, TcpPacket2::CMD_NONE + i);
 
-			int data_size = recvPacket.fromByteArray(recv_data);
-			if ( data_size < 0 )
-			{
-				qDebug() << "Recv unknown packet" << recv_bytes << "bytes [" << recv_data.left(40) << "~" << recv_data.right(4) << "]";
-			}
-			else
-			{
-				qDebug() << "Recv header :" << recvPacket.header();
+				int ret = tcpSocket.write(packet.rawData());
+				qDebug() << "#" << i+1 << ": Send" << ret << "bytes.";
 
-				if ( data_size > 0 )
-				{
-					recv_bytes = 0;
-					recv_data.clear();
-					while ( recv_bytes < data_size )
-					{
-						if ( tcpSocket.waitForReadyRead(1000) )
-						{
-							QByteArray data = tcpSocket.readAll();
-							qDebug() << "read data" << data.size() << "bytes";
-							recv_bytes += data.size();
-							recv_data += data;
-						}
-					}
-					qDebug() << "Recv data" << recv_bytes << "bytes [" << recv_data.left(40) << "~" << recv_data.right(4) << "]";
-				}
+				if ( packet.rawData().size() != ret )
+					qDebug("rawData().size() %d != %d", packet.rawData().size(), ret);
 			}
+
+			m_sendTest = false;
 		}
-		qDebug() << "DBG break";
-		m_stopFlag = true;
+
+		if ( tcpSocket.waitForReadyRead(500) )
+		{
+			QByteArray data = tcpSocket.readAll();
+			qDebug() << "recv" << data.size() << "bytes";
+		}
 	}
 
 	tcpSocket.close();
@@ -151,9 +74,6 @@ void TcpSocketThread::run()
 		qDebug() << "DBG disconnected";
 	else
 		qDebug() << "DBG waitForDisconnected() " << tcpSocket.error();
-
-
-	qDebug() << "DBG tcpsocketthread finished " << stopwatch.elapsed() << "ms elapsed";
 }
 
 
@@ -163,4 +83,25 @@ QHostAddress TcpSocketThread::clientAddress() const
 
 	tcpSocket.setSocketDescriptor(m_socketDescriptor);
 	return tcpSocket.peerAddress();
+}
+
+void TcpSocketThread::terminate()
+{
+	qDebug() << "Terminate tcpsocketthread";
+
+	m_stopFlag = true;
+}
+
+void TcpSocketThread::sendTest()
+{
+	qDebug() << "DBG sendTest start";
+
+	m_sendTest = true;
+
+//	QElapsedTimer stopwatch;
+
+//	stopwatch.start();
+
+//	qDebug() << "DBG send " << stopwatch.elapsed() << "ms elapsed";
+
 }

@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     tcppacket.cpp \
+    tcppacket2.cpp \
     tcpserver.cpp \
     tcpsocketthread.cpp
 
@@ -20,6 +21,7 @@ HEADERS += \
     discoverlistform.h \
     mainwindow.h \
     tcppacket.h \
+    tcppacket2.h \
     tcpserver.h \
     tcpsocketthread.h
 

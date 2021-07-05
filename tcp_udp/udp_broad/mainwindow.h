@@ -38,6 +38,10 @@ private slots:
 	void slot_clientDisconnected();
 
 
+	void on_pushButton_disconnect_clicked();
+
+	void on_pushButton_test_clicked();
+
 private:
 	Ui::MainWindow *ui;
 
