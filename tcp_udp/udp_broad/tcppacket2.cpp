@@ -100,7 +100,7 @@ QByteArray TcpPacket2::contents() const
 int TcpPacket2::flag() const
 {
 	if ( m_valid )
-		return (int)m_buf.at(HEADER_IDX_FLAG);
+		return (int)(unsigned char)m_buf.at(HEADER_IDX_FLAG);
 
 	return 0;
 }
@@ -108,7 +108,7 @@ int TcpPacket2::flag() const
 int TcpPacket2::cmd() const
 {
 	if ( m_valid )
-		return (int)m_buf.at(HEADER_IDX_CMD);
+		return (int)(unsigned char)m_buf.at(HEADER_IDX_CMD);
 
 	return 0;
 }
@@ -117,8 +117,7 @@ int TcpPacket2::cmd() const
 /// \return dataSize valid TcpPacket2 header with additional data
 /// \return 0 valid TcpPacket2 header. (header only packet)
 /// \return -1 invalid TcpPacket2
-/// \return -2 invalid but have TcpPacket2 reserved characters
-int TcpPacket2::fromRawHeader(const QByteArray &raw)
+int TcpPacket2::buildFromRawHeader(const QByteArray &raw)
 {
 	if ( raw.at(HEADER_IDX_FS) == RC_FS && raw.at(HEADER_IDX_MAGIC) == RC_MAGIC && raw.at(HEADER_IDX_GS) == RC_GS )
 	{
@@ -133,18 +132,27 @@ int TcpPacket2::fromRawHeader(const QByteArray &raw)
 		clear();
 		m_buf = raw.left(HEADER_SIZE);
 
+		if ( dataSize.val == 0 )
+			m_valid = true;
+
 		return dataSize.val;
 	}
-
-	QByteArray prefix;
-
-	prefix.append(RC_FS);
-	prefix.append(RC_MAGIC);
-
-	if ( raw.contains(prefix) )
-		return -2;
-
 	return -1;
+}
+
+// use with buildFromRawHeader
+int TcpPacket2::containsTcpPacket2Prefix(const QByteArray &raw)
+{
+	QByteArray prefix = { RC_FS, RC_MAGIC };
+
+	int idx = raw.indexOf(prefix);
+	if ( idx < 0 )
+		idx = raw.indexOf(RC_FS); // if not found, search RC_FS only
+
+	if ( idx == 0 )
+		return -1; // buildFromRawHeader() already searched from index 0.
+
+	return idx;
 }
 
 bool TcpPacket2::fillRawData(const QByteArray &data)
@@ -172,4 +180,19 @@ int TcpPacket2::dataSize() const
 	dataSize.buf[1] = m_buf.at(HEADER_IDX_DATASIZE1);
 
 	return dataSize.val;
+}
+
+QDebug operator<< (QDebug d, const TcpPacket2 &packet)
+{
+	if ( packet.isValid() )
+	{
+		if ( packet.dataSize() > 0 )
+			d.nospace() << "[" << packet.flag() << "|" << packet.cmd() << "|" << packet.dataSize() << "]" << packet.rawData().mid(TcpPacket2::HEADER_SIZE, 40);
+		else
+			d.nospace() << "[" << packet.flag() << "|" << packet.cmd() << "]";
+	}
+	else
+		d.nospace() << "invalid TcpPacket2";
+
+  return d;
 }

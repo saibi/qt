@@ -15,17 +15,21 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 
 	ui->groupBox_device->setEnabled(false);
+	ui->widget_tcp_test->setEnabled(false);
 
 	m_udpSocket = new QUdpSocket(this);
 	connect(m_udpSocket, &QUdpSocket::readyRead, this, &MainWindow::readPendingDatagrams );
 
 	m_tcpServer = new TcpServer(this);
 
-	if ( !m_tcpServer->listen(QHostAddress::Any, 8279) )
+	if ( !m_tcpServer->listen(QHostAddress::Any) )
 	{
 		qDebug() << "listen() error : " << m_tcpServer->errorString();
 		m_tcpServer->close();
 	}
+
+	qDebug() << "listen port :" << m_tcpServer->serverPort();
+
 	connect(m_tcpServer, &TcpServer::signalConnected, this, &MainWindow::slot_clientConnected);
 	connect(m_tcpServer, &TcpServer::signalDisconnected, this, &MainWindow::slot_clientDisconnected);
 	connect(ui->widget_discoverList, &DiscoverListForm::signalDeviceSelected, this, &MainWindow::slot_clientSelected);
@@ -70,7 +74,7 @@ void MainWindow::on_pushButton_broadcast_clicked()
 	ui->widget_discoverList->clear();
 
 	QByteArray datagram = "ew hello";
-	m_udpSocket->writeDatagram(datagram, QHostAddress::Broadcast, 8279);
+	m_udpSocket->writeDatagram(datagram, QHostAddress::Broadcast, DEVICE_UDP_PORT);
 }
 
 void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
@@ -85,27 +89,23 @@ void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
 void MainWindow::slot_clientConnected(TcpSocketThread *thread)
 {
 	m_thread = thread;
-	m_thread->setTransfer(ui->lineEdit_transfer->text().toInt());
-	m_thread->setRepeat(ui->lineEdit_repeat->text().toInt());
 	m_thread->start();
 	qDebug() << "DBG clientConnected";
+
+	ui->widget_tcp_test->setEnabled(true);
+	ui->pushButton_connect->setText("connected");
 }
 
 void MainWindow::slot_clientDisconnected()
 {
 	m_thread = nullptr;
 	qDebug() << "DBG clientDisConnected";
+
+	ui->widget_tcp_test->setEnabled(false);
+	ui->pushButton_connect->setText("Connect");
+
 }
 
-
-void MainWindow::on_pushButton_connect_clicked()
-{
-	qDebug("[UI] [MainWindow::on_pushButton_connect_clicked]");
-
-	QByteArray datagram = "ew con 8279 " + m_clientId.toLocal8Bit();
-
-	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), 8279);
-}
 
 void MainWindow::on_pushButton_delay_clicked()
 {
@@ -113,25 +113,61 @@ void MainWindow::on_pushButton_delay_clicked()
 
 	QByteArray datagram = QString("ew delay " + ui->lineEdit_delay->text()).toLocal8Bit();
 
-	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), 8279);
-}
-
-
-void MainWindow::on_pushButton_disconnect_clicked()
-{
-	qDebug("[UI] [MainWindow::on_pushButton_disconnect_clicked]");
-	if ( m_thread )
-		m_thread->terminate();
+	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), DEVICE_UDP_PORT);
 }
 
 void MainWindow::on_pushButton_test_clicked()
 {
 	qDebug("[UI] [MainWindow::on_pushButton_test_clicked]");
 
-	if ( m_thread )
+	if ( !m_thread )
+		return;
+
+	static unsigned int counter = 0;
+
+	int max = ui->lineEdit_repeat->text().toInt();
+	int size = ui->lineEdit_transfer->text().toInt();
+
+	for ( int i = 0 ; i < max ; ++ i )
 	{
-		m_thread->setTransfer(ui->lineEdit_transfer->text().toInt());
-		m_thread->setRepeat(ui->lineEdit_repeat->text().toInt());
-		m_thread->sendTest();
+		QByteArray data;
+
+		QString first = QString::asprintf("#%d;", counter++);
+		first += QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz");
+
+		data.fill(0, size);
+		data.prepend(first.toLocal8Bit());
+		data.resize(size);
+
+		TcpPacket2 packet;
+
+		if ( (i % 2) == 1 )
+			packet.set(TcpPacket2::FLAG_NONE + 1, TcpPacket2::CMD_NONE + i, data);
+		else
+			packet.set(TcpPacket2::FLAG_NONE, TcpPacket2::CMD_NONE + i);
+
+		m_thread->sendPacket(packet);
+		qDebug("DBG queue packet %d", i);
+	}
+}
+
+void MainWindow::on_pushButton_connect_clicked(bool checked)
+{
+	qDebug("[UI] [MainWindow::on_pushButton_connect_clicked] %d", checked);
+
+	if ( checked )
+	{
+		qDebug("DBG request connection");
+
+		QString datagram = QString::asprintf("ew con %d ", m_tcpServer->serverPort()) + m_clientId;
+		m_udpSocket->writeDatagram(datagram.toLocal8Bit(), QHostAddress(m_clientIp), DEVICE_UDP_PORT);
+	}
+	else
+	{
+		if ( m_thread )
+		{
+			qDebug("DBG terminate tcpsocketthread");
+			m_thread->terminate();
+		}
 	}
 }

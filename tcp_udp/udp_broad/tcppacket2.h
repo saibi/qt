@@ -2,6 +2,7 @@
 #define TCPPACKET2_H
 
 #include <QByteArray>
+#include <QDebug>
 
 class TcpPacket2
 {
@@ -40,6 +41,7 @@ public:
 
 	void clear();
 
+	bool isValid() const { return m_valid; }
 	int flag() const;
 	int cmd() const;
 	int dataSize() const;
@@ -47,8 +49,13 @@ public:
 	QByteArray contents() const;
 	const QByteArray & rawData() const { return m_buf; }
 
-	int fromRawHeader(const QByteArray & raw);
+	int buildFromRawHeader(const QByteArray & raw);
 	bool fillRawData(const QByteArray & data);
+
+	static int containsTcpPacket2Prefix(const QByteArray & raw);
+
+
+	friend QDebug operator<< (QDebug d, const TcpPacket2 &packet);
 
 protected:
 

@@ -3,10 +3,9 @@
 #include <QDateTime>
 #include <QElapsedTimer>
 
-#include "tcppacket2.h"
 
 TcpSocketThread::TcpSocketThread(int socketDescriptor, QObject *parent) :
-	QThread(parent), m_socketDescriptor(socketDescriptor)
+	QThread(parent), m_socketDescriptor(socketDescriptor), m_recvMutex(), m_sendMutex()
 {
 }
 
@@ -16,58 +15,77 @@ void TcpSocketThread::run()
 
 	if ( !tcpSocket.setSocketDescriptor(m_socketDescriptor) )
 	{
-		   emit signalError(tcpSocket.error());
-		   return;
+		qDebug() << "DBG run() setSocketDescriptor" << tcpSocket.error();
+		emit signalError(tcpSocket.error());
+		return;
 	}
 
 	qDebug() << "DBG tcpsocketthread start";
 
 	while (! m_stopFlag)
 	{
-		if ( m_sendTest )
+		if ( m_recvBuf.size() > TcpPacket2::HEADER_SIZE )
 		{
-			int transfer = m_transfer;
-			if ( transfer < 10 )
-				transfer = 10;
+			QByteArray header = m_recvBuf.left(TcpPacket2::HEADER_SIZE);
 
-			int repeat = m_repeat;
-			if ( repeat < 1 )
-				repeat = 1;
+			TcpPacket2 packet;
+			int dataSize = packet.buildFromRawHeader(header);
 
-			QByteArray data;
-
-			for ( int i = 0 ; i < transfer / 10; ++i)
+			if ( dataSize > 0 )
 			{
-				data.append(QString::asprintf("#%8d;", i).toLocal8Bit());
-			}
-
-			for ( int i = 0 ; i < repeat ; ++i )
-			{
-				TcpPacket2 packet;
-
-				if ( (i % 3) == 2 )
+				if ( m_recvBuf.size() >= (dataSize + TcpPacket2::HEADER_SIZE) )
 				{
-					packet.set(TcpPacket2::FLAG_NONE, TcpPacket2::CMD_NONE + i, data);
+					m_recvBuf.remove(0, TcpPacket2::HEADER_SIZE);
+					packet.fillRawData(m_recvBuf.left(dataSize));
+					m_recvBuf.remove(0, dataSize);
 				}
 				else
-					packet.set(TcpPacket2::FLAG_NONE, TcpPacket2::CMD_NONE + i);
-
-				int ret = tcpSocket.write(packet.rawData());
-				qDebug() << "#" << i+1 << ": Send" << ret << "bytes.";
-
-				if ( packet.rawData().size() != ret )
-					qDebug("rawData().size() %d != %d", packet.rawData().size(), ret);
+				{
+					// need data
+				}
+			}
+			else if ( dataSize == 0 )
+			{
+				m_recvBuf.remove(0, TcpPacket2::HEADER_SIZE);
+			}
+			else
+			{
+				int fsIdx = TcpPacket2::containsTcpPacket2Prefix(header);
+				if ( fsIdx > 0 )
+				{
+					m_recvBuf.remove(0, fsIdx);
+				}
 			}
 
-			m_sendTest = false;
+			if ( packet.isValid() )
+			{
+				QMutexLocker locker(&m_recvMutex);
+
+				m_recvQ.enqueue(packet);
+
+				qDebug() << "DBG packet received :" << packet;
+			}
 		}
 
-		if ( tcpSocket.waitForReadyRead(500) )
+		if ( tcpSocket.waitForReadyRead(5) )
 		{
-			QByteArray data = tcpSocket.readAll();
-			qDebug() << "recv" << data.size() << "bytes";
+			QByteArray buf = tcpSocket.readAll();
+			m_recvBuf += buf;
+			qDebug("DBG %d bytes received. recvBuf %d", buf.size(), m_recvBuf.size());
+		}
+
+		if ( !m_sendQ.isEmpty() )
+		{
+			QMutexLocker locker(&m_sendMutex);
+
+			TcpPacket2 packet = m_sendQ.dequeue();
+
+			int ret = tcpSocket.write(packet.rawData());
+			qDebug("DBG send packet %d bytes", ret);
 		}
 	}
+
+	qDebug() << "DBG tcpsocketthread end";
 
 	tcpSocket.close();
 	if ( tcpSocket.state() == QAbstractSocket::UnconnectedState || tcpSocket.waitForDisconnected() )
@@ -92,16 +110,21 @@ void TcpSocketThread::terminate()
 	m_stopFlag = true;
 }
 
-void TcpSocketThread::sendTest()
+
+void TcpSocketThread::sendPacket(const TcpPacket2 &packet)
 {
-	qDebug() << "DBG sendTest start";
+	QMutexLocker locker(&m_sendMutex);
 
-	m_sendTest = true;
+	m_sendQ.enqueue(packet);
+}
 
-//	QElapsedTimer stopwatch;
+bool TcpSocketThread::recvPacket(TcpPacket2 &packet)
+{
+	QMutexLocker locker(&m_recvMutex);
 
-//	stopwatch.start();
+	if ( m_recvQ.isEmpty() )
+		return false;
 
-//	qDebug() << "DBG send " << stopwatch.elapsed() << "ms elapsed";
-
+	packet = m_recvQ.dequeue();
+	return true;
 }

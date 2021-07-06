@@ -32,15 +32,13 @@ private slots:
 
 	void on_pushButton_delay_clicked();
 
-	void on_pushButton_connect_clicked();
-
 	void slot_clientConnected(TcpSocketThread *thread);
 	void slot_clientDisconnected();
 
-
-	void on_pushButton_disconnect_clicked();
-
 	void on_pushButton_test_clicked();
+
+	void on_pushButton_connect_clicked(bool checked);
+
 
 private:
 	Ui::MainWindow *ui;
@@ -51,5 +49,9 @@ private:
 	TcpSocketThread *m_thread = nullptr;
 	QString m_clientIp;
 	QString m_clientId;
+
+	enum InternalConstants {
+		DEVICE_UDP_PORT = 8279,
+	};
 };
 #endif // MAINWINDOW_H
