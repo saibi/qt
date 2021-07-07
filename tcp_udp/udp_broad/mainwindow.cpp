@@ -139,12 +139,12 @@ void MainWindow::on_pushButton_test_clicked()
 		data.prepend(first.toLocal8Bit());
 		data.resize(size);
 
-		TcpPacket2 packet;
+		TcpPacket3 packet;
 
 		if ( (i % 2) == 1 )
-			packet.set(TcpPacket2::FLAG_NONE + 1, TcpPacket2::CMD_NONE + i, data);
+			packet.set(TcpPacket3::FLAG_BIT_ENCRYPTION | TcpPacket3::FLAG_BIT_CHECKSUM, TcpPacket3::TYPE_NONE, data);
 		else
-			packet.set(TcpPacket2::FLAG_NONE, TcpPacket2::CMD_NONE + i);
+			packet.set(TcpPacket3::FLAG_NONE, TcpPacket3::TYPE_NONE);
 
 		m_thread->sendPacket(packet);
 		qDebug("DBG queue packet %d", i);

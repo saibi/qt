@@ -8,7 +8,7 @@
 #include <QMutex>
 #include <QQueue>
 
-#include "tcppacket2.h"
+#include "tcppacket3.h"
 
 class TcpSocketThread : public QThread
 {
@@ -23,8 +23,8 @@ public:
 
 	QHostAddress clientAddress() const;
 
-	void sendPacket(const TcpPacket2 & packet);
-	bool recvPacket(TcpPacket2 & packet);
+	void sendPacket(const TcpPacket3 & packet);
+	bool recvPacket(TcpPacket3 & packet);
 
 signals:
 	void signalError(QTcpSocket::SocketError socketError);
@@ -38,8 +38,8 @@ private:
 	QMutex m_recvMutex;
 	QMutex m_sendMutex;
 
-	QQueue <TcpPacket2> m_recvQ;
-	QQueue <TcpPacket2> m_sendQ;
+	QQueue <TcpPacket3> m_recvQ;
+	QQueue <TcpPacket3> m_sendQ;
 };
 
 #endif // TCPSOCKETTHREAD_H

@@ -14,6 +14,7 @@ SOURCES += \
     mainwindow.cpp \
     tcppacket.cpp \
     tcppacket2.cpp \
+    tcppacket3.cpp \
     tcpserver.cpp \
     tcpsocketthread.cpp
 
@@ -22,6 +23,7 @@ HEADERS += \
     mainwindow.h \
     tcppacket.h \
     tcppacket2.h \
+    tcppacket3.h \
     tcpserver.h \
     tcpsocketthread.h
 

@@ -24,19 +24,19 @@ void TcpSocketThread::run()
 
 	while (! m_stopFlag)
 	{
-		if ( m_recvBuf.size() > TcpPacket2::HEADER_SIZE )
+		if ( m_recvBuf.size() > TcpPacket3::HEADER_SIZE )
 		{
-			QByteArray header = m_recvBuf.left(TcpPacket2::HEADER_SIZE);
+			QByteArray header = m_recvBuf.left(TcpPacket3::HEADER_SIZE);
 
-			TcpPacket2 packet;
+			TcpPacket3 packet;
 			int dataSize = packet.buildFromRawHeader(header);
 
 			if ( dataSize > 0 )
 			{
-				if ( m_recvBuf.size() >= (dataSize + TcpPacket2::HEADER_SIZE) )
+				if ( m_recvBuf.size() >= (dataSize + TcpPacket3::HEADER_SIZE) )
 				{
-					m_recvBuf.remove(0, TcpPacket2::HEADER_SIZE);
-					packet.fillRawData(m_recvBuf.left(dataSize));
+					m_recvBuf.remove(0, TcpPacket3::HEADER_SIZE);
+					packet.buildFromRawData(m_recvBuf.left(dataSize));
 					m_recvBuf.remove(0, dataSize);
 				}
 				else
@@ -46,11 +46,11 @@ void TcpSocketThread::run()
 			}
 			else if ( dataSize == 0 )
 			{
-				m_recvBuf.remove(0, TcpPacket2::HEADER_SIZE);
+				m_recvBuf.remove(0, TcpPacket3::HEADER_SIZE);
 			}
 			else
 			{
-				int fsIdx = TcpPacket2::containsTcpPacket2Prefix(header);
+				int fsIdx = TcpPacket3::containsTcpPacket3Prefix(header);
 				if ( fsIdx > 0 )
 				{
 					m_recvBuf.remove(0, fsIdx);
@@ -78,9 +78,9 @@ void TcpSocketThread::run()
 		{
 			QMutexLocker locker(&m_sendMutex);
 
-			TcpPacket2 packet = m_sendQ.dequeue();
+			TcpPacket3 packet = m_sendQ.dequeue();
 
-			int ret = tcpSocket.write(packet.rawData());
+			int ret = tcpSocket.write(packet.rawByteArray());
 			qDebug("DBG send packet %d bytes", ret);
 		}
 	}
@@ -111,14 +111,14 @@ void TcpSocketThread::terminate()
 }
 
 
-void TcpSocketThread::sendPacket(const TcpPacket2 &packet)
+void TcpSocketThread::sendPacket(const TcpPacket3 &packet)
 {
 	QMutexLocker locker(&m_sendMutex);
 
 	m_sendQ.enqueue(packet);
 }
 
-bool TcpSocketThread::recvPacket(TcpPacket2 &packet)
+bool TcpSocketThread::recvPacket(TcpPacket3 &packet)
 {
 	QMutexLocker locker(&m_recvMutex);
 
