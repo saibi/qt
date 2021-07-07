@@ -90,7 +90,7 @@ unsigned short TcpPacket3::calcChecksum(const QByteArray & data)
 {
 	// TO-DO : caculate checksum
 
-	return data.at(0) + 0x0100; // test checksum
+	return (unsigned char)data.at(0) + 0x0100; // test checksum
 }
 
 /// \return data_size
