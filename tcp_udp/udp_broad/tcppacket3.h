@@ -34,7 +34,7 @@ public:
 		VERSION = 1,
 
 		HEADER_SIZE = 8,
-		MAX_CONTENTS_SIZE = 65535 - 4,
+		MAX_CONTENTS_SIZE = 50000,
 	};
 
 	void clear();
@@ -45,6 +45,8 @@ public:
 	int flag() const;
 	int type() const;
 	int dataSize() const;
+	int checksum() const;
+	int orgSize() const;
 
 	QByteArray contents();
 
@@ -78,6 +80,10 @@ protected:
 		HEADER_IDX_GS,
 
 		DATA_IDX_CONTENTS0,
+		DATA_IDX_CHECKSUM0 = DATA_IDX_CONTENTS0,
+
+		CHECKSUM_LEN = 2,
+		SIZE_LEN = 2,
 
 		RC_MAGIC = 0x42,
 		RC_FS = 0x1c,
@@ -87,10 +93,12 @@ protected:
 	};
 
 	void fillDefaultHeader();
-	int appendContents(int flag, const QByteArray & contents);
+	unsigned short appendContents(int flag, const QByteArray & contents);
 	QByteArray encryptContents(const QByteArray & contents);
 	QByteArray decryptContents(const QByteArray & contents);
 	unsigned short calcChecksum(const QByteArray & buf);
+	unsigned short convert_buf2short(const char *buf) const;
+	void convert_short2buf(unsigned short val, char *buf) const;
 };
 
 #endif // TcpPacket3_H

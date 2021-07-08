@@ -63,7 +63,7 @@ void TcpSocketThread::run()
 
 				m_recvQ.enqueue(packet);
 
-				qDebug() << "DBG packet received :" << packet;
+				qDebug() << "DBG packet received :" << packet.verifyChecksum() << packet;
 			}
 		}
 

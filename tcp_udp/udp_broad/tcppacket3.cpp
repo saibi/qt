@@ -45,6 +45,31 @@ void TcpPacket3::fillDefaultHeader()
 	m_buf[HEADER_IDX_GS] = RC_GS;
 }
 
+unsigned short TcpPacket3::convert_buf2short(const char *buf) const
+{
+	union {
+		char buf[2];
+		unsigned short val;
+	} conv;
+
+	conv.buf[0] = buf[0];
+	conv.buf[1] = buf[1];
+
+	return conv.val;
+}
+
+void TcpPacket3::convert_short2buf(unsigned short val, char *buf) const
+{
+	union {
+		char buf[2];
+		unsigned short val;
+	} conv;
+
+	conv.val = val;
+	buf[0] = conv.buf[0];
+	buf[1] = conv.buf[1];
+}
+
 void TcpPacket3::set(int flag, int type, const QByteArray & contents)
 {
 	fillDefaultHeader();
@@ -54,15 +79,11 @@ void TcpPacket3::set(int flag, int type, const QByteArray & contents)
 
 	if ( contents.size() > 0 && contents.size() <= MAX_CONTENTS_SIZE )
 	{
-		union {
-			unsigned char buf[2];
-			unsigned short val;
-		} dataSize;
+		char sizeBuf[2];
 
-		dataSize.val = appendContents(flag, contents);
-
-		m_buf[HEADER_IDX_DATASIZE0] = dataSize.buf[0];
-		m_buf[HEADER_IDX_DATASIZE1] = dataSize.buf[1];
+		convert_short2buf(appendContents(flag, contents), sizeBuf);
+		m_buf[HEADER_IDX_DATASIZE0] = sizeBuf[0];
+		m_buf[HEADER_IDX_DATASIZE1] = sizeBuf[1];
 	}
 	m_valid = true;
 }
@@ -89,12 +110,11 @@ QByteArray TcpPacket3::decryptContents(const QByteArray & contents)
 unsigned short TcpPacket3::calcChecksum(const QByteArray & data)
 {
 	// TO-DO : caculate checksum
-
 	return (unsigned char)data.at(0) + 0x0100; // test checksum
 }
 
 /// \return data_size
-int TcpPacket3::appendContents(int flag, const QByteArray & contents)
+unsigned short TcpPacket3::appendContents(int flag, const QByteArray & contents)
 {
 	if ( (flag & (FLAG_BIT_ENCRYPTION | FLAG_BIT_CHECKSUM)) == 0 )
 	{
@@ -103,18 +123,16 @@ int TcpPacket3::appendContents(int flag, const QByteArray & contents)
 	}
 
 	QByteArray buf;
-	union {
-		char buf[2];
-		unsigned short val;
-	} conv;
 	int dataSize = contents.size();
 
 	if ( flag & FLAG_BIT_ENCRYPTION )
 	{
-		conv.val = contents.size();
+		char sizeBuf[SIZE_LEN];
 
 		buf = encryptContents(contents);
-		buf.prepend(conv.buf, 2);
+
+		convert_short2buf(contents.size(), sizeBuf);
+		buf.prepend(sizeBuf, SIZE_LEN);
 		dataSize = buf.size();
 	}
 	else
@@ -124,9 +142,11 @@ int TcpPacket3::appendContents(int flag, const QByteArray & contents)
 
 	if ( flag & FLAG_BIT_CHECKSUM )
 	{
-		conv.val = calcChecksum(buf);
-		buf.prepend(conv.buf, 2);
-		dataSize += 2;
+		char checksumBuf[CHECKSUM_LEN];
+
+		convert_short2buf(calcChecksum(buf), checksumBuf);
+		buf.prepend(checksumBuf, CHECKSUM_LEN);
+		dataSize += CHECKSUM_LEN;
 	}
 
 	m_buf.append(buf);
@@ -161,16 +181,12 @@ bool TcpPacket3::verifyChecksum()
 {
 	int type = (int)(unsigned char)m_buf[HEADER_IDX_FLAG];
 
-	if ( type & FLAG_BIT_CHECKSUM )
+	if ( (type & FLAG_BIT_CHECKSUM) && (dataSize() > 0 ) )
 	{
-		union {
-			char buf[2];
-			unsigned short val;
-		} conv;
+		unsigned short checksum = convert_buf2short(&m_buf.data()[DATA_IDX_CHECKSUM0]);
 
-		conv.buf[0] = m_buf[0];
-		conv.buf[1] = m_buf[1];
-		return (conv.val == calcChecksum(m_buf.mid(2)));
+		qDebug("DBG checksum %d, calc %d", checksum, calcChecksum(m_buf.mid(DATA_IDX_CHECKSUM0 + CHECKSUM_LEN)) );
+		return (checksum == calcChecksum(m_buf.mid(DATA_IDX_CHECKSUM0 + CHECKSUM_LEN)));
 	}
 	return true;
 }
@@ -207,21 +223,14 @@ int TcpPacket3::buildFromRawHeader(const QByteArray &raw)
 {
 	if ( raw.at(HEADER_IDX_FS) == RC_FS && raw.at(HEADER_IDX_MAGIC) == RC_MAGIC && raw.at(HEADER_IDX_GS) == RC_GS )
 	{
-		union {
-			unsigned char buf[2];
-			unsigned short val;
-		} dataSize;
-
-		dataSize.buf[0] = raw.at(HEADER_IDX_DATASIZE0);
-		dataSize.buf[1] = raw.at(HEADER_IDX_DATASIZE1);
-
 		clear();
 		m_buf = raw.left(HEADER_SIZE);
+		unsigned short dataSize = convert_buf2short(&raw.data()[HEADER_IDX_DATASIZE0]);
 
-		if ( dataSize.val == 0 )
+		if ( dataSize == 0 )
 			m_valid = true;
 
-		return dataSize.val;
+		return dataSize;
 	}
 	return -1;
 }
@@ -253,26 +262,38 @@ int TcpPacket3::containsTcpPacket3Prefix(const QByteArray &raw)
 	return idx;
 }
 
-
 int TcpPacket3::dataSize() const
 {
-	union {
-		unsigned char buf[2];
-		unsigned short val;
-	} dataSize;
-
-	dataSize.buf[0] = m_buf.at(HEADER_IDX_DATASIZE0);
-	dataSize.buf[1] = m_buf.at(HEADER_IDX_DATASIZE1);
-
-	return dataSize.val;
+	return convert_buf2short(&m_buf.data()[HEADER_IDX_DATASIZE0]);
 }
+
+int TcpPacket3::checksum() const
+{
+	if ( flag() & FLAG_BIT_CHECKSUM )
+		return convert_buf2short(&m_buf.data()[DATA_IDX_CONTENTS0]);
+
+	return 0;
+}
+
+int TcpPacket3::orgSize() const
+{
+	if ( flag() & FLAG_BIT_ENCRYPTION )
+	{
+		if ( flag() & FLAG_BIT_CHECKSUM )
+			return convert_buf2short(&m_buf.data()[DATA_IDX_CONTENTS0 + CHECKSUM_LEN]);
+
+		return convert_buf2short(&m_buf.data()[DATA_IDX_CONTENTS0]);
+	}
+	return 0;
+}
+
 
 QDebug operator<< (QDebug d, const TcpPacket3 &packet)
 {
 	if ( packet.isValid() )
 	{
 		if ( packet.dataSize() > 0 )
-			d.nospace() << "[" << packet.version() << "|" << packet.flag() << "|" << packet.type() << "|" << packet.dataSize() << "]" << packet.rawByteArray().mid(TcpPacket3::HEADER_SIZE, 40);
+			d.nospace() << "[" << packet.version() << "|" << packet.flag() << "|" << packet.type() << "|" << packet.dataSize() << "]" << "[" << packet.checksum() << "|" << packet.orgSize() << "]" << packet.rawByteArray().mid(TcpPacket3::HEADER_SIZE, 40);
 		else
 			d.nospace() << "[" << packet.version() << "|" << packet.flag() << "|" << packet.type() << "]";
 	}
