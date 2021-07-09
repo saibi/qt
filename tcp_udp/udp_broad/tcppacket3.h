@@ -27,6 +27,7 @@ public:
 	{
 		TYPE_NONE = 0,
 		TYPE_CMDLINE,
+		TYPE_SMALLFILE,
 	};
 
 	enum Constants
@@ -56,13 +57,18 @@ public:
 	// build packet from bytearray
 	int buildFromRawHeader(const QByteArray & raw);
 	bool buildFromRawData(const QByteArray & data);
+
 	static int containsTcpPacket3Prefix(const QByteArray & raw);
 
 	bool verifyChecksum();
 
+
+	// create packet
+	bool setCmdLine(int flag, const QString & cmdline);
+	bool setSmallFile(int flag, const QString & filename, const QByteArray & fileContents);
+
 	// debug
 	friend QDebug operator<< (QDebug d, const TcpPacket3 &packet);
-
 protected:
 
 	QByteArray m_buf;
@@ -92,13 +98,15 @@ protected:
 		HEADER_FIELD_MASK = 0xff,
 	};
 
+	static QByteArray encryptContents(const QByteArray & contents);
+	static QByteArray decryptContents(const QByteArray & contents);
+	static unsigned short calcChecksum(const QByteArray & buf);
+	static unsigned short convert_buf2short(const char *buf);
+	static void convert_short2buf(unsigned short val, char *buf);
+
 	void fillDefaultHeader();
 	unsigned short appendContents(int flag, const QByteArray & contents);
-	QByteArray encryptContents(const QByteArray & contents);
-	QByteArray decryptContents(const QByteArray & contents);
-	unsigned short calcChecksum(const QByteArray & buf);
-	unsigned short convert_buf2short(const char *buf) const;
-	void convert_short2buf(unsigned short val, char *buf) const;
+
 };
 
 #endif // TcpPacket3_H

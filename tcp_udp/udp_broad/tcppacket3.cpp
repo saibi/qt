@@ -45,30 +45,6 @@ void TcpPacket3::fillDefaultHeader()
 	m_buf[HEADER_IDX_GS] = RC_GS;
 }
 
-unsigned short TcpPacket3::convert_buf2short(const char *buf) const
-{
-	union {
-		char buf[2];
-		unsigned short val;
-	} conv;
-
-	conv.buf[0] = buf[0];
-	conv.buf[1] = buf[1];
-
-	return conv.val;
-}
-
-void TcpPacket3::convert_short2buf(unsigned short val, char *buf) const
-{
-	union {
-		char buf[2];
-		unsigned short val;
-	} conv;
-
-	conv.val = val;
-	buf[0] = conv.buf[0];
-	buf[1] = conv.buf[1];
-}
 
 void TcpPacket3::set(int flag, int type, const QByteArray & contents)
 {
@@ -86,31 +62,6 @@ void TcpPacket3::set(int flag, int type, const QByteArray & contents)
 		m_buf[HEADER_IDX_DATASIZE1] = sizeBuf[1];
 	}
 	m_valid = true;
-}
-
-/// \return encrypted contents
-QByteArray TcpPacket3::encryptContents(const QByteArray & contents)
-{
-	// TO-DO : encrypt
-
-	QByteArray enc = contents;
-
-	enc.prepend("encrypt "); // test encryption
-	return enc;
-}
-
-/// \return decrypted contents
-QByteArray TcpPacket3::decryptContents(const QByteArray & contents)
-{
-	// TO-DO : decrypt
-
-	return contents.mid(8); // test decryption
-}
-
-unsigned short TcpPacket3::calcChecksum(const QByteArray & data)
-{
-	// TO-DO : caculate checksum
-	return (unsigned char)data.at(0) + 0x0100; // test checksum
 }
 
 /// \return data_size
@@ -247,21 +198,6 @@ bool TcpPacket3::buildFromRawData(const QByteArray &data)
 	return false;
 }
 
-/// if buildFromRawHeader returns -1, call this function to check raw header contains packet prefix chararacters.
-int TcpPacket3::containsTcpPacket3Prefix(const QByteArray &raw)
-{
-	QByteArray prefix = { RC_FS, RC_MAGIC };
-
-	int idx = raw.indexOf(prefix);
-	if ( idx < 0 )
-		idx = raw.indexOf(RC_FS); // if not found, search RC_FS only
-
-	if ( idx == 0 )
-		return -1; // buildFromRawHeader() already searched from index 0.
-
-	return idx;
-}
-
 int TcpPacket3::dataSize() const
 {
 	return convert_buf2short(&m_buf.data()[HEADER_IDX_DATASIZE0]);
@@ -293,7 +229,7 @@ QDebug operator<< (QDebug d, const TcpPacket3 &packet)
 	if ( packet.isValid() )
 	{
 		if ( packet.dataSize() > 0 )
-			d.nospace() << "[" << packet.version() << "|" << packet.flag() << "|" << packet.type() << "|" << packet.dataSize() << "]" << "[" << packet.checksum() << "|" << packet.orgSize() << "]" << packet.rawByteArray().mid(TcpPacket3::HEADER_SIZE, 40);
+			d.nospace() << "[" << packet.version() << "|" << packet.flag() << "|" << packet.type() << "|" << packet.dataSize() << "]" << "[" << packet.checksum() << "|" << packet.orgSize() << "]" << packet.rawByteArray().mid(TcpPacket3::HEADER_SIZE, 60);
 		else
 			d.nospace() << "[" << packet.version() << "|" << packet.flag() << "|" << packet.type() << "]";
 	}
@@ -301,4 +237,118 @@ QDebug operator<< (QDebug d, const TcpPacket3 &packet)
 		d.nospace() << "invalid TcpPacket3";
 
   return d;
+}
+
+
+bool TcpPacket3::setCmdLine(int flag, const QString & cmdline)
+{
+	if ( cmdline.size() > MAX_CONTENTS_SIZE )
+	{
+		qDebug("DBG too long cmdline");
+		return false;
+	}
+
+	set(flag, TYPE_CMDLINE, cmdline.toLocal8Bit());
+	return true;
+}
+
+bool TcpPacket3::setSmallFile(int flag, const QString &filename, const QByteArray &fileContents)
+{
+	if ( fileContents.size() > MAX_CONTENTS_SIZE )
+	{
+		qDebug("DBG too big");
+		return false;
+	}
+
+	QString name;
+	name = "name=" + filename;
+	if ( !filename.startsWith("\"") || !filename.endsWith("\"") )
+	{
+		if ( filename.contains('"') )
+		{
+			qDebug("DBG invalid filename");
+			return false;
+		}
+		if ( filename.contains(' ') )
+			name = "name=\"" + filename + "\"";
+	}
+
+	QString size;
+	size = "size=" + QString::number(fileContents.size());
+
+	QByteArray contents(QString(name + "\n" + size).toLocal8Bit());
+	contents += '\0';
+	contents += fileContents;
+	set(flag, TYPE_SMALLFILE, contents);
+	return true;
+}
+
+
+
+
+
+/// if buildFromRawHeader returns -1, call this function to check raw header contains packet prefix chararacters.
+int TcpPacket3::containsTcpPacket3Prefix(const QByteArray &raw)
+{
+	QByteArray prefix = { RC_FS, RC_MAGIC };
+
+	int idx = raw.indexOf(prefix);
+	if ( idx < 0 )
+		idx = raw.indexOf(RC_FS); // if not found, search RC_FS only
+
+	if ( idx == 0 )
+		return -1; // buildFromRawHeader() already searched from index 0.
+
+	return idx;
+}
+
+
+/// \return encrypted contents
+QByteArray TcpPacket3::encryptContents(const QByteArray & contents)
+{
+	// TO-DO : encrypt
+
+	QByteArray enc = contents;
+
+	enc.prepend("encrypt "); // test encryption
+	return enc;
+}
+
+/// \return decrypted contents
+QByteArray TcpPacket3::decryptContents(const QByteArray & contents)
+{
+	// TO-DO : decrypt
+
+	return contents.mid(8); // test decryption
+}
+
+unsigned short TcpPacket3::calcChecksum(const QByteArray & data)
+{
+	// TO-DO : caculate checksum
+	return (unsigned char)data.at(0) + 0x0100; // test checksum
+}
+
+unsigned short TcpPacket3::convert_buf2short(const char *buf)
+{
+	union {
+		char buf[2];
+		unsigned short val;
+	} conv;
+
+	conv.buf[0] = buf[0];
+	conv.buf[1] = buf[1];
+
+	return conv.val;
+}
+
+void TcpPacket3::convert_short2buf(unsigned short val, char *buf)
+{
+	union {
+		char buf[2];
+		unsigned short val;
+	} conv;
+
+	conv.val = val;
+	buf[0] = conv.buf[0];
+	buf[1] = conv.buf[1];
 }

@@ -141,10 +141,25 @@ void MainWindow::on_pushButton_test_clicked()
 
 		TcpPacket3 packet;
 
-		if ( (i % 2) == 1 )
+		switch(i%5)
+		{
+
+		case 1:
 			packet.set(TcpPacket3::FLAG_BIT_ENCRYPTION | TcpPacket3::FLAG_BIT_CHECKSUM, TcpPacket3::TYPE_NONE, data);
-		else
+			break;
+
+		case 2:
+			packet.setCmdLine(TcpPacket3::FLAG_BIT_CHECKSUM, "set time " + QDateTime::currentDateTime().toString("hh:mm:ss.zzz"));
+			break;
+
+		case 3:
+			packet.setSmallFile(TcpPacket3::FLAG_NONE, "hello.txt", "hello world\nhello world\n");
+			break;
+
+		default:
 			packet.set(TcpPacket3::FLAG_NONE, TcpPacket3::TYPE_NONE);
+			break;
+		}
 
 		m_thread->sendPacket(packet);
 		qDebug("DBG queue packet %d", i);
