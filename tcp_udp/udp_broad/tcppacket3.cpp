@@ -272,7 +272,92 @@ bool TcpPacket3::setSmallFile(int flag, const QString &filename, const QByteArra
 	return true;
 }
 
+QList<TcpPacket3> TcpPacket3::makeFilePackets(int flag, const QString &filename, const QByteArray &fileContents)
+{
+	QList<TcpPacket3> list;
+	TcpPacket3 packet;
 
+	// check small file
+#if 0
+	if ( fileContents.size() <= MAX_CONTENTS_SIZE )
+	{
+		if ( packet.setSmallFile(flag, filename, fileContents) )
+			list.append(packet);
+
+		return list;
+	}
+#endif
+
+	// big file start
+
+	char id = ' ' + (fileContents.size() % 90);
+	int fileSize = fileContents.size();
+	int fragmentSize = 10; // MAX_CONTENTS_SIZE;
+	int remainSize = fileSize % fragmentSize;
+	int fragmentCount = fileSize / fragmentSize;
+
+	qDebug("DBG id %c, fileSize %d, fragmentSize %d, remainSize %d, fragmentCount %d", id, fileSize, fragmentSize, remainSize, fragmentCount);
+
+	QByteArray contents;
+
+	contents.append(id);
+	contents.append(filename.toLocal8Bit());
+	contents.append('\0');
+	contents.append(QString::number(fileSize).toLocal8Bit());
+	contents.append('\0');
+	contents.append(QString::number(fragmentCount + (remainSize > 0 ? 1 : 0)).toLocal8Bit());
+	contents.append('\0');
+
+	packet.set(flag, TYPE_BIGFILE_START, contents);
+	list.append(packet);
+
+
+	// big file fragment
+
+	char buf[SIZE_LEN];
+	convert_short2buf(fragmentSize, buf);
+
+	for ( int i = 0 ; i < fragmentCount ; ++i )
+	{
+
+		contents.clear();
+		contents.append(id);
+		contents.append(QString::number(i).toLocal8Bit());
+		contents.append('\0');
+		contents.append(buf, SIZE_LEN);
+		contents.append(fileContents.mid(fragmentSize * i, fragmentSize));
+
+		packet.set(flag, TYPE_BIGFILE_FRAG, contents );
+		list.append(packet);
+	}
+
+	if ( remainSize > 0 )
+	{
+		convert_short2buf(remainSize, buf);
+		contents.clear();
+		contents.append(id);
+		contents.append(QString::number(fragmentCount).toLocal8Bit());
+		contents.append('\0');
+		contents.append(buf, SIZE_LEN);
+		contents.append(fileContents.mid(fragmentSize * fragmentCount, remainSize));
+
+		packet.set(flag, TYPE_BIGFILE_FRAG, contents );
+		list.append(packet);
+	}
+
+	// big file end
+
+	char checksumType = BIG_FILE_CHECKSUM_NONE;
+
+	contents.clear();
+	contents.append(id);
+	contents.append(checksumType);
+
+	packet.set(flag, TYPE_BIGFILE_END, contents);
+	list.append(packet);
+
+	return list;
+}
 
 
 /// if buildFromRawHeader returns -1, call this function to check raw header contains packet prefix chararacters.

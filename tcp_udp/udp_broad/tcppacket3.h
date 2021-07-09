@@ -28,6 +28,9 @@ public:
 		TYPE_NONE = 0,
 		TYPE_CMDLINE,
 		TYPE_SMALLFILE,
+		TYPE_BIGFILE_START,
+		TYPE_BIGFILE_FRAG,
+		TYPE_BIGFILE_END,
 	};
 
 	enum Constants
@@ -67,6 +70,8 @@ public:
 	bool setCmdLine(int flag, const QString & cmdline);
 	bool setSmallFile(int flag, const QString & filename, const QByteArray & fileContents);
 
+	static QList<TcpPacket3> makeFilePackets(int flag, const QString & filename, const QByteArray & fileContents);
+
 	// debug
 	friend QDebug operator<< (QDebug d, const TcpPacket3 &packet);
 protected:
@@ -90,6 +95,9 @@ protected:
 
 		CHECKSUM_LEN = 2,
 		SIZE_LEN = 2,
+
+		BIG_FILE_CHECKSUM_NONE = 0,
+		BIG_FILE_CHECKSUM_CRC = 1, // not implemented
 
 		RC_MAGIC = 0x42,
 		RC_FS = 0x1c,

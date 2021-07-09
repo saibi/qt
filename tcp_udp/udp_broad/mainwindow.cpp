@@ -153,19 +153,30 @@ void MainWindow::on_pushButton_test_clicked()
 			break;
 
 		case 3:
+			// small file test
 			packet.setSmallFile(TcpPacket3::FLAG_NONE, "hello.txt", "plain\nhello world\nhello world\n");
+//			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, "hello2.txt", "checksum\nhello world\nhello world\n");
+//			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION, "hello3.txt", "encryption\nhello world\nhello world\n");
+//			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION | TcpPacket3::FLAG_BIT_CHECKSUM, "hello4.txt", "encryption+checksum\nhello world\nhello world\n");
 			break;
 
 		case 4:
-			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, "hello2.txt", "checksum\nhello world\nhello world\n");
+		{
+			QList<TcpPacket3> list;
+
+			list = TcpPacket3::makeFilePackets(TcpPacket3::FLAG_NONE, "bigfile.txt", "hello\nworld\nbig file\nReturns a byte array containing len bytes from this byte array, starting at position pos.");
+
+			for (int i = 0; i < list.size() - 1; ++i )
+				m_thread->sendPacket(list.at(i));
+
+			packet = list.last();
+		}
 			break;
 
 		case 5:
-			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION, "hello3.txt", "encryption\nhello world\nhello world\n");
 			break;
 
 		case 6:
-			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION | TcpPacket3::FLAG_BIT_CHECKSUM, "hello4.txt", "encryption+checksum\nhello world\nhello world\n");
 			break;
 
 		default:
