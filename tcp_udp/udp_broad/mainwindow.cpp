@@ -141,7 +141,7 @@ void MainWindow::on_pushButton_test_clicked()
 
 		TcpPacket3 packet;
 
-		switch(i%5)
+		switch(i%11)
 		{
 
 		case 1:
@@ -153,7 +153,19 @@ void MainWindow::on_pushButton_test_clicked()
 			break;
 
 		case 3:
-			packet.setSmallFile(TcpPacket3::FLAG_NONE, "hello.txt", "hello world\nhello world\n");
+			packet.setSmallFile(TcpPacket3::FLAG_NONE, "hello.txt", "plain\nhello world\nhello world\n");
+			break;
+
+		case 4:
+			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, "hello2.txt", "checksum\nhello world\nhello world\n");
+			break;
+
+		case 5:
+			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION, "hello3.txt", "encryption\nhello world\nhello world\n");
+			break;
+
+		case 6:
+			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION | TcpPacket3::FLAG_BIT_CHECKSUM, "hello4.txt", "encryption+checksum\nhello world\nhello world\n");
 			break;
 
 		default:

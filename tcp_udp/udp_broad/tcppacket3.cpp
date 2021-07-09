@@ -55,7 +55,7 @@ void TcpPacket3::set(int flag, int type, const QByteArray & contents)
 
 	if ( contents.size() > 0 && contents.size() <= MAX_CONTENTS_SIZE )
 	{
-		char sizeBuf[2];
+		char sizeBuf[SIZE_LEN];
 
 		convert_short2buf(appendContents(flag, contents), sizeBuf);
 		m_buf[HEADER_IDX_DATASIZE0] = sizeBuf[0];
@@ -256,33 +256,21 @@ bool TcpPacket3::setSmallFile(int flag, const QString &filename, const QByteArra
 {
 	if ( fileContents.size() > MAX_CONTENTS_SIZE )
 	{
-		qDebug("DBG too big");
+		qDebug("DBG file is too big");
 		return false;
 	}
 
-	QString name;
-	name = "name=" + filename;
-	if ( !filename.startsWith("\"") || !filename.endsWith("\"") )
-	{
-		if ( filename.contains('"') )
-		{
-			qDebug("DBG invalid filename");
-			return false;
-		}
-		if ( filename.contains(' ') )
-			name = "name=\"" + filename + "\"";
-	}
-
-	QString size;
-	size = "size=" + QString::number(fileContents.size());
-
-	QByteArray contents(QString(name + "\n" + size).toLocal8Bit());
+	QByteArray contents(filename.toLocal8Bit());
 	contents += '\0';
+
+	char sizeBuf[SIZE_LEN];
+	convert_short2buf(fileContents.size(), sizeBuf);
+	contents.append(sizeBuf, SIZE_LEN);
+
 	contents += fileContents;
 	set(flag, TYPE_SMALLFILE, contents);
 	return true;
 }
-
 
 
 
