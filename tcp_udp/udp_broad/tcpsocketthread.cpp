@@ -74,14 +74,20 @@ void TcpSocketThread::run()
 			qDebug("DBG %d bytes received. recvBuf %d", buf.size(), m_recvBuf.size());
 		}
 
-		if ( !m_sendQ.isEmpty() )
 		{
 			QMutexLocker locker(&m_sendMutex);
 
-			TcpPacket3 packet = m_sendQ.dequeue();
+			if ( !m_sendQ.isEmpty() )
+			{
+				TcpPacket3 packet = m_sendQ.dequeue();
 
-			int ret = tcpSocket.write(packet.rawByteArray());
-			qDebug("DBG send packet %d bytes", ret);
+				int ret = sendPacketData(&tcpSocket, packet);
+				qDebug("DBG send %d bytes", ret);
+				if ( ret == 0 )
+				{
+					qDebug() << packet;
+				}
+			}
 		}
 	}
 
@@ -115,6 +121,11 @@ void TcpSocketThread::sendPacket(const TcpPacket3 &packet)
 {
 	QMutexLocker locker(&m_sendMutex);
 
+	if ( !packet.isValid() )
+	{
+		qDebug("DBG cannot send invalid packet");
+		return;
+	}
 	m_sendQ.enqueue(packet);
 }
 
@@ -127,4 +138,26 @@ bool TcpSocketThread::recvPacket(TcpPacket3 &packet)
 
 	packet = m_recvQ.dequeue();
 	return true;
+}
+
+
+int TcpSocketThread::sendPacketData(QTcpSocket * psocket, const TcpPacket3 & packet)
+{
+	int ret = 0;
+	const char *pdata = packet.rawByteArray().data();
+	int remainSize = packet.rawByteArray().size();
+	int sentSize = 0;
+
+	while ( remainSize > 0 )
+	{
+		ret = psocket->write((const char *)&pdata[sentSize], (qint64)remainSize);
+		if ( ret < 0 )
+		{
+			qDebug("DBG write error");
+			continue;
+		}
+		remainSize -= ret;
+		sentSize += ret;
+	}
+	return sentSize;
 }

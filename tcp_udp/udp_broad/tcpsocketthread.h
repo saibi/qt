@@ -40,6 +40,9 @@ private:
 
 	QQueue <TcpPacket3> m_recvQ;
 	QQueue <TcpPacket3> m_sendQ;
+
+
+	int sendPacketData(QTcpSocket * psocket, const TcpPacket3 & packet);
 };
 
 #endif // TCPSOCKETTHREAD_H

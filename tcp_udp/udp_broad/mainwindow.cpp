@@ -164,28 +164,57 @@ void MainWindow::on_pushButton_test_clicked()
 		{
 			QList<TcpPacket3> list;
 
-			list = TcpPacket3::makeFilePackets(TcpPacket3::FLAG_NONE, "bigfile.txt", "hello\nworld\nbig file\nReturns a byte array containing len bytes from this byte array, starting at position pos.");
+			const char * data =
+"Returns a byte array containing len bytes from\
+this byte array, starting at position pos.\n\
+Check if the Disconnect-request(FIN packet) has been received.\n\
+User can confirm the reception of FIN packet as below.\n\
+Returns the file size in bytes.\n\
+If the file does not exist or cannot be fetched, 0 is returned.\n\
+If the file is a symlink,the size of the target file is returned (not the symlink).\n\
+Reads up to maxSize bytes from the device into data,\n\
+and returns the number of bytes read or -1 if an error occurred.\n\
+If there are no bytes to be read and there can never be more bytes available\n\
+(examples include socket closed, pipe closed, sub-process finished),\n\
+this function returns  -1.\n\
+This function is called by QIODevice.  \n\
+Reimplement this function when creating a subclass of QIODevice.\n\
+When reimplementing this function it is important that this function\n\
+reads all the required data before returning.\n\
+This is required in order for QDataStream to be able to operate on the class.\n\
+Please click View more.\n";
+
+			QByteArray tmpFile;
+
+			for (int i = 0 ; i < 100; ++i)
+				tmpFile += data;
+
+			tmpFile += "====================\n";
+
+			list = TcpPacket3::makeFilePackets(TcpPacket3::FLAG_NONE, "bigfile.txt",
+											   QString::asprintf("\n### %05d BIG FILE ###\n\n", i).toLocal8Bit() + tmpFile );
 
 			for (int i = 0; i < list.size() - 1; ++i )
+			{
+				if ( !list.at(i).isValid() )
+				{
+					qDebug("DBG packet invalid #%d", i);
+				}
 				m_thread->sendPacket(list.at(i));
+			}
 
 			packet = list.last();
 		}
 			break;
 
 		case 5:
-			break;
-
 		case 6:
-			break;
-
 		default:
 			packet.set(TcpPacket3::FLAG_NONE, TcpPacket3::TYPE_NONE);
 			break;
 		}
 
 		m_thread->sendPacket(packet);
-		qDebug("DBG queue packet %d", i);
 	}
 }
 

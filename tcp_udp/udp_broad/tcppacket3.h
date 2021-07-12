@@ -39,6 +39,7 @@ public:
 
 		HEADER_SIZE = 8,
 		MAX_CONTENTS_SIZE = 50000,
+		MAX_BIGFILE_FRAG_SIZE = 20000,
 	};
 
 	void clear();

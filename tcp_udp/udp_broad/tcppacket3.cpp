@@ -290,9 +290,9 @@ QList<TcpPacket3> TcpPacket3::makeFilePackets(int flag, const QString &filename,
 
 	// big file start
 
-	char id = ' ' + (fileContents.size() % 90);
+	char id = ' ' + (fileContents.size() % 90) + 1;
 	int fileSize = fileContents.size();
-	int fragmentSize = 10; // MAX_CONTENTS_SIZE;
+	int fragmentSize = MAX_BIGFILE_FRAG_SIZE;
 	int remainSize = fileSize % fragmentSize;
 	int fragmentCount = fileSize / fragmentSize;
 
@@ -319,7 +319,6 @@ QList<TcpPacket3> TcpPacket3::makeFilePackets(int flag, const QString &filename,
 
 	for ( int i = 0 ; i < fragmentCount ; ++i )
 	{
-
 		contents.clear();
 		contents.append(id);
 		contents.append(QString::number(i).toLocal8Bit());
@@ -356,6 +355,7 @@ QList<TcpPacket3> TcpPacket3::makeFilePackets(int flag, const QString &filename,
 	packet.set(flag, TYPE_BIGFILE_END, contents);
 	list.append(packet);
 
+	qDebug("DBG big file %d packets are created", list.size());
 	return list;
 }
 
