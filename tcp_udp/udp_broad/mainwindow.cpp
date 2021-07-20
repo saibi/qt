@@ -149,12 +149,12 @@ void MainWindow::on_pushButton_test_clicked()
 			break;
 
 		case 2:
-			packet.setCmdLine(TcpPacket3::FLAG_BIT_CHECKSUM, "set time " + QDateTime::currentDateTime().toString("hh:mm:ss.zzz"));
+			packet.setCmdLine(TcpPacket3::FLAG_BIT_CHECKSUM, "set timestr=" + QDateTime::currentDateTime().toString("hh:mm:ss.zzz"));
 			break;
 
 		case 3:
 			// small file test
-			packet.setSmallFile(TcpPacket3::FLAG_NONE, "hello.txt", "plain\nhello world\nhello world\n");
+			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, "hello.txt", "plain\nhello world\nhello world\n");
 //			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, "hello2.txt", "checksum\nhello world\nhello world\n");
 //			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION, "hello3.txt", "encryption\nhello world\nhello world\n");
 //			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION | TcpPacket3::FLAG_BIT_CHECKSUM, "hello4.txt", "encryption+checksum\nhello world\nhello world\n");
@@ -191,7 +191,7 @@ Please click View more.\n";
 
 			tmpFile += "====================\n";
 
-			list = TcpPacket3::makeFilePackets(TcpPacket3::FLAG_NONE, "bigfile.txt",
+			list = TcpPacket3::makeFilePackets(TcpPacket3::FLAG_BIT_CHECKSUM, "bigfile.txt",
 											   QString::asprintf("\n### %05d BIG FILE ###\n\n", i).toLocal8Bit() + tmpFile );
 
 			for (int i = 0; i < list.size() - 1; ++i )

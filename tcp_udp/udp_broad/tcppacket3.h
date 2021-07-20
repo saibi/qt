@@ -73,6 +73,8 @@ public:
 
 	static QList<TcpPacket3> makeFilePackets(int flag, const QString & filename, const QByteArray & fileContents);
 
+	static int ccit_crc(const char *pData, int size);
+
 	// debug
 	friend QDebug operator<< (QDebug d, const TcpPacket3 &packet);
 protected:

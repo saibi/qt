@@ -346,11 +346,16 @@ QList<TcpPacket3> TcpPacket3::makeFilePackets(int flag, const QString &filename,
 
 	// big file end
 
-	char checksumType = BIG_FILE_CHECKSUM_NONE;
+	char checksumType = BIG_FILE_CHECKSUM_CRC;
+	char checksumBuf[2];
+	unsigned short crc = ccit_crc(fileContents.constData(), fileContents.size());
+	convert_short2buf(crc, checksumBuf);
+	qDebug("DBG big file crc = %d", crc);
 
 	contents.clear();
 	contents.append(id);
 	contents.append(checksumType);
+	contents.append(checksumBuf, CHECKSUM_LEN);
 
 	packet.set(flag, TYPE_BIGFILE_END, contents);
 	list.append(packet);
@@ -397,8 +402,7 @@ QByteArray TcpPacket3::decryptContents(const QByteArray & contents)
 
 unsigned short TcpPacket3::calcChecksum(const QByteArray & data)
 {
-	// TO-DO : caculate checksum
-	return (unsigned char)data.at(0) + 0x0100; // test checksum
+	return (unsigned short)ccit_crc(data.constData(), data.size());
 }
 
 unsigned short TcpPacket3::convert_buf2short(const char *buf)
@@ -424,4 +428,26 @@ void TcpPacket3::convert_short2buf(unsigned short val, char *buf)
 	conv.val = val;
 	buf[0] = conv.buf[0];
 	buf[1] = conv.buf[1];
+}
+
+int TcpPacket3::ccit_crc(const char *pData, int size)
+{
+	quint16 crc16 = 0;
+
+	if (pData && size > 0)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			crc16 = (crc16 >> 8) | (crc16 << 8);
+			crc16 ^= (quint8) pData[i];
+			crc16 ^= (crc16 & 0xFF) >> 4;
+			crc16 ^= (crc16 << 8) << 4;
+			crc16 ^= ((crc16 & 0xFF) << 4) << 1;
+		}
+	}
+	else
+	{
+		return -1;
+	}
+	return (int) crc16;
 }
