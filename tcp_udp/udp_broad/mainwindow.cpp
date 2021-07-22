@@ -191,7 +191,7 @@ Please click View more.\n";
 
 			tmpFile += "====================\n";
 
-			list = TcpPacket3::makeFilePackets(TcpPacket3::FLAG_BIT_CHECKSUM, "bigfile.txt",
+			list = TcpPacket3::makeBigFilePackets(TcpPacket3::FLAG_BIT_CHECKSUM, "bigfile.txt",
 											   QString::asprintf("\n### %05d BIG FILE ###\n\n", i).toLocal8Bit() + tmpFile );
 
 			for (int i = 0; i < list.size() - 1; ++i )
@@ -237,4 +237,31 @@ void MainWindow::on_pushButton_connect_clicked(bool checked)
 			m_thread->terminate();
 		}
 	}
+}
+
+void MainWindow::on_pushButton_dev_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_dev_clicked]");
+
+	const char *t =
+"Returns a byte\n\
+array containing\n\
+len bytes from\n\
+this byte array,\n\
+starting at\n\
+position pos.\n\
+Check if the\n\
+Disconnect-request\n\
+(FIN packet)\n\
+has been received.\n\
+User can confirm\n\
+the reception\n\
+of FIN packet as below.\n\
+Please click View more.\n";
+
+	QByteArray buf;
+
+	buf += t;
+
+	TcpPacket3::makeFileBufferPackets(0, "test", buf);
 }

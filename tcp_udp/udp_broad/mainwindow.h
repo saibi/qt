@@ -40,6 +40,8 @@ private slots:
 	void on_pushButton_connect_clicked(bool checked);
 
 
+	void on_pushButton_dev_clicked();
+
 private:
 	Ui::MainWindow *ui;
 
