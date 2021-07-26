@@ -46,7 +46,7 @@ void DiscoverListForm::on_tableView_doubleClicked(const QModelIndex &index)
 {
 	qDebug("[UI] [DiscoverListForm::on_tableView_doubleClicked]");
 
-	qDebug() << index.data() << index.siblingAtColumn(2).data();
+	qDebug() << index.data() << index.sibling(index.row(), 2).data();  // index.siblingAtColumn(2).data(); <- qt 5.15.x
 
-	emit signalDeviceSelected(index.siblingAtColumn(1).data().toString(), index.siblingAtColumn(2).data().toString());
+	emit signalDeviceSelected(index.sibling(index.row(), 1).data().toString(), index.sibling(index.row(), 2).data().toString());
 }

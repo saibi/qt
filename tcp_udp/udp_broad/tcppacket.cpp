@@ -77,11 +77,11 @@ int TcpPacket::fromByteArray(const QByteArray &raw)
 
 	clear();
 
-	if ( prefix.compare(PREFIX_HEADER_ONLY) == 0 )
+	if ( prefix == PREFIX_HEADER_ONLY )
 	{
 		m_type = TCP_PACKET_HEADER_ONLY;
 	}
-	else if ( prefix.compare(PREFIX_HAVE_DATA) == 0 )
+	else if ( prefix == PREFIX_HAVE_DATA )
 	{
 		QList <QByteArray> list = raw.split(' ');
 
