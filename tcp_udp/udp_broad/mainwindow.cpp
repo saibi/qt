@@ -162,6 +162,8 @@ void MainWindow::on_pushButton_test_clicked()
 
 		case 4:
 		{
+		// big file packet test
+#if 0
 			QList<TcpPacket3> list;
 
 			const char * data =
@@ -194,11 +196,59 @@ Please click View more.\n";
 			list = TcpPacket3::makeBigFilePackets(TcpPacket3::FLAG_BIT_CHECKSUM, "bigfile.txt",
 											   QString::asprintf("\n### %05d BIG FILE ###\n\n", i).toLocal8Bit() + tmpFile );
 
+			if ( list.size() == 0 )
+				break;
+
 			for (int i = 0; i < list.size() - 1; ++i )
 			{
 				if ( !list.at(i).isValid() )
 				{
 					qDebug("DBG packet invalid #%d", i);
+					continue;
+				}
+				m_thread->sendPacket(list.at(i));
+			}
+
+			packet = list.last();
+#endif
+		}
+			break;
+
+		case 5:
+		{
+			const char *t =
+"Returns a byte\n\
+array containing\n\
+len bytes from\n\
+this byte array,\n\
+starting at\n\
+position pos.\n\
+Check if the\n\
+Disconnect-request\n\
+(FIN packet)\n\
+has been received.\n\
+User can confirm\n\
+the reception\n\
+of FIN packet as below.\n\
+Please click View more.\n";
+
+			QByteArray buf;
+
+			QList<TcpPacket3> list;
+
+			buf += t;
+
+			list = TcpPacket3::makeFileBufferPackets(0, "test", buf);
+
+			if ( list.size() == 0 )
+				break;
+
+			for (int i = 0; i < list.size() - 1; ++i )
+			{
+				if ( !list.at(i).isValid() )
+				{
+					qDebug("DBG packet invalid #%d", i);
+					continue;
 				}
 				m_thread->sendPacket(list.at(i));
 			}
@@ -207,7 +257,6 @@ Please click View more.\n";
 		}
 			break;
 
-		case 5:
 		case 6:
 		default:
 			packet.set(TcpPacket3::FLAG_NONE, TcpPacket3::TYPE_NONE);

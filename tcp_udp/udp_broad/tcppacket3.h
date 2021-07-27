@@ -31,6 +31,7 @@ public:
 		TYPE_BIGFILE_START,
 		TYPE_BIGFILE_FRAG,
 		TYPE_BIGFILE_END,
+		TYPE_FILE_BUFFER,
 	};
 
 	enum Constants

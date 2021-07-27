@@ -441,7 +441,17 @@ int TcpPacket3::ccit_crc(const char *pData, int size)
 	return (int) crc16;
 }
 
-static int calcFileBufferNIndex(const QByteArray &fileContents, int cutSize, const QString & sepStr, int number, int * pstartIdx, int * pendIdx, bool * pisLast)
+/// find sepStr after (cutSize * number) index
+/// \param fileContents
+/// \param cutSize
+/// \param sepStr
+/// \param number
+/// \param pstartIdx (out)
+/// \param pendIdx (out)
+/// \param pisLast (out)
+/// \return true index found
+/// \return false index not found
+static bool calcFileBufferNIndex(const QByteArray &fileContents, int cutSize, const QString & sepStr, int number, int * pstartIdx, int * pendIdx, bool * pisLast)
 {
 	int startIdx;
 	int endIdx;
@@ -466,7 +476,7 @@ static int calcFileBufferNIndex(const QByteArray &fileContents, int cutSize, con
 		startIdx = offset + 1;
 	}
 
-	if ( endIdx >= fileContents.size() )
+	if ( endIdx >= (fileContents.size() - 1) )
 	{
 		endIdx = fileContents.size() - 1;
 		if ( pisLast )
@@ -483,7 +493,12 @@ static int calcFileBufferNIndex(const QByteArray &fileContents, int cutSize, con
 		endIdx = offset;
 
 		if ( pisLast )
-			*pisLast = false;
+		{
+			if ( endIdx == fileContents.size() -1 )
+				*pisLast = true;
+			else
+				*pisLast = false;
+		}
 	}
 
 	if ( pstartIdx )
@@ -495,51 +510,63 @@ static int calcFileBufferNIndex(const QByteArray &fileContents, int cutSize, con
 	return true;
 }
 
+/// \return N-th buffer
 static QByteArray getFileBufferN(const QByteArray &fileContents, int cutSize, const QString & sepStr, int number)
 {
 	int startIdx;
 	int endIdx;
 
 	if ( calcFileBufferNIndex(fileContents, cutSize, sepStr, number, &startIdx, &endIdx, 0) )
+	{
+		qDebug("DBG startIdx %d , endIdx %d", startIdx, endIdx);
 		return fileContents.mid(startIdx, endIdx - startIdx + 1);
+	}
 
 	return QByteArray();
 }
 
 QList<TcpPacket3> TcpPacket3::makeFileBufferPackets(int flag, const QString &filename, const QByteArray &fileContents)
 {
-	Q_UNUSED(flag);
-	Q_UNUSED(filename);
+	QList<TcpPacket3> list;
+	TcpPacket3 packet;
 
 	int cutSize = 20;
-	int number = 0;
 	const char * sepStr = "\n";
 	bool isLast = false;
-
 	int count;
 
-	QList<TcpPacket3> list;
-
-
-	qDebug("DBG file size %d, cutSize %d", fileContents.size(), cutSize);
-
+	// calc the number of buffer count
 	for ( count = 0 ; isLast == false ; ++count)
 	{
 		if ( !calcFileBufferNIndex(fileContents, cutSize, sepStr, count, 0, 0, &isLast ) )
 		{
-			qDebug("DBG number %d error", count);
+			qDebug("DBG file split error, file size %d, cutSize %d, number #%d", fileContents.size(), cutSize, count);
 			return list;
 		}
 	}
-
 	qDebug("DBG buffer count %d, (0 ~ %d)", count, count - 1);
 
-	for ( number = 0 ; number < count ; ++number )
+	for ( int number = 0 ; number < count ; ++number )
 	{
-		QByteArray buf = getFileBufferN(fileContents, cutSize, "\n", number);
-		qDebug("#%d [%s]", number, buf.constData());
+		QByteArray contents;
+
+		contents.append(filename.toLocal8Bit());
+		contents.append('\0');
+		contents.append(QString::number(number).toLocal8Bit());
+		contents.append('\0');
+
+
+		QByteArray buffer = getFileBufferN(fileContents, cutSize, "\n", number);
+		qDebug("#%d [%s]", number, buffer.constData());
+
+		char buf[SIZE_LEN];
+		convert_short2buf(buffer.size(), buf);
+		contents.append(buf, SIZE_LEN);
+		contents.append(buffer);
+
+		packet.set(flag, TYPE_FILE_BUFFER, contents );
+		list.append(packet);
+
 	}
-
 	return list;
-
 }
