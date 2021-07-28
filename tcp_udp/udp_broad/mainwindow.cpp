@@ -154,10 +154,17 @@ void MainWindow::on_pushButton_test_clicked()
 
 		case 3:
 			// small file test
-			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, "hello.txt", "plain\nhello world\nhello world\n");
+		{
+			QByteArray buf;
+
+			buf += "plain\nhello world\nhello world\n";
+			buf += QString("counter = %1\n").arg(counter).toLocal8Bit();
+			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, QString("hello%1.txt").arg(counter), buf );
 //			packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM, "hello2.txt", "checksum\nhello world\nhello world\n");
 //			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION, "hello3.txt", "encryption\nhello world\nhello world\n");
 //			packet.setSmallFile(TcpPacket3::FLAG_BIT_ENCRYPTION | TcpPacket3::FLAG_BIT_CHECKSUM, "hello4.txt", "encryption+checksum\nhello world\nhello world\n");
+		}
+
 			break;
 
 		case 4:
@@ -216,6 +223,7 @@ Please click View more.\n";
 
 		case 5:
 		{
+			// file buffer test
 			const char *t =
 "Returns a byte\n\
 array containing\n\
@@ -291,26 +299,16 @@ void MainWindow::on_pushButton_connect_clicked(bool checked)
 void MainWindow::on_pushButton_dev_clicked()
 {
 	qDebug("[UI] [MainWindow::on_pushButton_dev_clicked]");
+}
 
-	const char *t =
-"Returns a byte\n\
-array containing\n\
-len bytes from\n\
-this byte array,\n\
-starting at\n\
-position pos.\n\
-Check if the\n\
-Disconnect-request\n\
-(FIN packet)\n\
-has been received.\n\
-User can confirm\n\
-the reception\n\
-of FIN packet as below.\n\
-Please click View more.\n";
+void MainWindow::on_lineEdit_command_returnPressed()
+{
+	qDebug("[UI] [MainWindow::on_lineEdit_command_returnPressed] send command [%s]", qPrintable(ui->lineEdit_command->text()));
 
-	QByteArray buf;
+	TcpPacket3 packet;
+	packet.setCmdLine(TcpPacket3::FLAG_BIT_CHECKSUM | TcpPacket3::FLAG_BIT_ENCRYPTION, ui->lineEdit_command->text());
 
-	buf += t;
+	m_thread->sendPacket(packet);
 
-	TcpPacket3::makeFileBufferPackets(0, "test", buf);
+	ui->lineEdit_command->clear();
 }

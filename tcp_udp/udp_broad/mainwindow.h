@@ -42,6 +42,8 @@ private slots:
 
 	void on_pushButton_dev_clicked();
 
+	void on_lineEdit_command_returnPressed();
+
 private:
 	Ui::MainWindow *ui;
 
