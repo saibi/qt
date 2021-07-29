@@ -7,6 +7,7 @@
 TcpSocketThread::TcpSocketThread(int socketDescriptor, QObject *parent) :
 	QThread(parent), m_socketDescriptor(socketDescriptor), m_recvMutex(), m_sendMutex()
 {
+
 }
 
 void TcpSocketThread::run()
@@ -19,6 +20,17 @@ void TcpSocketThread::run()
 		emit signalError(tcpSocket.error());
 		return;
 	}
+
+	connect(&tcpSocket, &QAbstractSocket::disconnected, this, [=]() {
+		qDebug("DBG TcpSocketThread::run, disconnected");
+
+		if ( !m_stopFlag )
+		{
+			qDebug("DBG break; tcpsocket thread");
+
+			m_stopFlag = true;
+		}
+	});
 
 	qDebug() << "DBG tcpsocketthread start";
 
@@ -153,8 +165,8 @@ int TcpSocketThread::sendPacketData(QTcpSocket * psocket, const TcpPacket3 & pac
 		ret = psocket->write((const char *)&pdata[sentSize], (qint64)remainSize);
 		if ( ret < 0 )
 		{
-			qDebug("DBG write error");
-			continue;
+			qDebug() << "DBG write error :" << psocket->errorString();
+			break;
 		}
 		remainSize -= ret;
 		sentSize += ret;

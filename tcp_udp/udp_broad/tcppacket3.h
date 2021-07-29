@@ -72,9 +72,9 @@ public:
 	bool setCmdLine(int flag, const QString & cmdline);
 	bool setSmallFile(int flag, const QString & filename, const QByteArray & fileContents);
 
-	static QList<TcpPacket3> makeBigFilePackets(int flag, const QString & filename, const QByteArray & fileContents);
+	static QList<TcpPacket3> makeBigFilePackets(int flag, const QString & filename, const QByteArray & fileContents, unsigned short splitSize = 10000);
 
-	static QList<TcpPacket3> makeFileBufferPackets(int flag, const QString & filename, const QByteArray & fileContents);
+	static QList<TcpPacket3> makeFileBufferPackets(int flag, const QString & filename, const QByteArray & fileContents, unsigned short splitSize = 80 * 100, const QString & sepStr = "\n");
 
 	static int ccit_crc(const char *pData, int size);
 

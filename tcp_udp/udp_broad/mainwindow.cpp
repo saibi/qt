@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QHostAddress>
 #include <QTcpSocket>
+#include <QFileDialog>
 
 #include "tcpsocketthread.h"
 
@@ -101,9 +102,13 @@ void MainWindow::slot_clientDisconnected()
 	m_thread = nullptr;
 	qDebug() << "DBG clientDisConnected";
 
+	if ( ui->pushButton_connect->isChecked() )
+	{
+		qDebug("DBG checked --> set false");
+		ui->pushButton_connect->setChecked(false);
+	}
 	ui->widget_tcp_test->setEnabled(false);
 	ui->pushButton_connect->setText("Connect");
-
 }
 
 
@@ -311,4 +316,90 @@ void MainWindow::on_lineEdit_command_returnPressed()
 	m_thread->sendPacket(packet);
 
 	ui->lineEdit_command->clear();
+}
+
+void MainWindow::on_pushButton_browse_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_browse_clicked]");
+
+	m_selectedFilePath = QFileDialog::getOpenFileName(this, "Select File", m_selectedFilePath, "All (*.*);;Text (*.txt)");
+
+	if ( !m_selectedFilePath.isEmpty() )
+	{
+		ui->lineEdit_file->setText(m_selectedFilePath);
+		qDebug("PATH : %s", qPrintable(m_selectedFilePath));
+	}
+}
+
+static QByteArray readFileContents(const QString & path)
+{
+	QFile file(path);
+	QByteArray contents;
+
+	if ( file.open(QIODevice::ReadOnly) )
+	{
+		contents = file.readAll();
+		file.close();
+	}
+	else
+	{
+		qDebug("DBG open error : %s", qPrintable(path));
+	}
+	return contents;
+}
+
+void MainWindow::on_pushButton_send_file_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_browse_clicked]");
+
+	QByteArray contents = readFileContents(m_selectedFilePath);
+	if ( contents.isEmpty() )
+		return;
+
+	TcpPacket3 packet;
+	if ( packet.setSmallFile(TcpPacket3::FLAG_BIT_CHECKSUM | TcpPacket3::FLAG_BIT_ENCRYPTION, QFileInfo(m_selectedFilePath).fileName(), contents ) )
+	{
+		qDebug("send small file %d bytes", contents.size());
+		m_thread->sendPacket(packet);
+	}
+}
+
+void MainWindow::on_pushButton_send_big_file_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_send_big_file_clicked]");
+
+	QByteArray contents = readFileContents(m_selectedFilePath);
+	if ( contents.isEmpty() )
+		return;
+
+	QList<TcpPacket3> packetList;
+	packetList = TcpPacket3::makeBigFilePackets(TcpPacket3::FLAG_BIT_CHECKSUM | TcpPacket3::FLAG_BIT_ENCRYPTION, QFileInfo(m_selectedFilePath).fileName(), contents );
+	if ( packetList.size() > 0 )
+	{
+		for ( int i = 0; i < packetList.size(); ++i )
+		{
+			qDebug("send big file #%d", i);
+			m_thread->sendPacket(packetList.at(i));
+		}
+	}
+}
+
+void MainWindow::on_pushButton_send_buffer_clicked()
+{
+	qDebug("[UI] [MainWindow::on_pushButton_send_buffer_clicked]");
+
+	QByteArray contents = readFileContents(m_selectedFilePath);
+	if ( contents.isEmpty() )
+		return;
+
+	QList<TcpPacket3> packetList;
+	packetList = TcpPacket3::makeFileBufferPackets(TcpPacket3::FLAG_BIT_CHECKSUM | TcpPacket3::FLAG_BIT_ENCRYPTION, QFileInfo(m_selectedFilePath).fileName(), contents );
+	if ( packetList.size() > 0 )
+	{
+		for ( int i = 0; i < packetList.size(); ++i )
+		{
+			qDebug("send file buffer #%d", i);
+			m_thread->sendPacket(packetList.at(i));
+		}
+	}
 }

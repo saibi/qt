@@ -272,7 +272,7 @@ bool TcpPacket3::setSmallFile(int flag, const QString &filename, const QByteArra
 	return true;
 }
 
-QList<TcpPacket3> TcpPacket3::makeBigFilePackets(int flag, const QString &filename, const QByteArray &fileContents)
+QList<TcpPacket3> TcpPacket3::makeBigFilePackets(int flag, const QString &filename, const QByteArray &fileContents, unsigned short splitSize)
 {
 	QList<TcpPacket3> list;
 	TcpPacket3 packet;
@@ -281,7 +281,11 @@ QList<TcpPacket3> TcpPacket3::makeBigFilePackets(int flag, const QString &filena
 
 	char id = ' ' + (fileContents.size() % 90) + 1;
 	int fileSize = fileContents.size();
-	int fragmentSize = MAX_BIGFILE_FRAG_SIZE;
+	int fragmentSize = splitSize;
+
+	if ( fragmentSize > MAX_BIGFILE_FRAG_SIZE )
+		fragmentSize = MAX_BIGFILE_FRAG_SIZE;
+
 	int remainSize = fileSize % fragmentSize;
 	int fragmentCount = fileSize / fragmentSize;
 
@@ -525,22 +529,20 @@ static QByteArray getFileBufferN(const QByteArray &fileContents, int cutSize, co
 	return QByteArray();
 }
 
-QList<TcpPacket3> TcpPacket3::makeFileBufferPackets(int flag, const QString &filename, const QByteArray &fileContents)
+QList<TcpPacket3> TcpPacket3::makeFileBufferPackets(int flag, const QString &filename, const QByteArray &fileContents, unsigned short splitSize, const QString & sepStr)
 {
 	QList<TcpPacket3> list;
 	TcpPacket3 packet;
 
-	int cutSize = 20;
-	const char * sepStr = "\n";
 	bool isLast = false;
 	int count;
 
 	// calc the number of buffer count
 	for ( count = 0 ; isLast == false ; ++count)
 	{
-		if ( !calcFileBufferNIndex(fileContents, cutSize, sepStr, count, 0, 0, &isLast ) )
+		if ( !calcFileBufferNIndex(fileContents, splitSize, sepStr, count, 0, 0, &isLast ) )
 		{
-			qDebug("DBG file split error, file size %d, cutSize %d, number #%d", fileContents.size(), cutSize, count);
+			qDebug("DBG file split error, file size %d, cutSize %d, number #%d", fileContents.size(), splitSize, count);
 			return list;
 		}
 	}
@@ -556,8 +558,8 @@ QList<TcpPacket3> TcpPacket3::makeFileBufferPackets(int flag, const QString &fil
 		contents.append('\0');
 
 
-		QByteArray buffer = getFileBufferN(fileContents, cutSize, "\n", number);
-		qDebug("#%d [%s]", number, buffer.constData());
+		QByteArray buffer = getFileBufferN(fileContents, splitSize, sepStr, number);
+		qDebug("DBG #%d [%s]", number, buffer.constData());
 
 		char buf[SIZE_LEN];
 		convert_short2buf(buffer.size(), buf);
@@ -566,7 +568,6 @@ QList<TcpPacket3> TcpPacket3::makeFileBufferPackets(int flag, const QString &fil
 
 		packet.set(flag, TYPE_FILE_BUFFER, contents );
 		list.append(packet);
-
 	}
 	return list;
 }

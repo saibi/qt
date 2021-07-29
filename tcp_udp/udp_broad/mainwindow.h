@@ -44,6 +44,14 @@ private slots:
 
 	void on_lineEdit_command_returnPressed();
 
+	void on_pushButton_browse_clicked();
+
+	void on_pushButton_send_file_clicked();
+
+	void on_pushButton_send_big_file_clicked();
+
+	void on_pushButton_send_buffer_clicked();
+
 private:
 	Ui::MainWindow *ui;
 
@@ -53,6 +61,8 @@ private:
 	TcpSocketThread *m_thread = nullptr;
 	QString m_clientIp;
 	QString m_clientId;
+
+	QString m_selectedFilePath;
 
 	enum InternalConstants {
 		DEVICE_UDP_PORT = 8279,
