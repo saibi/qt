@@ -95,6 +95,9 @@ void MainWindow::slot_clientConnected(TcpSocketThread *thread)
 
 	ui->widget_tcp_test->setEnabled(true);
 	ui->pushButton_connect->setText("connected");
+	if ( !ui->pushButton_connect->isChecked() )
+		ui->pushButton_connect->setChecked(true);
+
 }
 
 void MainWindow::slot_clientDisconnected()
@@ -290,6 +293,8 @@ void MainWindow::on_pushButton_connect_clicked(bool checked)
 
 		QString datagram = QString::asprintf("ew con %d ", m_tcpServer->serverPort()) + m_clientId;
 		m_udpSocket->writeDatagram(datagram.toLocal8Bit(), QHostAddress(m_clientIp), DEVICE_UDP_PORT);
+
+		ui->pushButton_connect->setChecked(false);
 	}
 	else
 	{

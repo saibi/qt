@@ -32,6 +32,15 @@ void TcpSocketThread::run()
 		}
 	});
 
+	connect(&tcpSocket, static_cast<void(QAbstractSocket::*)(QAbstractSocket::SocketError)>(&QAbstractSocket::error), [=](QAbstractSocket::SocketError socketError) {
+		if ( socketError != QAbstractSocket::SocketTimeoutError)
+			qDebug("DBG socket error %d", socketError);
+	});
+
+	connect(&tcpSocket, &QAbstractSocket::stateChanged, [=](QAbstractSocket::SocketState socketState) {
+		qDebug("DBG socket state %d", socketState);
+	});
+
 	qDebug() << "DBG tcpsocketthread start";
 
 	while (! m_stopFlag)
