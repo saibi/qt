@@ -45,7 +45,6 @@ void MainWindow::readPendingDatagrams()
 {
 	while (m_udpSocket->hasPendingDatagrams())
 	{
-
 		QNetworkDatagram datagram = m_udpSocket->receiveDatagram();
 		processDatagram(datagram);
 	}
@@ -76,6 +75,7 @@ void MainWindow::on_pushButton_broadcast_clicked()
 
 	QByteArray datagram = "ew hello";
 	m_udpSocket->writeDatagram(datagram, QHostAddress::Broadcast, DEVICE_UDP_PORT);
+	m_udpSocket->writeDatagram(datagram, QHostAddress::LocalHost, DEVICE_UDP_PORT);
 }
 
 void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
