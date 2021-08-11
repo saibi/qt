@@ -75,7 +75,6 @@ void MainWindow::on_pushButton_broadcast_clicked()
 
 	QByteArray datagram = "ew hello";
 	m_udpSocket->writeDatagram(datagram, QHostAddress::Broadcast, DEVICE_UDP_PORT);
-	m_udpSocket->writeDatagram(datagram, QHostAddress::LocalHost, DEVICE_UDP_PORT);
 }
 
 void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
@@ -309,6 +308,16 @@ void MainWindow::on_pushButton_connect_clicked(bool checked)
 void MainWindow::on_pushButton_dev_clicked()
 {
 	qDebug("[UI] [MainWindow::on_pushButton_dev_clicked]");
+
+	static unsigned char k;
+
+	QByteArray datagram = "ew myip 192.168.0.";
+
+	datagram += QString::number(k).toLocal8Bit();
+
+	m_udpSocket->writeDatagram(datagram, QHostAddress::LocalHost, DEVICE_UDP_PORT);
+
+	++k;
 }
 
 void MainWindow::on_lineEdit_command_returnPressed()
