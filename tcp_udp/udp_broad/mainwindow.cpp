@@ -89,9 +89,11 @@ void MainWindow::on_pushButton_broadcast_clicked()
 	ui->label_ip->clear();
 	ui->widget_discoverList->clear();
 
-	m_udpSocket->writeDatagram(EW_HELLO, QHostAddress::Broadcast, DISCOVERY_UDP_PORT);
+	// broadcast
+	//m_udpSocket->writeDatagram(EW_HELLO, QHostAddress::Broadcast, DISCOVERY_UDP_PORT);
 
-	m_udpSocket->writeDatagram(EW_LIST, QHostAddress("127.0.0.1"), DISCOVERY_UDP_PORT);
+	// discovery server
+	m_udpSocket->writeDatagram(EW_LIST, QHostAddress("172.10.150.130"), DISCOVERY_UDP_PORT);
 }
 
 void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
@@ -328,10 +330,11 @@ void MainWindow::on_pushButton_dev_clicked()
 
 	static unsigned char k;
 
-	QByteArray datagram = EW_MYIP " 192.168.0.";
+	QByteArray datagram = EW_MYIP " 192.168.38.";
 	datagram += QString::number(k).toLocal8Bit();
-	m_udpSocket->writeDatagram(datagram, QHostAddress::LocalHost, DISCOVERY_UDP_PORT);
+	m_udpSocket->writeDatagram(datagram, QHostAddress("172.10.150.130"), DISCOVERY_UDP_PORT);
 
+	qDebug("DBG send [%s]", datagram.constData());
 	++k;
 }
 
