@@ -2,6 +2,11 @@
 #include <QRegExp>
 
 
+#define EW_MYIP "ew myip"
+#define EW_LIST "ew list"
+#define EW_IP "ew ip"
+
+
 UdpServer::UdpServer(QObject *parent) : QObject(parent)
 {
 }
@@ -20,7 +25,7 @@ bool UdpServer::startServer(unsigned short port, unsigned int expire)
 
 	m_udpSocket = new QUdpSocket(this);
 
-	if ( m_udpSocket && m_udpSocket->bind(QHostAddress::LocalHost, port) )
+	if ( m_udpSocket && m_udpSocket->bind(QHostAddress::Any, port) )
 	{
 		connect(m_udpSocket, &QUdpSocket::readyRead, this, &UdpServer::slotReadPendingDatagrams );
 		startTimer(CHECK_PERIOD * 1000);
@@ -50,11 +55,9 @@ void UdpServer::timerEvent(QTimerEvent *event)
 	QMap<QString, QDateTime>::iterator i = m_map.begin();
 	while (i != m_map.end())
 	{
-		qDebug() << i.value().toString("HH:mm:ss.zzz") << ":" << i.key();
-
 		if ( i.value().secsTo(now) >= expireSec )
 		{
-			qDebug() << "DBG ip expired:" << i.key();
+			qDebug() << "ip expired:" << i.key() << i.value().toString("HH:mm:ss");
 
 			i = m_map.erase(i);
 		}
@@ -73,10 +76,6 @@ void UdpServer::slotReadPendingDatagrams()
 
 }
 
-#define EW_MYIP "ew myip"
-#define EW_LIST "ew list"
-#define EW_IP "ew ip"
-
 void UdpServer::processDatagram(QNetworkDatagram datagram)
 {
 	QByteArray data = datagram.data().trimmed();
@@ -92,7 +91,7 @@ void UdpServer::processDatagram(QNetworkDatagram datagram)
 		{
 			m_map.insert(ip, QDateTime::currentDateTime());
 
-			qDebug() << "DBG device ip added :" << ip;
+			qDebug() << "device ip added :" << ip;
 		}
 	}
 	else if ( data.startsWith(EW_LIST) )
