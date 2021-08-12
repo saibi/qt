@@ -65,7 +65,7 @@ private:
 	QString m_selectedFilePath;
 
 	enum InternalConstants {
-		DEVICE_UDP_PORT = 8279,
-	};
+		DISCOVERY_UDP_PORT = 8279,
+	};	
 };
 #endif // MAINWINDOW_H

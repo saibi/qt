@@ -8,6 +8,14 @@
 
 #include "tcpsocketthread.h"
 
+#define EW_READY "ew ready"
+#define EW_HELLO "ew hello"
+#define EW_DELAY "ew delay"
+#define EW_CON "ew con"
+#define EW_MYIP "ew myip"
+#define EW_IP "ew ip"
+#define EW_LIST "ew list"
+
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -57,11 +65,19 @@ void MainWindow::processDatagram(QNetworkDatagram datagram)
 	qDebug() << datagram.senderAddress() << datagram.senderPort();
 	qDebug() << datagram.data();
 
-	if ( data.startsWith("ew ready") )
+	if ( data.startsWith(EW_READY) )
 	{
 		QString id(data);
-		id = id.replace("ew ready", "").trimmed();
+		id = id.replace(EW_READY, "").trimmed();
 		ui->widget_discoverList->discoverUpdate(QDateTime::currentDateTime(), id, QHostAddress(datagram.senderAddress().toIPv4Address()).toString());
+	}
+	else if ( data.startsWith(EW_IP) )
+	{
+		QString destIP(data);
+		destIP = destIP.replace(EW_IP, "").trimmed();
+
+		QByteArray datagram = EW_HELLO;
+		m_udpSocket->writeDatagram(datagram, QHostAddress(destIP), DISCOVERY_UDP_PORT);
 	}
 }
 
@@ -73,8 +89,9 @@ void MainWindow::on_pushButton_broadcast_clicked()
 	ui->label_ip->clear();
 	ui->widget_discoverList->clear();
 
-	QByteArray datagram = "ew hello";
-	m_udpSocket->writeDatagram(datagram, QHostAddress::Broadcast, DEVICE_UDP_PORT);
+	m_udpSocket->writeDatagram(EW_HELLO, QHostAddress::Broadcast, DISCOVERY_UDP_PORT);
+
+	m_udpSocket->writeDatagram(EW_LIST, QHostAddress("127.0.0.1"), DISCOVERY_UDP_PORT);
 }
 
 void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
@@ -118,9 +135,9 @@ void MainWindow::on_pushButton_delay_clicked()
 {
 	qDebug("[UI] [MainWindow::on_pushButton_delay_clicked]");
 
-	QByteArray datagram = QString("ew delay " + ui->lineEdit_delay->text()).toLocal8Bit();
+	QByteArray datagram = QString(EW_DELAY " " + ui->lineEdit_delay->text()).toLocal8Bit();
 
-	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), DEVICE_UDP_PORT);
+	m_udpSocket->writeDatagram(datagram, QHostAddress(m_clientIp), DISCOVERY_UDP_PORT);
 }
 
 void MainWindow::on_pushButton_test_clicked()
@@ -290,8 +307,8 @@ void MainWindow::on_pushButton_connect_clicked(bool checked)
 	{
 		qDebug("DBG request connection");
 
-		QString datagram = QString::asprintf("ew con %d ", m_tcpServer->serverPort()) + m_clientId;
-		m_udpSocket->writeDatagram(datagram.toLocal8Bit(), QHostAddress(m_clientIp), DEVICE_UDP_PORT);
+		QString datagram = QString::asprintf(EW_CON " %d ", m_tcpServer->serverPort()) + m_clientId;
+		m_udpSocket->writeDatagram(datagram.toLocal8Bit(), QHostAddress(m_clientIp), DISCOVERY_UDP_PORT);
 
 		ui->pushButton_connect->setChecked(false);
 	}
@@ -311,11 +328,9 @@ void MainWindow::on_pushButton_dev_clicked()
 
 	static unsigned char k;
 
-	QByteArray datagram = "ew myip 192.168.0.";
-
+	QByteArray datagram = EW_MYIP " 192.168.0.";
 	datagram += QString::number(k).toLocal8Bit();
-
-	m_udpSocket->writeDatagram(datagram, QHostAddress::LocalHost, DEVICE_UDP_PORT);
+	m_udpSocket->writeDatagram(datagram, QHostAddress::LocalHost, DISCOVERY_UDP_PORT);
 
 	++k;
 }
