@@ -11,13 +11,17 @@ class UdpServer : public QObject
 	Q_OBJECT
 
 public:
-	UdpServer(unsigned short port = 0, QObject *parent = nullptr);
+	UdpServer(QObject *parent = nullptr);
+
+	bool startServer(unsigned short port = 0, unsigned int expire = 0);
+
+signals:
+	void signalError();
 
 protected:
 	virtual void timerEvent(QTimerEvent *event);
 
 protected slots:
-
 	void slotReadPendingDatagrams();
 
 protected:
@@ -27,14 +31,13 @@ private:
 
 	QUdpSocket *m_udpSocket;
 	QMap <QString, QDateTime> m_map;
+	unsigned int m_expire = 0;
 
 	enum ConstantsList
 	{
 		DEFAULT_PORT = 8279,
-		VALID_TIME = 60, // 60 sec
-		CHECK_PERIOD = 10, // 10 sec
-
-
+		CHECK_PERIOD = 1, // sec
+		DEFAULT_EXPIRE_TIME = 2, // min
 	};
 
 };
