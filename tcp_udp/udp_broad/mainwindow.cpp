@@ -16,6 +16,7 @@
 #define EW_IP "ew ip"
 #define EW_LIST "ew list"
 
+#define DISCOVERY_SERVER_IP "172.16.5.50"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -92,8 +93,8 @@ void MainWindow::on_pushButton_broadcast_clicked()
 	// broadcast
 	//m_udpSocket->writeDatagram(EW_HELLO, QHostAddress::Broadcast, DISCOVERY_UDP_PORT);
 
-	// discovery server
-	m_udpSocket->writeDatagram(EW_LIST, QHostAddress("172.10.150.130"), DISCOVERY_UDP_PORT);
+	// use discovery server
+	m_udpSocket->writeDatagram(EW_LIST, QHostAddress(DISCOVERY_SERVER_IP), DISCOVERY_UDP_PORT);
 }
 
 void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
@@ -327,15 +328,6 @@ void MainWindow::on_pushButton_connect_clicked(bool checked)
 void MainWindow::on_pushButton_dev_clicked()
 {
 	qDebug("[UI] [MainWindow::on_pushButton_dev_clicked]");
-
-	static unsigned char k;
-
-	QByteArray datagram = EW_MYIP " 192.168.38.";
-	datagram += QString::number(k).toLocal8Bit();
-	m_udpSocket->writeDatagram(datagram, QHostAddress("172.10.150.130"), DISCOVERY_UDP_PORT);
-
-	qDebug("DBG send [%s]", datagram.constData());
-	++k;
 }
 
 void MainWindow::on_lineEdit_command_returnPressed()
