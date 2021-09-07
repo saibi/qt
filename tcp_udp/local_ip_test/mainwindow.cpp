@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->widget_tcp_test->setEnabled(false);
 
 	m_udpSocket = new QUdpSocket(this);
+	m_udpSocket->bind(QHostAddress::Any, DISCOVERY_UDP_PORT);
 
 #if QT_VERSION >= 0x050800
 	connect(m_udpSocket, &QUdpSocket::readyRead, this, &MainWindow::readPendingDatagrams );
@@ -74,9 +75,10 @@ void MainWindow::readPendingDatagrams()
 
 		senderAddress = datagram.senderAddress();
 		senderPort = datagram.senderPort();
-		QByteArray dgram = datagram.data()
-
+		QByteArray dgram = datagram.data();
 #else
+		qDebug("DBG %d", m_udpSocket->pendingDatagramSize());
+
 		QByteArray dgram;
 		dgram.resize(m_udpSocket->pendingDatagramSize());
 
@@ -110,6 +112,7 @@ void MainWindow::processDatagram(const QByteArray &dgram, QHostAddress *senderAd
 	}
 
 }
+
 #if 0
 void MainWindow::processDatagram(QNetworkDatagram datagram)
 {
