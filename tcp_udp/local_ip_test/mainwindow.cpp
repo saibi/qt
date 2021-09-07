@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	m_tcpServer = new TcpServer(this);
 
-	if ( !m_tcpServer->listen(QHostAddress::Any) )
+    if ( !m_tcpServer->listen(QHostAddress::Any) )
 	{
 		qDebug() << "listen() error : " << m_tcpServer->errorString();
 		m_tcpServer->close();
@@ -147,10 +147,15 @@ void MainWindow::on_pushButton_broadcast_clicked()
 	ui->widget_discoverList->clear();
 
 	// broadcast
-	//m_udpSocket->writeDatagram(EW_HELLO, QHostAddress::Broadcast, DISCOVERY_UDP_PORT);
+    m_udpSocket->writeDatagram(EW_HELLO, QHostAddress::Broadcast, DISCOVERY_UDP_PORT);
 
 	// use discovery server
-	m_udpSocket->writeDatagram(EW_LIST, QHostAddress(DISCOVERY_SERVER_IP), DISCOVERY_UDP_PORT);
+    //m_udpSocket->writeDatagram(EW_LIST, QHostAddress(DISCOVERY_SERVER_IP), DISCOVERY_UDP_PORT);
+
+
+    // use direct peer
+    //m_udpSocket->writeDatagram(EW_HELLO, QHostAddress("192.168.18.2"), DISCOVERY_UDP_PORT);
+
 }
 
 void MainWindow::slot_clientSelected(const QString & id, const QString & ip)
