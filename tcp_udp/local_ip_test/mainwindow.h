@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
 protected slots:
@@ -58,10 +58,10 @@ private slots:
 private:
 	Ui::MainWindow *ui;
 
-	QUdpSocket *m_udpSocket = nullptr;
-	TcpServer *m_tcpServer = nullptr;
+    QUdpSocket *m_udpSocket = 0;
+    TcpServer *m_tcpServer = 0;
 
-	TcpSocketThread *m_thread = nullptr;
+    TcpSocketThread *m_thread = 0;
 	QString m_clientIp;
 	QString m_clientId;
 

@@ -11,7 +11,7 @@ class TcpServer : public QTcpServer
 	Q_OBJECT
 
 public:
-	TcpServer(QObject *parent = nullptr);
+    TcpServer(QObject *parent = 0);
 
 signals:
 	void signalConnected(TcpSocketThread *thread);

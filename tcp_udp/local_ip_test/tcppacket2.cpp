@@ -143,7 +143,7 @@ int TcpPacket2::buildFromRawHeader(const QByteArray &raw)
 // use with buildFromRawHeader
 int TcpPacket2::containsTcpPacket2Prefix(const QByteArray &raw)
 {
-	QByteArray prefix = { RC_FS, RC_MAGIC };
+    const char prefix[] = { RC_FS, RC_MAGIC };
 
 	int idx = raw.indexOf(prefix);
 	if ( idx < 0 )

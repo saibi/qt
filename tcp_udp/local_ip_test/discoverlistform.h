@@ -16,7 +16,7 @@ class DiscoverListForm : public QWidget
 	Q_OBJECT
 
 public:
-	explicit DiscoverListForm(QWidget *parent = nullptr);
+    explicit DiscoverListForm(QWidget *parent = 0);
 	~DiscoverListForm();
 
 signals:

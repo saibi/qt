@@ -9,7 +9,7 @@ DiscoverListForm::DiscoverListForm(QWidget *parent) :
 
 	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-	m_discoverRecord.setHorizontalHeaderLabels(QStringList({"Name", "IP", "Date & Time"}));
+    m_discoverRecord.setHorizontalHeaderLabels(QStringList() << "Name" << "IP" << "Date & Time");
 	m_discoverProxy.setSourceModel(&m_discoverRecord);
 	ui->tableView->setModel(&m_discoverRecord);
 }
@@ -34,9 +34,9 @@ void DiscoverListForm::discoverUpdate(const QDateTime & timeStamp, const QString
 		}
 	}
 
-	auto itemT = new QStandardItem;
-	auto itemN = new QStandardItem;
-	auto itemA = new QStandardItem;
+    QStandardItem * itemT = new QStandardItem;
+    QStandardItem * itemN = new QStandardItem;
+    QStandardItem * itemA = new QStandardItem;
 
 	itemT->setData(timeStamp, Qt::DisplayRole);
 	itemN->setData(name, Qt::DisplayRole);
@@ -55,7 +55,7 @@ void DiscoverListForm::discoverUpdate(const QDateTime & timeStamp, const QString
 void DiscoverListForm::clear()
 {
 	m_discoverRecord.clear();
-	m_discoverRecord.setHorizontalHeaderLabels(QStringList({"Name", "IP", "Date & Time"}));
+    m_discoverRecord.setHorizontalHeaderLabels(QStringList() << "Name" << "IP" << "Date & Time");
 }
 
 void DiscoverListForm::on_tableView_doubleClicked(const QModelIndex &index)

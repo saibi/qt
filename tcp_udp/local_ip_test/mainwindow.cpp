@@ -177,7 +177,7 @@ void MainWindow::slot_clientConnected(TcpSocketThread *thread)
 
 void MainWindow::slot_clientDisconnected()
 {
-	m_thread = nullptr;
+    m_thread = 0;
 	qDebug() << "DBG clientDisConnected";
 
 	if ( ui->pushButton_connect->isChecked() )

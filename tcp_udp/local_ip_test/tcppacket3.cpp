@@ -361,7 +361,7 @@ QList<TcpPacket3> TcpPacket3::makeBigFilePackets(int flag, const QString &filena
 /// if buildFromRawHeader returns -1, call this function to check raw header contains packet prefix chararacters.
 int TcpPacket3::containsTcpPacket3Prefix(const QByteArray &raw)
 {
-	QByteArray prefix = { RC_FS, RC_MAGIC };
+    const char prefix[] = { RC_FS, RC_MAGIC };
 
 	int idx = raw.indexOf(prefix);
 	if ( idx < 0 )
