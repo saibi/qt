@@ -9,9 +9,9 @@ Dialog::Dialog(QWidget *parent) :
 	ui->setupUi(this);
 #ifdef Q_WS_X11
 	qDebug("Q_WS_X11");
-#elif Q_WS_QWS
+#elif defined(Q_WS_QWS)
 	qDebug("Q_WS_QWS");
-#elif Q_WS_WIN32
+#elif defined(Q_WS_WIN32)
 	qDebug("Q_WS_WIN32");
 #else
 	qDebug("Q_WS_ xxx");
